@@ -1,63 +1,78 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BookButton } from "./book-button";
 import { nav } from "@/content/site";
 
 export function SiteHeader() {
+  const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Solid dark bar after scrolling past the hero fold (matches Astro nav).
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="sticky top-0 z-40 border-b border-sand/70 bg-cream/80 backdrop-blur-md">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-        <Link
-          href="/"
-          className="font-display text-xl tracking-wide text-forest"
-          onClick={() => setMenuOpen(false)}
-        >
-          IYKA<span className="text-gold">-</span>ARAM
+    <header className={`v2-landing v2-nav ${scrolled ? "scrolled" : ""}`}>
+      <div className="v2-nav-inner">
+        <Link href="/" aria-label="IYKA-ARAM home" onClick={() => setMenuOpen(false)}>
+          <Image
+            src="/logo.png"
+            alt="IYKA-ARAM"
+            width={180}
+            height={170}
+            className="v2-nav-logo"
+            priority
+          />
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm text-muted md:flex">
+        <ul className="v2-nav-links">
           {nav.map((n) => (
-            <Link
-              key={n.href}
-              href={n.href}
-              className="transition-colors hover:text-ink"
-            >
-              {n.label}
-            </Link>
+            <li key={n.href}>
+              <Link href={n.href} className="v2-nav-link">
+                {n.label}
+              </Link>
+            </li>
           ))}
-        </nav>
+          <li>
+            <BookButton className="v2-btn v2-btn-gold v2-nav-cta rounded-none bg-transparent text-[inherit]">
+              Book Now
+            </BookButton>
+          </li>
+        </ul>
 
-        <div className="flex items-center gap-3">
-          <BookButton className="hidden sm:inline-flex" />
-          <button
-            className="rounded-lg p-2 text-forest md:hidden"
-            aria-label="Toggle menu"
-            onClick={() => setMenuOpen((v) => !v)}
-          >
-            {menuOpen ? "✕" : "☰"}
-          </button>
-        </div>
+        <button
+          className="v2-nav-toggle"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((v) => !v)}
+        >
+          <svg width="24" height="24" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+            {menuOpen ? (
+              <path strokeLinecap="round" d="M6 6l12 12M18 6L6 18" />
+            ) : (
+              <path strokeLinecap="round" d="M4 6h16M4 12h16M4 18h16" />
+            )}
+          </svg>
+        </button>
       </div>
 
       {menuOpen && (
-        <nav className="border-t border-sand bg-cream px-6 py-4 md:hidden">
-          <div className="flex flex-col gap-3 text-sm text-muted">
-            {nav.map((n) => (
-              <Link
-                key={n.href}
-                href={n.href}
-                onClick={() => setMenuOpen(false)}
-                className="transition-colors hover:text-ink"
-              >
-                {n.label}
-              </Link>
-            ))}
-            <BookButton className="mt-2 w-full" />
-          </div>
+        <nav className="v2-nav-mobile">
+          {nav.map((n) => (
+            <Link key={n.href} href={n.href} onClick={() => setMenuOpen(false)}>
+              {n.label}
+            </Link>
+          ))}
+          <BookButton className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit] mt-2 w-full justify-center">
+            Book Now
+          </BookButton>
         </nav>
       )}
     </header>

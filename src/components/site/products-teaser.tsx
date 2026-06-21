@@ -1,58 +1,70 @@
 import Image from "next/image";
-import { BookButton } from "./book-button";
-import { products } from "@/content/site";
+import { Reveal } from "./reveal";
+
+const products = [
+  { name: "Keshanidhi Hair Oil", category: "Hair Care", price: "₹480", img: "/products/keshanidhi-hair-oil.jpg" },
+  { name: "Organic Soap – Garo Hills", category: "Skin Care", price: "₹160", img: "/products/organic-soap.jpg" },
+  { name: "Organic Cork Yoga Mat", category: "Yoga", price: "₹1,200", img: "/products/yoga-mat.jpg" },
+  { name: "Aloe Vera Gel", category: "Skin Care", price: "₹520", img: "/products/aloe-vera-gel.jpg" },
+  { name: "Luxury Wellness Gift Box", category: "Gift Sets", price: "₹1,800", img: "/products/gift-box.jpg" },
+  { name: "Stress Relief Oil", category: "Wellness", price: "₹380", img: "/products/stress-oil.jpg" },
+];
 
 export function ProductsTeaser() {
   return (
-    <section id="products" className="scroll-mt-20 bg-cream">
-      <div className="mx-auto max-w-6xl px-6 py-24">
-        <div className="flex flex-wrap items-end justify-between gap-4">
-          <div className="max-w-2xl">
-            <p className="text-xs uppercase tracking-[0.3em] text-gold">
-              Products
+    <section
+      id="products"
+      className="v2-landing v2-section-py scroll-mt-20"
+      style={{ background: "var(--cream)" }}
+    >
+      <div className="v2-container">
+        <div className="v2-products-head">
+          <Reveal>
+            <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
+              IYKA Living
             </p>
-            <h2 className="mt-4 font-display text-3xl text-forest sm:text-4xl">
-              Wellness, delivered pan-India
+            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 300 }}>
+              Wellness you can
+              <br />
+              <em style={{ color: "var(--gold)" }}>hold in your hands.</em>
             </h2>
-          </div>
-          <span className="text-sm text-muted">Delivery across India</span>
+          </Reveal>
+          <Reveal delay={0.2}>
+            <a href="/store" className="v2-btn v2-btn-outline-dark">
+              Visit Store
+            </a>
+          </Reveal>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-3">
-          {products.map((p) => (
-            <div
-              key={p.name}
-              className="overflow-hidden rounded-2xl border border-sand bg-white"
-            >
-              {p.image ? (
+        <div className="v2-products-grid">
+          {products.map((p, i) => (
+            <Reveal key={p.name} className="v2-product-card" delay={(i % 4) * 0.08}>
+              <div className="v2-product-image-wrap">
                 <Image
-                  src={p.image}
+                  src={p.img}
                   alt={p.name}
-                  width={400}
-                  height={176}
-                  className="h-44 w-full object-cover"
+                  fill
+                  sizes="(max-width: 900px) 50vw, 30vw"
+                  className="v2-product-image"
                 />
-              ) : (
-                <div className="h-44 bg-gradient-to-br from-gold-soft to-sage/30" />
-              )}
-              <div className="p-6">
-                <h3 className="font-display text-lg text-forest">{p.name}</h3>
-                {p.desc && <p className="mt-1 text-sm text-muted">{p.desc}</p>}
-                <div className="mt-1 text-sm text-muted">{p.price}</div>
-                <BookButton
-                  interest="PRODUCT"
-                  className="mt-5 w-full border border-sage bg-transparent text-forest hover:bg-sand hover:text-forest"
-                >
-                  Enquire to order
-                </BookButton>
+                <div className="v2-product-overlay">
+                  <a
+                    href="/store"
+                    className="v2-btn v2-btn-gold rounded-none"
+                    style={{ fontSize: "0.75rem", padding: "0.6rem 1.2rem" }}
+                  >
+                    View Product
+                  </a>
+                </div>
               </div>
-            </div>
+              <div className="v2-product-info">
+                <span className="v2-product-category">{p.category}</span>
+                <h3 className="v2-product-name">{p.name}</h3>
+                <span className="v2-product-price">{p.price}</span>
+              </div>
+            </Reveal>
           ))}
         </div>
-
-        <p className="mt-8 text-center text-xs text-muted">
-          Full online store with checkout is planned for a later phase.
-        </p>
       </div>
     </section>
   );

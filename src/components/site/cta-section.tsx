@@ -1,26 +1,54 @@
+import { Reveal } from "./reveal";
 import { BookButton } from "./book-button";
 
 export function CtaSection() {
   return (
-    <section className="bg-cream">
-      <div className="mx-auto max-w-6xl px-6 py-20">
-        <div className="rounded-3xl bg-forest px-8 py-16 text-center text-cream">
-          <p className="text-xs uppercase tracking-[0.3em] text-gold">
-            Let&apos;s make history
+    <section className="v2-landing v2-cta-panel">
+      <div className="v2-container v2-cta-inner">
+        <Reveal>
+          <p className="v2-section-label" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+            Start Your Journey
           </p>
-          <h2 className="mx-auto mt-4 max-w-2xl font-display text-3xl leading-snug sm:text-4xl">
-            Because we don&apos;t settle for less.
+          <h2
+            style={{
+              fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
+              color: "var(--cream)",
+              fontWeight: 300,
+              lineHeight: 1.1,
+              maxWidth: "30rem",
+            }}
+          >
+            Because we don&apos;t
+            <br />
+            <em style={{ color: "var(--gold-light)" }}>settle for less.</em>
           </h2>
-          <p className="mx-auto mt-4 max-w-xl text-cream/75">
-            Book a consultation or send us an enquiry — our team will be in touch
-            to guide your first step.
+        </Reveal>
+
+        <Reveal delay={0.2} style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "flex-start" }}>
+          <p
+            style={{
+              color: "rgba(248,244,238,0.65)",
+              fontSize: "1rem",
+              lineHeight: 1.8,
+              maxWidth: "28rem",
+            }}
+          >
+            You deserve answers, not just prescriptions. Our team of specialists
+            will work with you to understand the root cause and build a lasting
+            path to wellness.
           </p>
-          <div className="mt-8 flex justify-center">
-            <BookButton className="bg-gold px-8 py-3.5 text-base text-ink hover:bg-cream hover:text-forest">
-              Book / Enquire
+          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
+            <BookButton
+              interest="GENERAL"
+              className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit]"
+            >
+              Book a Free Call
             </BookButton>
+            <a href="#services" className="v2-btn v2-btn-outline-cream">
+              Explore Services
+            </a>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );
