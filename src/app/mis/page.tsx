@@ -33,26 +33,95 @@ export default async function MisDashboard() {
   const todayEnd = new Date();
   todayEnd.setHours(23, 59, 59, 999);
   const monthStart = new Date(todayStart.getFullYear(), todayStart.getMonth(), 1);
+  const weekStart = new Date(todayStart);
+  weekStart.setDate(todayStart.getDate() - 6);
 
   const hour = now.getHours();
   const greeting =
     hour < 12 ? "Good Morning" : hour < 17 ? "Good Afternoon" : "Good Evening";
 
-  const apptScope =
-    user.role === "DOCTOR" ? { providerId: user.staffId ?? "__none__" } : {};
+  const days: Date[] = [];
+  for (let i = 6; i >= 0; i--) {
+    const d = new Date(todayStart);
+    d.setDate(todayStart.getDate() - i);
+    days.push(d);
+  }
 
-  const [todayCount, patientCount, queue, todays] = await Promise.all([
+  const header = (subtitle: React.ReactNode) => (
+    <div className="flex flex-wrap items-start justify-between gap-4">
+      <div>
+        <h1 className="font-display text-2xl text-forest">
+          {greeting}, {user.name.split(" ")[0]}!
+        </h1>
+        <p className="mt-1 text-sm text-muted">{subtitle}</p>
+      </div>
+      <Link
+        href="/mis/finance"
+        className="rounded-full border border-sand bg-white px-4 py-2 text-sm text-forest transition-colors hover:border-forest"
+      >
+        View Reports
+      </Link>
+    </div>
+  );
+
+  /* ── Doctor: one concurrent batch ───────────────────────────── */
+  if (!isStaff) {
+    const scope = { providerId: user.staffId ?? "__none__" };
+    const [todayCount, queue, seenToday] = await Promise.all([
+      prisma.appointment.count({
+        where: { ...scope, startsAt: { gte: todayStart, lte: todayEnd }, status: { not: "CANCELLED" } },
+      }),
+      prisma.appointment.findMany({
+        where: {
+          ...scope,
+          startsAt: { gte: todayStart, lte: todayEnd },
+          status: { in: ["REQUESTED", "CONFIRMED", "CHECKED_IN"] },
+        },
+        include: { patient: true, service: true, provider: true },
+        orderBy: { startsAt: "asc" },
+        take: 8,
+      }),
+      prisma.appointment.count({
+        where: { ...scope, startsAt: { gte: todayStart, lte: todayEnd }, status: "COMPLETED" },
+      }),
+    ]);
+
+    return (
+      <div>
+        {header(
+          `${todayCount} appointment${todayCount === 1 ? "" : "s"} today · ${todayStart.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })}`,
+        )}
+        <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
+          <Kpi label="Your appointments today" value={todayCount} icon={<ICalendar />} />
+          <Kpi label="In queue" value={queue.length} icon={<IUsers />} />
+          <Kpi label="Completed today" value={seenToday} icon={<IDoc />} />
+        </div>
+        <div className="mt-4">
+          <QueueCard title="Your upcoming queue" queue={queue} action="Open" />
+        </div>
+      </div>
+    );
+  }
+
+  /* ── Staff (admin / front-desk): one concurrent batch ───────── */
+  const [
+    todayCount,
+    patientCount,
+    queue,
+    providers,
+    revAgg,
+    outstandingInvoices,
+    pendingInvoices,
+    missed,
+    weekAppts,
+    weekPayments,
+  ] = await Promise.all([
     prisma.appointment.count({
-      where: {
-        ...apptScope,
-        startsAt: { gte: todayStart, lte: todayEnd },
-        status: { not: "CANCELLED" },
-      },
+      where: { startsAt: { gte: todayStart, lte: todayEnd }, status: { not: "CANCELLED" } },
     }),
     prisma.patient.count(),
     prisma.appointment.findMany({
       where: {
-        ...apptScope,
         startsAt: { gte: todayStart, lte: todayEnd },
         status: { in: ["REQUESTED", "CONFIRMED", "CHECKED_IN"] },
       },
@@ -60,116 +129,12 @@ export default async function MisDashboard() {
       orderBy: { startsAt: "asc" },
       take: 6,
     }),
-    prisma.appointment.findMany({
-      where: { ...apptScope, startsAt: { gte: todayStart, lte: todayEnd } },
-      include: { patient: true, service: true, provider: true },
-      orderBy: { startsAt: "asc" },
-      take: 10,
-    }),
-  ]);
-
-  const onDuty = new Set(
-    todays.filter((a) => a.providerId).map((a) => a.providerId),
-  ).size;
-
-  return (
-    <div>
-      {/* Greeting header */}
-      <div className="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <h1 className="font-display text-2xl text-forest">
-            {greeting}, {user.name.split(" ")[0]}!
-          </h1>
-          <p className="mt-1 text-sm text-muted">
-            {todayCount} appointment{todayCount === 1 ? "" : "s"} today
-            {isStaff && ` · ${onDuty} provider${onDuty === 1 ? "" : "s"} on duty`}{" "}
-            ·{" "}
-            {todayStart.toLocaleDateString("en-IN", {
-              weekday: "long",
-              day: "numeric",
-              month: "long",
-            })}
-          </p>
-        </div>
-        <Link
-          href="/mis/finance"
-          className="rounded-full border border-sand bg-white px-4 py-2 text-sm text-forest transition-colors hover:border-forest"
-        >
-          View Reports
-        </Link>
-      </div>
-
-      {isStaff ? (
-        <StaffDashboard
-          todayCount={todayCount}
-          patientCount={patientCount}
-          monthStart={monthStart}
-          todayStart={todayStart}
-          now={now}
-          queue={queue}
-        />
-      ) : (
-        <DoctorDashboard todayCount={todayCount} queue={queue} todays={todays} />
-      )}
-    </div>
-  );
-}
-
-/* ───────────────────────── Staff (admin / front-desk) ───────────────────────── */
-
-type QueueAppt = {
-  id: string;
-  startsAt: Date;
-  status: string;
-  patient: { name: string };
-  service: { name: string };
-  provider: { name: string } | null;
-};
-
-async function StaffDashboard({
-  todayCount,
-  patientCount,
-  monthStart,
-  todayStart,
-  now,
-  queue,
-}: {
-  todayCount: number;
-  patientCount: number;
-  monthStart: Date;
-  todayStart: Date;
-  now: Date;
-  queue: QueueAppt[];
-}) {
-  const todayEnd = new Date(todayStart);
-  todayEnd.setHours(23, 59, 59, 999);
-  const weekStart = new Date(todayStart);
-  weekStart.setDate(todayStart.getDate() - 6);
-
-  const [
-    revAgg,
-    outstandingInvoices,
-    providers,
-    pendingInvoices,
-    missed,
-    weekAppts,
-    weekPayments,
-  ] = await Promise.all([
-    prisma.payment.aggregate({
-      _sum: { amount: true },
-      where: { paidAt: { gte: monthStart } },
-    }),
-    prisma.invoice.findMany({
-      where: { OR: [{ status: "ISSUED" }, { status: "PARTIALLY_PAID" }] },
-      select: { total: true, payments: { select: { amount: true } } },
-    }),
     prisma.staff.findMany({
       where: { isActive: true, type: { in: ["DOCTOR", "THERAPIST", "NUTRITIONIST"] } },
       select: {
         id: true,
         name: true,
         type: true,
-        specialties: true,
         appointments: {
           where: { startsAt: { gte: todayStart, lte: todayEnd } },
           select: { status: true, patient: { select: { name: true } } },
@@ -177,10 +142,15 @@ async function StaffDashboard({
         },
       },
       orderBy: { name: "asc" },
-      take: 6,
+      take: 8,
+    }),
+    prisma.payment.aggregate({ _sum: { amount: true }, where: { paidAt: { gte: monthStart } } }),
+    prisma.invoice.findMany({
+      where: { status: { in: ["ISSUED", "PARTIALLY_PAID"] } },
+      select: { total: true, payments: { select: { amount: true } } },
     }),
     prisma.invoice.findMany({
-      where: { OR: [{ status: "ISSUED" }, { status: "PARTIALLY_PAID" }] },
+      where: { status: { in: ["ISSUED", "PARTIALLY_PAID"] } },
       select: {
         id: true,
         number: true,
@@ -198,14 +168,8 @@ async function StaffDashboard({
       orderBy: { startsAt: "desc" },
       take: 5,
     }),
-    prisma.appointment.findMany({
-      where: { startsAt: { gte: weekStart } },
-      select: { startsAt: true },
-    }),
-    prisma.payment.findMany({
-      where: { paidAt: { gte: weekStart } },
-      select: { paidAt: true, amount: true },
-    }),
+    prisma.appointment.findMany({ where: { startsAt: { gte: weekStart } }, select: { startsAt: true } }),
+    prisma.payment.findMany({ where: { paidAt: { gte: weekStart } }, select: { paidAt: true, amount: true } }),
   ]);
 
   const monthRevenue = Number(revAgg._sum.amount ?? 0);
@@ -213,27 +177,23 @@ async function StaffDashboard({
     const paid = inv.payments.reduce((a, p) => a + Number(p.amount), 0);
     return s + (Number(inv.total) - paid);
   }, 0);
+  const onDuty = providers.filter((p) => p.appointments.length > 0).length;
 
-  const days: Date[] = [];
-  for (let i = 6; i >= 0; i--) {
-    const d = new Date(todayStart);
-    d.setDate(todayStart.getDate() - i);
-    days.push(d);
-  }
   const apptSeries = days.map((d) => ({
     label: d.toLocaleDateString("en-IN", { weekday: "short" }),
     value: weekAppts.filter((a) => sameDay(a.startsAt, d)).length,
   }));
   const revSeries = days.map((d) => ({
     label: d.toLocaleDateString("en-IN", { weekday: "short" }),
-    value: weekPayments
-      .filter((p) => sameDay(p.paidAt, d))
-      .reduce((s, p) => s + Number(p.amount), 0),
+    value: weekPayments.filter((p) => sameDay(p.paidAt, d)).reduce((s, p) => s + Number(p.amount), 0),
   }));
 
   return (
-    <>
-      {/* KPI row */}
+    <div>
+      {header(
+        `${todayCount} appointment${todayCount === 1 ? "" : "s"} today · ${onDuty} provider${onDuty === 1 ? "" : "s"} on duty · ${todayStart.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" })}`,
+      )}
+
       <div className="mt-6 grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Kpi label="Today's Appointments" value={todayCount} icon={<ICalendar />} />
         <Kpi label="Revenue · this month" value={inr(monthRevenue)} icon={<IRupee />} />
@@ -241,9 +201,7 @@ async function StaffDashboard({
         <Kpi label="Outstanding" value={inr(outstanding)} icon={<IDoc />} accent />
       </div>
 
-      {/* Operational cards */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
-        {/* Providers on duty */}
         <Card title="Providers on duty" href="/mis/doctors" linkLabel="View all staff">
           {providers.length === 0 ? (
             <Empty>No active providers.</Empty>
@@ -260,23 +218,15 @@ async function StaffDashboard({
                       </span>
                       <div>
                         <div className="text-sm font-medium text-ink">{p.name}</div>
-                        <div className="text-xs text-muted capitalize">
+                        <div className="text-xs capitalize text-muted">
                           {p.type.toLowerCase()}
-                          {serving
-                            ? ` · seeing ${serving.patient.name}`
-                            : todayN
-                              ? ` · ${todayN} today`
-                              : " · free"}
+                          {serving ? ` · seeing ${serving.patient.name}` : todayN ? ` · ${todayN} today` : " · free"}
                         </div>
                       </div>
                     </div>
                     <span
                       className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                        serving
-                          ? "bg-sage/30 text-forest"
-                          : todayN
-                            ? "bg-gold-soft text-forest"
-                            : "bg-sand text-muted"
+                        serving ? "bg-sage/30 text-forest" : todayN ? "bg-gold-soft text-forest" : "bg-sand text-muted"
                       }`}
                     >
                       {serving ? "Serving" : todayN ? "On duty" : "Free"}
@@ -288,42 +238,8 @@ async function StaffDashboard({
           )}
         </Card>
 
-        {/* Upcoming queue */}
-        <Card title="Upcoming queue" href="/mis/appointments" linkLabel="View all">
-          {queue.length === 0 ? (
-            <Empty>No patients in the queue.</Empty>
-          ) : (
-            <ul className="divide-y divide-sand">
-              {queue.map((a, i) => (
-                <li key={a.id} className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 text-center font-display text-sm text-muted">
-                      {i + 1}
-                    </span>
-                    <div>
-                      <div className="text-sm font-medium text-ink">{a.patient.name}</div>
-                      <div className="text-xs text-muted">
-                        {timeStr(a.startsAt)} · {a.service.name}
-                        {a.provider ? ` · ${a.provider.name}` : ""}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <StatusBadge status={a.status} />
-                    <Link
-                      href={`/mis/appointments/${a.id}`}
-                      className="text-xs text-gold hover:text-forest"
-                    >
-                      Manage →
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
+        <QueueCard title="Upcoming queue" queue={queue} action="Manage" />
 
-        {/* Pending checkout (billing) */}
         <Card title="Pending checkout" href="/mis/billing" linkLabel="View billing">
           {pendingInvoices.length === 0 ? (
             <Empty>No unpaid invoices.</Empty>
@@ -336,16 +252,11 @@ async function StaffDashboard({
                   <li key={inv.id} className="flex items-center justify-between py-3">
                     <div>
                       <div className="text-sm font-medium text-ink">{inv.patient.name}</div>
-                      <div className="text-xs text-muted">
-                        {inv.number} · balance {inr(balance)}
-                      </div>
+                      <div className="text-xs text-muted">{inv.number} · balance {inr(balance)}</div>
                     </div>
                     <div className="flex items-center gap-3">
                       <StatusBadge status={inv.status} />
-                      <Link
-                        href={`/mis/billing/${inv.id}`}
-                        className="text-xs text-gold hover:text-forest"
-                      >
+                      <Link href={`/mis/billing/${inv.id}`} className="text-xs text-gold hover:text-forest">
                         Settle →
                       </Link>
                     </div>
@@ -356,7 +267,6 @@ async function StaffDashboard({
           )}
         </Card>
 
-        {/* Missed / no-shows */}
         <Card title="Missed today" href="/mis/appointments" linkLabel="View all">
           {missed.length === 0 ? (
             <Empty>No missed appointments today. 🎉</Empty>
@@ -381,73 +291,57 @@ async function StaffDashboard({
         </Card>
       </div>
 
-      {/* Charts */}
       <div className="mt-4 grid gap-4 lg:grid-cols-2">
         <Chart title="Appointments · last 7 days" data={apptSeries} />
         <Chart title="Revenue · last 7 days" data={revSeries} money />
       </div>
-    </>
+    </div>
   );
 }
 
-/* ───────────────────────── Doctor view ───────────────────────── */
+/* ───────────────────────── components ───────────────────────── */
 
-function DoctorDashboard({
-  todayCount,
-  queue,
-  todays,
-}: {
-  todayCount: number;
-  queue: QueueAppt[];
-  todays: QueueAppt[];
-}) {
+type QueueAppt = {
+  id: string;
+  startsAt: Date;
+  status: string;
+  patient: { name: string };
+  service: { name: string };
+  provider: { name: string } | null;
+};
+
+function QueueCard({ title, queue, action }: { title: string; queue: QueueAppt[]; action: string }) {
   return (
-    <>
-      <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3">
-        <Kpi label="Your appointments today" value={todayCount} icon={<ICalendar />} />
-        <Kpi label="In queue" value={queue.length} icon={<IUsers />} />
-        <Kpi label="Seen / scheduled" value={todays.length} icon={<IDoc />} />
-      </div>
-
-      <div className="mt-4">
-        <Card title="Your upcoming queue" href="/mis/appointments" linkLabel="View all">
-          {queue.length === 0 ? (
-            <Empty>No patients in your queue.</Empty>
-          ) : (
-            <ul className="divide-y divide-sand">
-              {queue.map((a, i) => (
-                <li key={a.id} className="flex items-center justify-between py-3">
-                  <div className="flex items-center gap-3">
-                    <span className="w-6 text-center font-display text-sm text-muted">
-                      {i + 1}
-                    </span>
-                    <div>
-                      <div className="text-sm font-medium text-ink">{a.patient.name}</div>
-                      <div className="text-xs text-muted">
-                        {timeStr(a.startsAt)} · {a.service.name}
-                      </div>
-                    </div>
+    <Card title={title} href="/mis/appointments" linkLabel="View all">
+      {queue.length === 0 ? (
+        <Empty>No patients in the queue.</Empty>
+      ) : (
+        <ul className="divide-y divide-sand">
+          {queue.map((a, i) => (
+            <li key={a.id} className="flex items-center justify-between py-3">
+              <div className="flex items-center gap-3">
+                <span className="w-6 text-center font-display text-sm text-muted">{i + 1}</span>
+                <div>
+                  <div className="text-sm font-medium text-ink">{a.patient.name}</div>
+                  <div className="text-xs text-muted">
+                    {timeStr(a.startsAt)} · {a.service.name}
+                    {a.provider ? ` · ${a.provider.name}` : ""}
                   </div>
-                  <div className="flex items-center gap-3">
-                    <StatusBadge status={a.status} />
-                    <Link
-                      href={`/mis/appointments/${a.id}`}
-                      className="text-xs text-gold hover:text-forest"
-                    >
-                      Open →
-                    </Link>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
-        </Card>
-      </div>
-    </>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                <StatusBadge status={a.status} />
+                <Link href={`/mis/appointments/${a.id}`} className="text-xs text-gold hover:text-forest">
+                  {action} →
+                </Link>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </Card>
   );
 }
-
-/* ───────────────────────── UI primitives ───────────────────────── */
 
 function Card({
   title,
@@ -538,7 +432,7 @@ function Chart({
   );
 }
 
-/* ───────────────────────── Icons ───────────────────────── */
+/* ───────────────────────── icons ───────────────────────── */
 
 function svg(path: string) {
   return (
