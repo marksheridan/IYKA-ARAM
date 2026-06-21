@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# IYKA-ARAM Wellness — Web Platform
 
-## Getting Started
+Premium clinical-wellness platform for **IYKA-ARAM Wellness**, Meghalaya — Functional Medicine, Yoga & Naturopathy (drugless, integrative healthcare).
 
-First, run the development server:
+One Next.js app serving three modules:
+
+1. **Landing page** — premium marketing site + lead capture
+2. **Booking** — appointments (consults/sessions) & yoga class seats
+3. **MIS** — back-office: appointments, yoga sessions, doctors, patients, **billing + finance**, **dashboard**
+
+> Full functional spec & delivery plan: [`docs/IYKA-ARAM-Work-Plan.md`](docs/IYKA-ARAM-Work-Plan.md). This repo is at **Phase 0 (foundations)**.
+
+## Stack
+
+| | |
+|---|---|
+| Framework | Next.js 16 (App Router) + React 19 + TypeScript |
+| Styling | Tailwind CSS v4 (theme in `src/app/globals.css`) |
+| Fonts | Fraunces (display) + Inter (body) via `next/font` |
+| Database | PostgreSQL + Prisma 7 (driver adapter `@prisma/adapter-pg`) |
+| Auth | Auth.js — wired in Phase 3 |
+| Notifications | WhatsApp Business API — wired in the final phase |
+
+## Getting started
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install              # also runs `prisma generate` (postinstall)
+
+cp .env.example .env     # then set DATABASE_URL to a managed Postgres
+npm run db:migrate       # creates all tables from prisma/schema.prisma
+
+npm run dev              # http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Without a database you can still run `npm run dev` / `npm run build` — the
+placeholder pages don't query the DB. A live `DATABASE_URL` is only needed for
+`db:migrate` / `db:studio` and any data-backed feature.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Script | What it does |
+|--------|--------------|
+| `npm run dev` | Start the dev server |
+| `npm run build` | Production build |
+| `npm run db:migrate` | Create/apply a migration (`prisma migrate dev`) |
+| `npm run db:push` | Push schema without a migration (prototyping) |
+| `npm run db:studio` | Open Prisma Studio (visual DB browser) |
+| `npm run db:generate` | Regenerate the Prisma client |
 
-## Learn More
+## Project structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+  app/
+    (site)/            # public website (Modules 1 & 2)
+      page.tsx         #   landing page
+      about/ services/ products/ contact/ booking/
+    mis/               # back-office (Module 3) — sidebar shell + dashboard
+    layout.tsx         # root layout: fonts + metadata
+    globals.css        # Tailwind v4 + brand design tokens
+  components/ui/        # design-system primitives (e.g. button.tsx)
+  lib/
+    db.ts              # Prisma client singleton (pg adapter)
+    utils.ts           # cn() class merge helper
+  generated/prisma/     # generated Prisma client (gitignored)
+prisma/
+  schema.prisma        # full data model (see §5.3 of the work plan)
+docs/                   # work plan + original brief
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Database
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Connection URL is configured in `prisma.config.ts` (CLI) and read at runtime by
+the driver adapter in `src/lib/db.ts` — both via `DATABASE_URL`. Edit the data
+model in `prisma/schema.prisma`, then run `npm run db:migrate`.
