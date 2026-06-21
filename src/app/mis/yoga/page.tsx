@@ -5,11 +5,13 @@ import {
   createClassSchedule,
   generateOccurrences,
 } from "./actions";
+import { Pagination } from "@/components/mis/pagination";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Yoga Sessions" };
 
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+const PAGE_SIZE = 15;
 
 type SP = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -17,21 +19,26 @@ export default async function YogaPage({ searchParams }: { searchParams: SP }) {
   await requireUser(["ADMIN", "FRONT_DESK"]);
   const sp = await searchParams;
   const error = typeof sp.error === "string" ? sp.error : "";
+  const page = Math.max(1, Number(sp.page) || 1);
 
-  const [schedules, occurrences, yogaServices, instructors] = await Promise.all([
-    prisma.classSchedule.findMany({
-      include: { instructor: true, service: true },
-      orderBy: { createdAt: "asc" },
-    }),
-    prisma.classOccurrence.findMany({
-      where: { startsAt: { gte: new Date() } },
-      include: { instructor: true, _count: { select: { enrollments: true } } },
-      orderBy: { startsAt: "asc" },
-      take: 30,
-    }),
-    prisma.service.findMany({ where: { type: "YOGA_CLASS", isActive: true } }),
-    prisma.staff.findMany({ where: { type: "INSTRUCTOR", isActive: true } }),
-  ]);
+  const occWhere = { startsAt: { gte: new Date() } };
+  const [schedules, occurrences, occTotal, yogaServices, instructors] =
+    await Promise.all([
+      prisma.classSchedule.findMany({
+        include: { instructor: true, service: true },
+        orderBy: { createdAt: "asc" },
+      }),
+      prisma.classOccurrence.findMany({
+        where: occWhere,
+        include: { instructor: true, _count: { select: { enrollments: true } } },
+        orderBy: { startsAt: "asc" },
+        skip: (page - 1) * PAGE_SIZE,
+        take: PAGE_SIZE,
+      }),
+      prisma.classOccurrence.count({ where: occWhere }),
+      prisma.service.findMany({ where: { type: "YOGA_CLASS", isActive: true } }),
+      prisma.staff.findMany({ where: { type: "INSTRUCTOR", isActive: true } }),
+    ]);
 
   return (
     <div className="max-w-4xl">
@@ -138,6 +145,8 @@ export default async function YogaPage({ searchParams }: { searchParams: SP }) {
           </table>
         )}
       </div>
+
+      <Pagination page={page} pageSize={PAGE_SIZE} total={occTotal} />
 
       {/* Create schedule */}
       <h2 className="mt-10 font-display text-lg text-forest">

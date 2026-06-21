@@ -2,21 +2,36 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
 import { StatusBadge } from "@/components/mis/status-badge";
+import { Pagination } from "@/components/mis/pagination";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Appointments" };
 
-export default async function AppointmentsPage() {
+const PAGE_SIZE = 20;
+
+type SP = Promise<{ [key: string]: string | string[] | undefined }>;
+
+export default async function AppointmentsPage({
+  searchParams,
+}: {
+  searchParams: SP;
+}) {
   const user = await requireUser();
+  const sp = await searchParams;
+  const page = Math.max(1, Number(sp.page) || 1);
   const scope =
     user.role === "DOCTOR" ? { providerId: user.staffId ?? "__none__" } : {};
 
-  const appts = await prisma.appointment.findMany({
-    where: scope,
-    include: { patient: true, service: true, provider: true },
-    orderBy: { startsAt: "desc" },
-    take: 100,
-  });
+  const [total, appts] = await Promise.all([
+    prisma.appointment.count({ where: scope }),
+    prisma.appointment.findMany({
+      where: scope,
+      include: { patient: true, service: true, provider: true },
+      orderBy: { startsAt: "desc" },
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+    }),
+  ]);
 
   return (
     <div>
@@ -76,6 +91,8 @@ export default async function AppointmentsPage() {
           </table>
         )}
       </div>
+
+      <Pagination page={page} pageSize={PAGE_SIZE} total={total} />
     </div>
   );
 }

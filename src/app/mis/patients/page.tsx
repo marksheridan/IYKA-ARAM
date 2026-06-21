@@ -1,9 +1,12 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { requireUser } from "@/lib/auth";
+import { Pagination } from "@/components/mis/pagination";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Patients" };
+
+const PAGE_SIZE = 20;
 
 type SP = Promise<{ [key: string]: string | string[] | undefined }>;
 
@@ -15,20 +18,27 @@ export default async function PatientsPage({
   await requireUser();
   const sp = await searchParams;
   const q = typeof sp.q === "string" ? sp.q.trim() : "";
+  const page = Math.max(1, Number(sp.page) || 1);
 
-  const patients = await prisma.patient.findMany({
-    where: q
-      ? {
-          OR: [
-            { name: { contains: q, mode: "insensitive" } },
-            { phone: { contains: q } },
-          ],
-        }
-      : {},
-    orderBy: { createdAt: "desc" },
-    take: 100,
-    include: { _count: { select: { appointments: true, enrollments: true } } },
-  });
+  const where = q
+    ? {
+        OR: [
+          { name: { contains: q, mode: "insensitive" as const } },
+          { phone: { contains: q } },
+        ],
+      }
+    : {};
+
+  const [total, patients] = await Promise.all([
+    prisma.patient.count({ where }),
+    prisma.patient.findMany({
+      where,
+      orderBy: { createdAt: "desc" },
+      skip: (page - 1) * PAGE_SIZE,
+      take: PAGE_SIZE,
+      include: { _count: { select: { appointments: true, enrollments: true } } },
+    }),
+  ]);
 
   return (
     <div>
@@ -87,6 +97,13 @@ export default async function PatientsPage({
           </table>
         )}
       </div>
+
+      <Pagination
+        page={page}
+        pageSize={PAGE_SIZE}
+        total={total}
+        params={q ? { q } : {}}
+      />
     </div>
   );
 }
