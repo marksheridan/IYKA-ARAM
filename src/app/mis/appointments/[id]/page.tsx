@@ -4,12 +4,15 @@ import { requireUser } from "@/lib/auth";
 import { StatusBadge } from "@/components/mis/status-badge";
 import { setAppointmentStatus, addConsultationNote } from "../../actions";
 import { createInvoiceFromAppointment } from "../../billing/actions";
+import { getAvailableSlots } from "@/lib/booking";
+import { rescheduleAppointment } from "../actions";
 
 export const dynamic = "force-dynamic";
 
 const ACTIONS = [
   { status: "CONFIRMED", label: "Confirm" },
   { status: "CHECKED_IN", label: "Check in" },
+  { status: "IN_CONSULTATION", label: "Start consult" },
   { status: "COMPLETED", label: "Complete" },
   { status: "NO_SHOW", label: "No-show" },
   { status: "CANCELLED", label: "Cancel" },
@@ -17,11 +20,15 @@ const ACTIONS = [
 
 export default async function AppointmentDetail({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
   const user = await requireUser();
   const { id } = await params;
+  const sp = await searchParams;
+  const rdate = typeof sp.rdate === "string" ? sp.rdate : "";
 
   const appt = await prisma.appointment.findUnique({
     where: { id },
@@ -60,6 +67,14 @@ export default async function AppointmentDetail({
   }
 
   const canNote = user.role === "ADMIN" || (user.role === "DOCTOR" && isOwn);
+  const rslots =
+    rdate && appt.providerId
+      ? await getAvailableSlots({
+          providerId: appt.providerId,
+          serviceDurationMin: appt.service.durationMin,
+          date: rdate,
+        })
+      : null;
 
   return (
     <div className="max-w-3xl">
@@ -113,6 +128,44 @@ export default async function AppointmentDetail({
             </form>
           ))}
         </div>
+      </div>
+
+      {/* Reschedule */}
+      <div className="mt-8">
+        <h2 className="text-sm font-medium text-ink">Reschedule</h2>
+        {sp.error === "taken" && (
+          <p className="mt-2 text-xs text-red-600">That slot was just taken — pick another.</p>
+        )}
+        <form className="mt-3 flex gap-2">
+          <input
+            type="date"
+            name="rdate"
+            defaultValue={rdate}
+            className="rounded-lg border border-sand bg-white px-3 py-2 text-sm text-ink outline-none focus:border-gold"
+          />
+          <button className="rounded-lg border border-sand bg-white px-4 py-2 text-sm text-forest hover:border-forest">
+            Show slots
+          </button>
+        </form>
+        {rslots && (
+          <div className="mt-3">
+            {rslots.length === 0 ? (
+              <p className="text-sm text-muted">No available slots on {rdate} for {appt.provider?.name ?? "this provider"}.</p>
+            ) : (
+              <div className="flex flex-wrap gap-2">
+                {rslots.map((slot) => (
+                  <form key={slot.value} action={rescheduleAppointment}>
+                    <input type="hidden" name="id" value={appt.id} />
+                    <input type="hidden" name="startsAt" value={slot.value} />
+                    <button className="rounded-lg border border-sand bg-white px-3 py-2 text-sm text-forest transition-colors hover:border-forest hover:bg-gold-soft">
+                      {slot.label}
+                    </button>
+                  </form>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
 
       {/* Billing */}

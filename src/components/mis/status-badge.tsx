@@ -2,6 +2,7 @@ const STYLES: Record<string, string> = {
   REQUESTED: "bg-sand text-muted",
   CONFIRMED: "bg-gold-soft text-forest",
   CHECKED_IN: "bg-sage/30 text-forest",
+  IN_CONSULTATION: "bg-blue-100 text-blue-700",
   COMPLETED: "bg-forest text-cream",
   CANCELLED: "bg-red-100 text-red-700",
   NO_SHOW: "bg-red-100 text-red-700",
