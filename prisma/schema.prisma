@@ -1,7 +1,3 @@
-// IYKA-ARAM Wellness — data model
-// Mirrors §5.3 of docs/IYKA-ARAM-Work-Plan.md
-// Docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client"
   output   = "../src/generated/prisma"
@@ -9,42 +5,27 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  // Prisma 7: connection URL lives in prisma.config.ts (CLI) and is passed
-  // to PrismaClient via a driver adapter at runtime (see src/lib/db.ts).
 }
 
-// ─────────────────────────────────────────────────────────────
-// Auth & people
-// ─────────────────────────────────────────────────────────────
-
-// MIS login accounts. Auth.js (NextAuth) Prisma-adapter compatible
-// so wiring real auth in Phase 3 is plug-and-play.
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  role          Role      @default(FRONT_DESK)
-  passwordHash  String? // optional credentials login
-
-  // a DOCTOR user links to their Staff/Provider record
-  staff   Staff?  @relation(fields: [staffId], references: [id])
-  staffId String? @unique
-
-  accounts Account[]
-  sessions Session[]
-
-  // audit trails
+  id              String    @id @default(cuid())
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  role            Role      @default(FRONT_DESK)
+  passwordHash    String?
+  staffId         String?   @unique
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  accounts        Account[]
+  expensesLogged  Expense[] @relation("ExpenseRecordedBy")
   invoicesCreated Invoice[] @relation("InvoiceCreatedBy")
   paymentsTaken   Payment[] @relation("PaymentRecordedBy")
-  expensesLogged  Expense[] @relation("ExpenseRecordedBy")
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sessions        Session[]
+  staff           Staff?    @relation(fields: [staffId], references: [id])
 }
 
-// Auth.js adapter models (used from Phase 3)
 model Account {
   id                String  @id @default(cuid())
   userId            String
@@ -79,110 +60,92 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-// Doctors, therapists, yoga instructors, nutritionists.
-// Instructors do NOT get a User login (front-desk manages on their behalf).
 model Staff {
-  id          String       @id @default(cuid())
-  name        String
-  type        ProviderType
-  specialties String[]
-  bio         String?
-  photoUrl    String?
-  email       String?
-  phone       String?
-  isPublic    Boolean      @default(true) // show on the website
-  isActive    Boolean      @default(true)
-
-  user              User?
-  services          Service[]          @relation("ServiceProviders")
-  availability      Availability[]
-  timeBlocks        TimeBlock[]
+  id                String             @id @default(cuid())
+  name              String
+  type              ProviderType
+  specialties       String[]
+  bio               String?
+  photoUrl          String?
+  email             String?
+  phone             String?
+  isPublic          Boolean            @default(true)
+  isActive          Boolean            @default(true)
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @updatedAt
   appointments      Appointment[]
-  classSchedules    ClassSchedule[]
+  availability      Availability[]
   classOccurrences  ClassOccurrence[]
+  classSchedules    ClassSchedule[]
   consultationNotes ConsultationNote[]
   payouts           Payout[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  timeBlocks        TimeBlock[]
+  user              User?
+  services          Service[]          @relation("ServiceProviders")
 }
-
-// ─────────────────────────────────────────────────────────────
-// Service catalogue & scheduling
-// ─────────────────────────────────────────────────────────────
 
 model Service {
-  id               String      @id @default(cuid())
+  id               String          @id @default(cuid())
   name             String
   type             ServiceType
-  mode             ServiceMode @default(OFFLINE)
-  durationMin      Int         @default(30)
-  price            Decimal     @db.Decimal(10, 2)
-  requiresProvider Boolean     @default(true)
+  mode             ServiceMode     @default(OFFLINE)
+  durationMin      Int             @default(30)
+  price            Decimal         @db.Decimal(10, 2)
+  requiresProvider Boolean         @default(true)
   description      String?
-  isActive         Boolean     @default(true)
-
-  providers      Staff[]         @relation("ServiceProviders")
-  appointments   Appointment[]
-  classSchedules ClassSchedule[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive         Boolean         @default(true)
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  appointments     Appointment[]
+  classSchedules   ClassSchedule[]
+  providers        Staff[]         @relation("ServiceProviders")
 }
 
-// Weekly recurring working hours for a provider.
 model Availability {
   id        String @id @default(cuid())
-  staff     Staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
   staffId   String
-  dayOfWeek Int // 0=Sunday … 6=Saturday
-  startTime String // "HH:mm"
-  endTime   String // "HH:mm"
+  dayOfWeek Int
+  startTime String
+  endTime   String
+  staff     Staff  @relation(fields: [staffId], references: [id], onDelete: Cascade)
 
   @@index([staffId])
 }
 
-// One-off blocked time (holiday, leave, etc.).
 model TimeBlock {
   id      String   @id @default(cuid())
-  staff   Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
   staffId String
   start   DateTime
   end     DateTime
   reason  String?
+  staff   Staff    @relation(fields: [staffId], references: [id], onDelete: Cascade)
 
   @@index([staffId])
 }
 
-// Recurring group-class definition (yoga). Generates occurrences.
 model ClassSchedule {
-  id           String      @id @default(cuid())
-  service      Service     @relation(fields: [serviceId], references: [id])
+  id           String            @id @default(cuid())
   serviceId    String
-  instructor   Staff       @relation(fields: [instructorId], references: [id])
   instructorId String
   title        String
-  daysOfWeek   Int[] // e.g. [1,3,5]
-  startTime    String // "HH:mm"
+  daysOfWeek   Int[]
+  startTime    String
   durationMin  Int
-  capacity     Int         @default(20)
-  mode         ServiceMode @default(ONLINE)
-  validFrom    DateTime    @default(now())
+  capacity     Int               @default(20)
+  mode         ServiceMode       @default(ONLINE)
+  validFrom    DateTime          @default(now())
   validTo      DateTime?
-  isActive     Boolean     @default(true)
-
-  occurrences ClassOccurrence[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  isActive     Boolean           @default(true)
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+  occurrences  ClassOccurrence[]
+  instructor   Staff             @relation(fields: [instructorId], references: [id])
+  service      Service           @relation(fields: [serviceId], references: [id])
 }
 
-// A concrete dated instance of a class that patients book seats in.
 model ClassOccurrence {
   id           String                @id @default(cuid())
-  schedule     ClassSchedule?        @relation(fields: [scheduleId], references: [id])
   scheduleId   String?
-  instructor   Staff                 @relation(fields: [instructorId], references: [id])
   instructorId String
   title        String
   startsAt     DateTime
@@ -190,167 +153,141 @@ model ClassOccurrence {
   capacity     Int
   meetingLink  String?
   status       ClassOccurrenceStatus @default(SCHEDULED)
-
-  enrollments Enrollment[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+  instructor   Staff                 @relation(fields: [instructorId], references: [id])
+  schedule     ClassSchedule?        @relation(fields: [scheduleId], references: [id])
+  enrollments  Enrollment[]
 
   @@index([startsAt])
 }
 
-// ─────────────────────────────────────────────────────────────
-// Patients, bookings & clinical notes
-// ─────────────────────────────────────────────────────────────
-
 model Patient {
-  id                  String    @id @default(cuid())
+  id                  String             @id @default(cuid())
   name                String
-  phone               String // E.164, e.g. +91…
+  phone               String
   email               String?
   gender              String?
   dateOfBirth         DateTime?
   address             String?
   city                String?
   notes               String?
-  consentWhatsApp     Boolean   @default(false)
-  consentDataHandling Boolean   @default(false)
-
-  appointments      Appointment[]
-  enrollments       Enrollment[]
-  invoices          Invoice[]
-  consultationNotes ConsultationNote[]
-  convertedFromLead Lead?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  consentWhatsApp     Boolean            @default(false)
+  consentDataHandling Boolean            @default(false)
+  createdAt           DateTime           @default(now())
+  updatedAt           DateTime           @updatedAt
+  appointments        Appointment[]
+  consultationNotes   ConsultationNote[]
+  enrollments         Enrollment[]
+  invoices            Invoice[]
+  convertedFromLead   Lead?
 
   @@index([phone])
 }
 
-// 1:1 slot booking — consultations & offline sessions.
 model Appointment {
-  id          String            @id @default(cuid())
-  patient     Patient           @relation(fields: [patientId], references: [id])
-  patientId   String
-  service     Service           @relation(fields: [serviceId], references: [id])
-  serviceId   String
-  provider    Staff?            @relation(fields: [providerId], references: [id])
-  providerId  String?
-  startsAt    DateTime
-  endsAt      DateTime
-  mode        ServiceMode       @default(OFFLINE)
-  status      AppointmentStatus @default(REQUESTED)
-  source      BookingSource     @default(WEBSITE)
-  reason      String?
-  notes       String? // front-desk notes
-  meetingLink String?
-
+  id               String            @id @default(cuid())
+  patientId        String
+  serviceId        String
+  providerId       String?
+  startsAt         DateTime
+  endsAt           DateTime
+  mode             ServiceMode       @default(OFFLINE)
+  status           AppointmentStatus @default(REQUESTED)
+  source           BookingSource     @default(WEBSITE)
+  reason           String?
+  notes            String?
+  meetingLink      String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  patient          Patient           @relation(fields: [patientId], references: [id])
+  provider         Staff?            @relation(fields: [providerId], references: [id])
+  service          Service           @relation(fields: [serviceId], references: [id])
   consultationNote ConsultationNote?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
 
   @@index([startsAt])
   @@index([providerId, startsAt])
 }
 
-// Seat booking — a patient's place in a class occurrence.
 model Enrollment {
   id           String           @id @default(cuid())
-  patient      Patient          @relation(fields: [patientId], references: [id])
   patientId    String
-  occurrence   ClassOccurrence  @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
   occurrenceId String
   status       EnrollmentStatus @default(BOOKED)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  occurrence   ClassOccurrence  @relation(fields: [occurrenceId], references: [id], onDelete: Cascade)
+  patient      Patient          @relation(fields: [patientId], references: [id])
 
   @@unique([patientId, occurrenceId])
 }
 
-// EMR-lite consultation note, authored by the treating doctor.
 model ConsultationNote {
   id             String      @id @default(cuid())
-  appointment    Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
   appointmentId  String      @unique
-  patient        Patient     @relation(fields: [patientId], references: [id])
   patientId      String
-  doctor         Staff       @relation(fields: [doctorId], references: [id])
   doctorId       String
   chiefComplaint String?
   notes          String?
   advice         String?
   vitals         Json?
   followUpDate   DateTime?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  appointment    Appointment @relation(fields: [appointmentId], references: [id], onDelete: Cascade)
+  doctor         Staff       @relation(fields: [doctorId], references: [id])
+  patient        Patient     @relation(fields: [patientId], references: [id])
 }
 
-// ─────────────────────────────────────────────────────────────
-// Billing & finance
-// ─────────────────────────────────────────────────────────────
-
 model Invoice {
-  id        String        @id @default(cuid())
-  number    String        @unique // sequential, GST-friendly
-  patient   Patient       @relation(fields: [patientId], references: [id])
-  patientId String
-  status    InvoiceStatus @default(DRAFT)
-  subtotal  Decimal       @default(0) @db.Decimal(10, 2)
-  taxAmount Decimal       @default(0) @db.Decimal(10, 2)
-  discount  Decimal       @default(0) @db.Decimal(10, 2)
-  total     Decimal       @default(0) @db.Decimal(10, 2)
-  notes     String?
-  issuedAt  DateTime?
-  dueAt     DateTime?
-
-  createdBy   User?   @relation("InvoiceCreatedBy", fields: [createdById], references: [id])
+  id          String            @id @default(cuid())
+  number      String            @unique
+  patientId   String
+  status      InvoiceStatus     @default(DRAFT)
+  subtotal    Decimal           @default(0) @db.Decimal(10, 2)
+  taxAmount   Decimal           @default(0) @db.Decimal(10, 2)
+  discount    Decimal           @default(0) @db.Decimal(10, 2)
+  total       Decimal           @default(0) @db.Decimal(10, 2)
+  notes       String?
+  issuedAt    DateTime?
+  dueAt       DateTime?
   createdById String?
-
-  lineItems InvoiceLineItem[]
-  payments  Payment[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  createdBy   User?             @relation("InvoiceCreatedBy", fields: [createdById], references: [id])
+  patient     Patient           @relation(fields: [patientId], references: [id])
+  lineItems   InvoiceLineItem[]
+  payments    Payment[]
 }
 
 model InvoiceLineItem {
   id          String  @id @default(cuid())
-  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
   invoiceId   String
   description String
   quantity    Int     @default(1)
   unitPrice   Decimal @db.Decimal(10, 2)
-  taxRate     Decimal @default(0) @db.Decimal(5, 2) // GST %
+  taxRate     Decimal @default(0) @db.Decimal(5, 2)
   amount      Decimal @db.Decimal(10, 2)
-
-  // optional links to what was billed
-  serviceId String?
-  productId String?
+  serviceId   String?
+  productId   String?
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
 }
 
 model Payment {
-  id        String        @id @default(cuid())
-  invoice   Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
-  invoiceId String
-  amount    Decimal       @db.Decimal(10, 2)
-  method    PaymentMethod @default(CASH)
-  reference String?
-  paidAt    DateTime      @default(now())
-
-  recordedBy   User?   @relation("PaymentRecordedBy", fields: [recordedById], references: [id])
+  id           String        @id @default(cuid())
+  invoiceId    String
+  amount       Decimal       @db.Decimal(10, 2)
+  method       PaymentMethod @default(CASH)
+  reference    String?
+  paidAt       DateTime      @default(now())
   recordedById String?
-
-  createdAt DateTime @default(now())
+  createdAt    DateTime      @default(now())
+  invoice      Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  recordedBy   User?         @relation("PaymentRecordedBy", fields: [recordedById], references: [id])
 }
 
-// What the business owes each provider (salary or per-consult/commission).
 model Payout {
   id          String       @id @default(cuid())
-  provider    Staff        @relation(fields: [providerId], references: [id])
   providerId  String
   periodStart DateTime
   periodEnd   DateTime
@@ -358,9 +295,9 @@ model Payout {
   status      PayoutStatus @default(PENDING)
   paidAt      DateTime?
   notes       String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  provider    Staff        @relation(fields: [providerId], references: [id])
 }
 
 model ExpenseCategory {
@@ -371,24 +308,18 @@ model ExpenseCategory {
 }
 
 model Expense {
-  id          String          @id @default(cuid())
-  category    ExpenseCategory @relation(fields: [categoryId], references: [id])
-  categoryId  String
-  amount      Decimal         @db.Decimal(10, 2)
-  date        DateTime        @default(now())
-  vendor      String?
-  description String?
-  receiptUrl  String?
-
-  recordedBy   User?   @relation("ExpenseRecordedBy", fields: [recordedById], references: [id])
+  id           String          @id @default(cuid())
+  categoryId   String
+  amount       Decimal         @db.Decimal(10, 2)
+  date         DateTime        @default(now())
+  vendor       String?
+  description  String?
+  receiptUrl   String?
   recordedById String?
-
-  createdAt DateTime @default(now())
+  createdAt    DateTime        @default(now())
+  category     ExpenseCategory @relation(fields: [categoryId], references: [id])
+  recordedBy   User?           @relation("ExpenseRecordedBy", fields: [recordedById], references: [id])
 }
-
-// ─────────────────────────────────────────────────────────────
-// Storefront (catalogue), leads & messaging
-// ─────────────────────────────────────────────────────────────
 
 model Product {
   id          String   @id @default(cuid())
@@ -400,12 +331,10 @@ model Product {
   category    String?
   stock       Int?
   isPublished Boolean  @default(true)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
-// Website enquiries (booking/contact pop-up, product enquiries).
 model Lead {
   id                 String       @id @default(cuid())
   name               String
@@ -414,39 +343,31 @@ model Lead {
   interest           LeadInterest @default(GENERAL)
   message            String?
   status             LeadStatus   @default(NEW)
-  source             String? // page / campaign
-  convertedPatient   Patient?     @relation(fields: [convertedPatientId], references: [id])
+  source             String?
   convertedPatientId String?      @unique
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt          DateTime     @default(now())
+  updatedAt          DateTime     @updatedAt
+  convertedPatient   Patient?     @relation(fields: [convertedPatientId], references: [id])
 }
 
-// Outbound message audit (WhatsApp first, then SMS/email).
 model MessageLog {
-  id                String         @id @default(cuid())
-  channel           MessageChannel @default(WHATSAPP)
-  type              MessageType
-  recipient         String // phone (E.164) or email
-  templateName      String?
-  payload           Json?
-  status            MessageStatus  @default(QUEUED)
-  providerMessageId String?
-  error             String?
-
+  id                   String         @id @default(cuid())
+  channel              MessageChannel @default(WHATSAPP)
+  type                 MessageType
+  recipient            String
+  templateName         String?
+  payload              Json?
+  status               MessageStatus  @default(QUEUED)
+  providerMessageId    String?
+  error                String?
   relatedPatientId     String?
   relatedAppointmentId String?
   relatedInvoiceId     String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
 
   @@index([status])
 }
-
-// ─────────────────────────────────────────────────────────────
-// Enums
-// ─────────────────────────────────────────────────────────────
 
 enum Role {
   ADMIN
@@ -482,6 +403,7 @@ enum AppointmentStatus {
   CANCELLED
   NO_SHOW
   RESCHEDULED
+  IN_CONSULTATION
 }
 
 enum EnrollmentStatus {

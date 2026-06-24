@@ -6,7 +6,7 @@ import { AboutSection } from "@/components/site/about-section";
 import { TeamSection } from "@/components/site/team-section";
 import { ProductsTeaser } from "@/components/site/products-teaser";
 import { EventsSection } from "@/components/site/events-section";
-import { Testimonials } from "@/components/site/testimonials";
+import { VideoTestimonials } from "@/components/site/video-testimonials";
 import { BookingSection } from "@/components/site/booking-section";
 import { CtaSection } from "@/components/site/cta-section";
 import { LocationSection } from "@/components/site/location-section";
@@ -23,7 +23,7 @@ export default function HomePage() {
       <TeamSection />
       <ProductsTeaser />
       <EventsSection />
-      <Testimonials />
+      <VideoTestimonials />
       <BookingSection />
       <CtaSection />
       <LocationSection />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import { submitLead, type LeadState } from "@/app/(site)/actions";
 
 const INTERESTS = [
@@ -25,7 +25,6 @@ export function BookingModal({
     null,
   );
 
-  // Close on Escape + lock body scroll while open.
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -92,39 +91,7 @@ export function BookingModal({
               required
               placeholder="+91 …"
             />
-            <Field
-              label="Email (optional)"
-              name="email"
-              type="email"
-              placeholder="you@example.com"
-            />
-            <div>
-              <label className="mb-1 block text-sm font-medium text-ink">
-                I'm interested in
-              </label>
-              <select
-                name="interest"
-                defaultValue={defaultInterest}
-                className="w-full rounded-lg border border-sand bg-white px-3 py-2.5 text-sm text-ink outline-none focus:border-gold"
-              >
-                {INTERESTS.map((i) => (
-                  <option key={i.value} value={i.value}>
-                    {i.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div>
-              <label className="mb-1 block text-sm font-medium text-ink">
-                Message (optional)
-              </label>
-              <textarea
-                name="message"
-                rows={3}
-                placeholder="Tell us how we can help…"
-                className="w-full resize-none rounded-lg border border-sand bg-white px-3 py-2.5 text-sm text-ink outline-none focus:border-gold"
-              />
-            </div>
+            <InterestSelect defaultValue={defaultInterest} />
 
             {state && !state.ok && (
               <p className="text-sm text-red-700">{state.message}</p>
@@ -141,6 +108,82 @@ export function BookingModal({
               By submitting, you agree to be contacted about your enquiry.
             </p>
           </form>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function InterestSelect({ defaultValue }: { defaultValue: string }) {
+  const initial = INTERESTS.find((i) => i.value === defaultValue) ?? INTERESTS[0];
+  const [selected, setSelected] = useState(initial);
+  const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, [open]);
+
+  return (
+    <div>
+      <label className="mb-1 block text-sm font-medium text-ink">
+        I&apos;m interested in
+      </label>
+      <div ref={ref} className="relative">
+        {/* Hidden input so FormData picks up the value */}
+        <input type="hidden" name="interest" value={selected.value} />
+
+        <button
+          type="button"
+          onClick={() => setOpen((v) => !v)}
+          className="flex w-full items-center justify-between rounded-lg border border-sand bg-white px-3 py-2.5 text-sm text-ink transition-colors hover:border-gold focus:outline-none focus:border-gold"
+        >
+          <span>{selected.label}</span>
+          <svg
+            width="16" height="16" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
+            className={`text-gold flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          >
+            <path d="M6 9l6 6 6-6" />
+          </svg>
+        </button>
+
+        {open && (
+          <ul
+            role="listbox"
+            className="absolute z-10 mt-1.5 w-full overflow-hidden rounded-lg border border-sand bg-white shadow-xl"
+          >
+            {INTERESTS.map((item) => {
+              const isActive = item.value === selected.value;
+              return (
+                <li
+                  key={item.value}
+                  role="option"
+                  aria-selected={isActive}
+                  onClick={() => { setSelected(item); setOpen(false); }}
+                  className={`flex cursor-pointer items-center justify-between px-4 py-2.5 text-sm transition-colors
+                    ${isActive
+                      ? "bg-gold/10 text-forest font-medium"
+                      : "text-ink hover:bg-cream"
+                    }`}
+                >
+                  <span>{item.label}</span>
+                  {isActive && (
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
+                      className="text-gold flex-shrink-0">
+                      <path d="M20 6L9 17l-5-5" />
+                    </svg>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
         )}
       </div>
     </div>
