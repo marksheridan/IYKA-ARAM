@@ -403,7 +403,6 @@ enum AppointmentStatus {
   CANCELLED
   NO_SHOW
   RESCHEDULED
-  IN_CONSULTATION
 }
 
 enum EnrollmentStatus {
