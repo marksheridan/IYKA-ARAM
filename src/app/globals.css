@@ -3,6 +3,19 @@
 :root {
   --background: #faf7f0; /* warm cream */
   --foreground: #1c1b17; /* warm near-black */
+
+  /* Brand palette — also defined in .v2-landing; exposed at root so
+     store and other non-v2-landing sections can use them */
+  --cream:      #F8F4EE;
+  --cream-deep: #EEE8DF;
+  --dark:       #1B1916;
+  --dark-soft:  #2A2520;
+  --gold:       #C8973C;
+  --gold-light: #DEB86A;
+  --gold-pale:  #F0DEB8;
+  --green:      #2C4028;
+  --green-mid:  #3A5234;
+  --green-pale: #E8EEE7;
 }
 
 /*
@@ -1406,14 +1419,29 @@ body {
 .store-nav-link { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; color: var(--dark-soft); transition: color 0.2s; text-decoration: none; }
 .store-nav-link:hover { color: var(--gold); }
 .cart-btn {
-  display: flex; align-items: center; gap: 0.4rem; background: var(--dark); color: #fff;
-  border: none; padding: 0.55rem 1.1rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
-  transition: background 0.2s; cursor: pointer; text-decoration: none;
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 2.4rem; height: 2.4rem; background: none;
+  border: 1.5px solid var(--gold); color: var(--gold) !important;
+  transition: background 0.2s; cursor: pointer; text-decoration: none; flex-shrink: 0;
 }
-.cart-btn:hover { background: var(--green); }
+.cart-btn svg { stroke: var(--gold); }
+.cart-btn:hover { background: rgba(200,151,60,0.1); }
+.store-profile-btn {
+  position: relative; display: flex; align-items: center; justify-content: center;
+  width: 2.4rem; height: 2.4rem; background: none; color: var(--gold) !important;
+  border: 1.5px solid var(--gold); cursor: pointer; text-decoration: none;
+  flex-shrink: 0; transition: background 0.2s;
+}
+.store-profile-btn svg { stroke: var(--gold); }
+.store-profile-btn:hover { background: rgba(200,151,60,0.1); }
+.store-profile-btn--in { background: var(--gold); border-color: var(--gold); color: var(--dark) !important; }
+.store-profile-btn--in svg { stroke: var(--dark); }
+.store-profile-btn--in:hover { background: var(--gold-light); border-color: var(--gold-light); }
+.store-profile-initials { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.05em; color: var(--dark); }
 .cart-count {
-  background: var(--gold); color: #fff; font-size: 0.65rem; font-weight: 700;
-  min-width: 1.2rem; height: 1.2rem; border-radius: 50%;
+  position: absolute; top: -0.4rem; right: -0.4rem;
+  background: var(--dark); color: #fff; font-size: 0.6rem; font-weight: 700;
+  min-width: 1.1rem; height: 1.1rem; border-radius: 50%;
   display: inline-flex; align-items: center; justify-content: center; line-height: 1;
 }
 .store-footer {
