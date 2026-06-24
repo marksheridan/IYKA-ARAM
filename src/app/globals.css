@@ -367,6 +367,25 @@ body {
   padding: 0.6rem 1.4rem;
   font-size: 0.8rem;
 }
+.v2-nav-store-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+.v2-nav-store-btn:hover {
+  background: rgba(200, 151, 60, 0.12);
+}
 .v2-nav-toggle {
   display: none;
   background: none;

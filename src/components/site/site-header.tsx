@@ -41,6 +41,22 @@ export function SiteHeader() {
             </li>
           ))}
           <li>
+            <a
+              href="/store"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="v2-btn v2-nav-store-btn"
+              aria-label="Open store"
+            >
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+                <line x1="3" y1="6" x2="21" y2="6" />
+                <path d="M16 10a4 4 0 01-8 0" />
+              </svg>
+              Store
+            </a>
+          </li>
+          <li>
             <BookButton className="v2-btn v2-btn-gold v2-nav-cta rounded-none bg-transparent text-[inherit]">
               Book Now
             </BookButton>
@@ -70,6 +86,19 @@ export function SiteHeader() {
               {n.label}
             </Link>
           ))}
+          <a
+            href="/store"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="v2-btn v2-nav-store-btn w-full justify-center mt-2"
+          >
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <path d="M16 10a4 4 0 01-8 0" />
+            </svg>
+            Store
+          </a>
           <BookButton className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit] mt-2 w-full justify-center">
             Book Now
           </BookButton>
