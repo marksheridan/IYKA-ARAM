@@ -117,7 +117,7 @@ export default function CheckoutPage() {
       if (!data.verified) throw new Error(data.error || "Incorrect OTP.");
       setOtpStep(3);
       if (countdownRef.current) clearInterval(countdownRef.current);
-      setTimeout(() => placeOrder(), 1200);
+      setTimeout(() => void placeOrder(), 1200);
     } catch (e: unknown) {
       setOtpVerifyError(e instanceof Error ? e.message : "Verification failed.");
       setOtpDigits(["", "", "", "", "", ""]);
@@ -127,18 +127,25 @@ export default function CheckoutPage() {
     }
   }
 
-  function placeOrder() {
-    const id = "IYKA" + Date.now().toString().slice(-8);
-    const order = { id, date: new Date().toISOString(), items: cart, name, phone, email, street, city, state, pin, payment, subtotal, delivery, codCharge, total, status: "Order Placed" };
-    const orders = JSON.parse(localStorage.getItem("iyka-orders") || "[]");
-    orders.unshift(order);
-    localStorage.setItem("iyka-orders", JSON.stringify(orders));
-    localStorage.removeItem("iyka-cart");
-    window.dispatchEvent(new Event("cart-updated"));
-    setOtpOpen(false);
-    setOrderId(id);
-    setSuccess(true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  async function placeOrder() {
+    try {
+      const res = await fetch("/api/orders", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, phone, email, street, city, state, pin, payment, items: cart, subtotal, delivery, codCharge, total }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || "Failed to place order.");
+      localStorage.removeItem("iyka-cart");
+      window.dispatchEvent(new Event("cart-updated"));
+      setOtpOpen(false);
+      setOrderId(data.orderNumber);
+      setSuccess(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (e: unknown) {
+      setOtpVerifyError(e instanceof Error ? e.message : "Failed to place order. Please try again.");
+      setOtpStep(2);
+    }
   }
 
   function handleDigit(idx: number, val: string) {

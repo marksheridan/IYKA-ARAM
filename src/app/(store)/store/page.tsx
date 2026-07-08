@@ -1,32 +1,16 @@
-"use client";
+import { prisma } from "@/lib/db";
+import { StoreGrid } from "./store-grid";
 
-import { useState } from "react";
-import Link from "next/link";
-import { products, categories } from "@/data/products";
+export const dynamic = "force-dynamic";
+export const metadata = { title: "IYKA Living Store" };
 
-function addToCart(item: { slug: string; name: string; price: number; img: string; size: string }) {
-  const cart: { slug: string; qty: number }[] = JSON.parse(localStorage.getItem("iyka-cart") || "[]");
-  const existing = cart.find((i) => i.slug === item.slug);
-  if (existing) {
-    existing.qty = (existing.qty || 1) + 1;
-  } else {
-    (cart as unknown[]).push({ ...item, qty: 1 });
-  }
-  localStorage.setItem("iyka-cart", JSON.stringify(cart));
-  window.dispatchEvent(new Event("cart-updated"));
-}
+export default async function StorePage() {
+  const products = await prisma.product.findMany({
+    where: { isPublished: true },
+    orderBy: { createdAt: "asc" },
+  });
 
-export default function StorePage() {
-  const [active, setActive] = useState("All");
-  const [added, setAdded] = useState<string | null>(null);
-
-  const visible = products.filter((p) => active === "All" || p.category === active);
-
-  function handleAdd(p: typeof products[0]) {
-    addToCart({ slug: p.slug, name: p.name, price: p.price, img: p.img, size: p.size });
-    setAdded(p.slug);
-    setTimeout(() => setAdded(null), 1500);
-  }
+  const categories = ["All", ...Array.from(new Set(products.map((p) => p.category).filter(Boolean) as string[]))];
 
   return (
     <>
@@ -45,58 +29,7 @@ export default function StorePage() {
         </div>
       </section>
 
-      {/* Filter + Grid */}
-      <section style={{ padding: "3rem 2rem 5rem" }}>
-        <div className="store-container">
-          <div className="store-filter-bar">
-            {categories.map((cat) => (
-              <button
-                key={cat}
-                className={`store-filter-btn${active === cat ? " active" : ""}`}
-                onClick={() => setActive(cat)}
-              >
-                {cat}
-              </button>
-            ))}
-          </div>
-
-          <div className="store-products-grid">
-            {visible.map((p) => (
-              <article key={p.slug} className="store-product-card">
-                <Link href={`/store/${p.slug}`} className="store-product-img-wrap">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={p.img} alt={p.name} loading="lazy" />
-                  {p.badge && <span className="store-product-badge">{p.badge}</span>}
-                  {p.mrp > p.price && (
-                    <span className="store-product-discount">−{Math.round((1 - p.price / p.mrp) * 100)}%</span>
-                  )}
-                </Link>
-                <div className="store-product-info">
-                  <span className="store-product-cat">{p.category}</span>
-                  <Link href={`/store/${p.slug}`}>
-                    <h2 className="store-product-name">{p.name}</h2>
-                  </Link>
-                  <p className="store-product-tagline">{p.tagline}</p>
-                  <div className="store-product-price-row">
-                    <span className="store-price-current">₹{p.price.toLocaleString("en-IN")}</span>
-                    {p.mrp > p.price && <span className="store-price-mrp">₹{p.mrp.toLocaleString("en-IN")}</span>}
-                  </div>
-                  <div className="store-product-rating">
-                    <span className="store-stars">{"★".repeat(Math.round(p.rating))}{"☆".repeat(5 - Math.round(p.rating))}</span>
-                    <span className="store-rating-count">({p.reviews})</span>
-                  </div>
-                  <button
-                    className={`store-add-to-cart-btn${added === p.slug ? " added" : ""}`}
-                    onClick={() => handleAdd(p)}
-                  >
-                    {added === p.slug ? "✓ Added" : "Add to Cart"}
-                  </button>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <StoreGrid products={products} categories={categories} />
 
       {/* Trust bar */}
       <section style={{ background: "var(--cream-mid)", padding: "2.5rem 2rem", borderTop: "1px solid var(--cream-deep)" }}>
