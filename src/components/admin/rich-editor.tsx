@@ -61,11 +61,9 @@ export function RichEditor({ name, defaultValue = "", placeholder = "Start writi
             key={t.label}
             type="button"
             onMouseDown={(e) => { e.preventDefault(); t.action(); }}
-            className="rounded px-2.5 py-1 text-xs font-semibold transition-colors"
-            style={t.active
-              ? { background: "#1f2937", color: "#fff" }
-              : { color: "#374151" }
-            }
+            className={`rounded px-2.5 py-1 text-xs font-semibold transition-colors ${
+              t.active ? "bg-mis-blue text-white" : "text-mis-text-muted hover:bg-mis-border-soft hover:text-mis-text"
+            }`}
           >
             {t.label}
           </button>

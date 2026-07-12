@@ -65,8 +65,9 @@
   --color-mis-success:         #3a7048;
   --color-mis-success-bg:      #e4efe4;
   --color-mis-warning:         #c8973c; /* brand gold */
+  --color-mis-warning-deep:    #8a6524; /* legible gold for small text */
   --color-mis-warning-bg:      #f5ead1;
-  --color-mis-info:            #5b7b9a;
+  --color-mis-info:            #4a6580;
   --color-mis-info-bg:         #e7eef4;
   --color-mis-purple:          #8a6b9e;
   --color-mis-purple-bg:       #efe8f3;
@@ -1649,6 +1650,21 @@ body {
 /* ── MIS trend badge ── */
 .mis-trend-up   { color: var(--color-mis-success); }
 .mis-trend-down { color: var(--color-mis-danger); }
+
+/* ── Admin backoffice — landing-page typography ── */
+.admin-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.admin-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 
 /* ── MIS form input ── */
 .mis-input {

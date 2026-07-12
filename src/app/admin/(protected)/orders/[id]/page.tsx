@@ -3,16 +3,9 @@ import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { updateOrderStatus } from "../actions";
 import type { StoreOrderStatus } from "@/generated/prisma/client";
+import { StatusBadge } from "@/components/admin/status-badge";
 
 export const dynamic = "force-dynamic";
-
-const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
-  PLACED:     { bg: "#eff6ff", text: "#2563eb" },
-  CONFIRMED:  { bg: "#f0fdf4", text: "#16a34a" },
-  DISPATCHED: { bg: "#fefce8", text: "#ca8a04" },
-  DELIVERED:  { bg: "#dcfce7", text: "#15803d" },
-  CANCELLED:  { bg: "#fef2f2", text: "#dc2626" },
-};
 
 const STATUS_FLOW: StoreOrderStatus[] = ["PLACED", "CONFIRMED", "DISPATCHED", "DELIVERED"];
 
@@ -26,7 +19,6 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
   });
   if (!order) notFound();
 
-  const sc = STATUS_STYLE[order.status] ?? { bg: "#f9fafb", text: "#6b7280" };
   const currentIdx = STATUS_FLOW.indexOf(order.status as StoreOrderStatus);
   const nextStatus = currentIdx >= 0 && currentIdx < STATUS_FLOW.length - 1 ? STATUS_FLOW[currentIdx + 1] : null;
 
@@ -40,9 +32,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
             {order.createdAt.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
           </p>
         </div>
-        <span className="rounded-full px-3 py-1 text-sm font-semibold" style={{ background: sc.bg, color: sc.text }}>
-          {order.status.charAt(0) + order.status.slice(1).toLowerCase()}
-        </span>
+        <StatusBadge status={order.status} />
       </div>
 
       {/* Status actions */}
@@ -107,7 +97,7 @@ export default async function OrderDetailPage({ params }: { params: Promise<{ id
           </thead>
           <tbody>
             {order.items.map((item, i) => (
-              <tr key={item.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }}>
+              <tr key={item.id} className={i === 0 ? undefined : "border-t border-mis-border-soft"}>
                 <td className="px-5 py-3.5">
                   <p className="font-medium text-mis-text">{item.productName}</p>
                   <p className="text-xs text-mis-text-soft">{item.productSlug}</p>

@@ -10,16 +10,17 @@ export default async function AdminBlogPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
+      <div className="animate-fade-in-up flex items-end justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-mis-text">Blog</h1>
+          <p className="admin-eyebrow">Content</p>
+          <h1 className="admin-display mt-1 text-4xl text-mis-text">Blog</h1>
           <p className="mt-1 text-sm text-mis-text-muted">{posts.length} posts</p>
         </div>
         <Link
           href="/admin/blog/new"
-          className="rounded-lg bg-mis-blue px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80"
+          className="rounded-lg bg-gold px-4 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-mis-warning"
         >
-          + New Post
+          + New post
         </Link>
       </div>
 
@@ -35,9 +36,9 @@ export default async function AdminBlogPage() {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {posts.map((post, i) => (
-                <tr key={post.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-mis-bg">
+            <tbody className="divide-y divide-mis-border-soft">
+              {posts.map((post) => (
+                <tr key={post.id} className="transition-colors hover:bg-mis-bg/60">
                   <td className="px-4 py-3.5">
                     <p className="font-semibold text-mis-text">{post.title}</p>
                     <p className="text-xs text-mis-text-soft">/blog/{post.slug}</p>
@@ -49,10 +50,9 @@ export default async function AdminBlogPage() {
                   </td>
                   <td className="px-4 py-3.5">
                     <span
-                      className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold"
-                      style={post.published
-                        ? { background: "#f0fdf4", color: "#16a34a" }
-                        : { background: "#f9fafb", color: "#9ca3af" }}
+                      className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
+                        post.published ? "bg-mis-blue-light text-mis-blue" : "bg-mis-border-soft text-mis-text-soft"
+                      }`}
                     >
                       {post.published ? "Published" : "Draft"}
                     </span>

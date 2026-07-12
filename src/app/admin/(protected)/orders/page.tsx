@@ -1,16 +1,9 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { StatusBadge, STATUS_TINTS } from "@/components/admin/status-badge";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Orders · IYKA Admin" };
-
-const STATUS_STYLE: Record<string, { bg: string; text: string }> = {
-  PLACED:     { bg: "#eff6ff", text: "#2563eb" },
-  CONFIRMED:  { bg: "#f0fdf4", text: "#16a34a" },
-  DISPATCHED: { bg: "#fefce8", text: "#ca8a04" },
-  DELIVERED:  { bg: "#f0fdf4", text: "#15803d" },
-  CANCELLED:  { bg: "#fef2f2", text: "#dc2626" },
-};
 
 function fmt(n: number) { return "₹" + n.toLocaleString("en-IN"); }
 
@@ -32,8 +25,9 @@ export default async function AdminOrdersPage({
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-mis-text">Orders</h1>
+      <div className="animate-fade-in-up">
+        <p className="admin-eyebrow">Store</p>
+        <h1 className="admin-display mt-1 text-4xl text-mis-text">Orders</h1>
         <p className="mt-1 text-sm text-mis-text-muted">{orders.length} {statusFilter ? statusFilter.toLowerCase() : "total"}</p>
       </div>
 
@@ -41,20 +35,21 @@ export default async function AdminOrdersPage({
       <div className="flex flex-wrap gap-2">
         <Link
           href="/admin/orders"
-          className="rounded-full px-3 py-1 text-xs font-medium transition-colors"
-          style={!statusFilter ? { background: "#1f2937", color: "#fff" } : { background: "#f3f4f6", color: "#6b7280" }}
+          className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+            !statusFilter ? "bg-mis-blue text-white" : "bg-mis-border-soft text-mis-text-muted hover:text-mis-text"
+          }`}
         >
           All
         </Link>
         {STATUSES.map((s) => {
-          const sc = STATUS_STYLE[s];
           const active = statusFilter === s;
           return (
             <Link
               key={s}
               href={`/admin/orders?status=${s}`}
-              className="rounded-full px-3 py-1 text-xs font-medium transition-colors"
-              style={active ? { background: sc.text, color: "#fff" } : { background: sc.bg, color: sc.text }}
+              className={`rounded-full px-3 py-1 text-xs font-semibold transition-colors ${
+                active ? "bg-mis-blue text-white" : `${STATUS_TINTS[s].pill} hover:opacity-75`
+              }`}
             >
               {s.charAt(0) + s.slice(1).toLowerCase()}
             </Link>
@@ -74,11 +69,10 @@ export default async function AdminOrdersPage({
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {orders.map((o, i) => {
-                const sc = STATUS_STYLE[o.status] ?? { bg: "#f9fafb", text: "#6b7280" };
+            <tbody className="divide-y divide-mis-border-soft">
+              {orders.map((o) => {
                 return (
-                  <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-mis-bg">
+                  <tr key={o.id} className="transition-colors hover:bg-mis-bg/60">
                     <td className="px-4 py-3.5">
                       <span className="font-mono text-xs font-semibold text-mis-text">{o.orderNumber}</span>
                     </td>
@@ -92,11 +86,7 @@ export default async function AdminOrdersPage({
                     <td className="px-4 py-3.5 tabular-nums text-mis-text-muted">{o.items.length}</td>
                     <td className="px-4 py-3.5 font-semibold tabular-nums text-mis-text">{fmt(Number(o.total))}</td>
                     <td className="px-4 py-3.5 uppercase text-xs text-mis-text-muted">{o.paymentMethod}</td>
-                    <td className="px-4 py-3.5">
-                      <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={{ background: sc.bg, color: sc.text }}>
-                        {o.status.charAt(0) + o.status.slice(1).toLowerCase()}
-                      </span>
-                    </td>
+                    <td className="px-4 py-3.5"><StatusBadge status={o.status} /></td>
                     <td className="px-4 py-3.5 text-right">
                       <Link
                         href={`/admin/orders/${o.id}`}

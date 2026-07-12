@@ -7,11 +7,12 @@ export default function AdminLoginPage() {
   const [state, action, pending] = useActionState(adminLogin, null);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-mis-bg">
-      <div className="w-full max-w-sm rounded-2xl border border-mis-border bg-white p-8 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-mis-bg" style={{ fontFamily: "var(--font-dmsans), system-ui, sans-serif" }}>
+      <div className="animate-fade-in-up w-full max-w-sm rounded-2xl border border-mis-border bg-white p-8 shadow-sm">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-mis-text-soft">IYKA-ARAM</p>
-          <h1 className="mt-1 text-2xl font-semibold text-mis-text">Admin</h1>
+          <p className="admin-eyebrow">IYKA-ARAM</p>
+          <h1 className="admin-display mt-1 text-3xl text-mis-text">Living Store</h1>
+          <span className="mx-auto mt-3 block h-px w-8 bg-gold" />
         </div>
 
         <form action={action} className="space-y-4">

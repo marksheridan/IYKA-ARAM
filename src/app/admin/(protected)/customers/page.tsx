@@ -49,8 +49,9 @@ export default async function AdminCustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-mis-text">Customers</h1>
+      <div className="animate-fade-in-up">
+        <p className="admin-eyebrow">Store</p>
+        <h1 className="admin-display mt-1 text-4xl text-mis-text">Customers</h1>
         <p className="mt-1 text-sm text-mis-text-muted">{customers.length} unique buyers</p>
       </div>
 
@@ -66,9 +67,9 @@ export default async function AdminCustomersPage() {
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {customers.map((c, i) => (
-                <tr key={c.phone} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-mis-bg">
+            <tbody className="divide-y divide-mis-border-soft">
+              {customers.map((c) => (
+                <tr key={c.phone} className="transition-colors hover:bg-mis-bg/60">
                   <td className="px-4 py-3.5">
                     <p className="font-semibold text-mis-text">{c.name}</p>
                     {c.email && <p className="text-xs text-mis-text-soft">{c.email}</p>}
