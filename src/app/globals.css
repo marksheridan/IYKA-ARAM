@@ -33,6 +33,7 @@
   --color-ink: #1c1b17;
   --color-muted: #6b6863;
   --color-gold: #c2a14d;
+  --color-gold-light: #deb86a; /* legible gold for text on dark green */
   --color-gold-soft: #e7d8ae;
   --color-forest: #2f4733;
   --color-sage: #7c8b6f;

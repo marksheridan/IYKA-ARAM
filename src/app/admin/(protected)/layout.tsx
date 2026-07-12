@@ -18,7 +18,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
       {/* Sidebar — the landing page's forest panel, carried into the tool */}
       <aside className="flex w-56 shrink-0 flex-col bg-mis-blue">
         <div className="border-b border-white/10 px-5 py-5">
-          <p className="admin-eyebrow">IYKA-ARAM</p>
+          <p className="admin-eyebrow" style={{ color: "var(--gold-light)" }}>IYKA-ARAM</p>
           <p className="admin-display mt-0.5 text-xl text-cream">Living Store</p>
         </div>
 
