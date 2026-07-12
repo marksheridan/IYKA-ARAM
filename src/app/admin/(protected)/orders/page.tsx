@@ -33,8 +33,8 @@ export default async function AdminOrdersPage({
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Orders</h1>
-        <p className="mt-1 text-sm text-neutral-500">{orders.length} {statusFilter ? statusFilter.toLowerCase() : "total"}</p>
+        <h1 className="text-2xl font-bold text-mis-text">Orders</h1>
+        <p className="mt-1 text-sm text-mis-text-muted">{orders.length} {statusFilter ? statusFilter.toLowerCase() : "total"}</p>
       </div>
 
       {/* Status filter tabs */}
@@ -62,15 +62,15 @@ export default async function AdminOrdersPage({
         })}
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-xl border border-mis-border bg-white">
         {orders.length === 0 ? (
-          <p className="p-8 text-center text-sm text-neutral-400">No orders found.</p>
+          <p className="p-8 text-center text-sm text-mis-text-soft">No orders found.</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-100 bg-neutral-50">
+              <tr className="border-b border-mis-border-soft bg-mis-bg">
                 {["Order #", "Customer", "Date", "Items", "Total", "Payment", "Status", ""].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
                 ))}
               </tr>
             </thead>
@@ -78,20 +78,20 @@ export default async function AdminOrdersPage({
               {orders.map((o, i) => {
                 const sc = STATUS_STYLE[o.status] ?? { bg: "#f9fafb", text: "#6b7280" };
                 return (
-                  <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-neutral-50">
+                  <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-mis-bg">
                     <td className="px-4 py-3.5">
-                      <span className="font-mono text-xs font-semibold text-neutral-700">{o.orderNumber}</span>
+                      <span className="font-mono text-xs font-semibold text-mis-text">{o.orderNumber}</span>
                     </td>
                     <td className="px-4 py-3.5">
-                      <p className="font-medium text-neutral-900">{o.customerName}</p>
-                      <p className="text-xs text-neutral-400">{o.customerPhone}</p>
+                      <p className="font-medium text-mis-text">{o.customerName}</p>
+                      <p className="text-xs text-mis-text-soft">{o.customerPhone}</p>
                     </td>
-                    <td className="px-4 py-3.5 text-xs tabular-nums text-neutral-500">
+                    <td className="px-4 py-3.5 text-xs tabular-nums text-mis-text-muted">
                       {o.createdAt.toLocaleDateString("en-IN")}
                     </td>
-                    <td className="px-4 py-3.5 tabular-nums text-neutral-500">{o.items.length}</td>
-                    <td className="px-4 py-3.5 font-semibold tabular-nums text-neutral-900">{fmt(Number(o.total))}</td>
-                    <td className="px-4 py-3.5 uppercase text-xs text-neutral-500">{o.paymentMethod}</td>
+                    <td className="px-4 py-3.5 tabular-nums text-mis-text-muted">{o.items.length}</td>
+                    <td className="px-4 py-3.5 font-semibold tabular-nums text-mis-text">{fmt(Number(o.total))}</td>
+                    <td className="px-4 py-3.5 uppercase text-xs text-mis-text-muted">{o.paymentMethod}</td>
                     <td className="px-4 py-3.5">
                       <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={{ background: sc.bg, color: sc.text }}>
                         {o.status.charAt(0) + o.status.slice(1).toLowerCase()}
@@ -100,7 +100,7 @@ export default async function AdminOrdersPage({
                     <td className="px-4 py-3.5 text-right">
                       <Link
                         href={`/admin/orders/${o.id}`}
-                        className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100"
+                        className="rounded-lg border border-mis-border px-3 py-1.5 text-xs font-medium text-mis-text hover:bg-mis-border-soft"
                       >
                         View
                       </Link>

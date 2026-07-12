@@ -55,9 +55,9 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
   return (
     <div className="max-w-3xl space-y-6">
       <div>
-        <Link href="/admin/customers" className="text-xs text-neutral-500 hover:text-neutral-800">← Customers</Link>
-        <h1 className="mt-1 text-2xl font-bold text-neutral-900">{customer.customerName}</h1>
-        <div className="mt-1 flex flex-wrap gap-4 text-sm text-neutral-500">
+        <Link href="/admin/customers" className="text-xs text-mis-text-muted hover:text-mis-text">← Customers</Link>
+        <h1 className="mt-1 text-2xl font-bold text-mis-text">{customer.customerName}</h1>
+        <div className="mt-1 flex flex-wrap gap-4 text-sm text-mis-text-muted">
           <span>{customer.customerPhone}</span>
           {customer.customerEmail && <span>{customer.customerEmail}</span>}
         </div>
@@ -70,27 +70,27 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
           { label: "Total Spent", value: fmt(totalSpend) },
           { label: "Products Bought", value: products.length },
         ].map((s) => (
-          <div key={s.label} className="rounded-xl border border-neutral-200 bg-white p-4">
-            <p className="text-xs font-medium uppercase tracking-wider text-neutral-400">{s.label}</p>
-            <p className="mt-1.5 text-2xl font-bold tabular-nums text-neutral-900">{s.value}</p>
+          <div key={s.label} className="rounded-xl border border-mis-border bg-white p-4">
+            <p className="text-xs font-medium uppercase tracking-wider text-mis-text-soft">{s.label}</p>
+            <p className="mt-1.5 text-2xl font-bold tabular-nums text-mis-text">{s.value}</p>
           </div>
         ))}
       </div>
 
       {/* Products purchased */}
       {products.length > 0 && (
-        <div className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
-          <div className="border-b border-neutral-100 px-5 py-4">
-            <h2 className="text-sm font-semibold text-neutral-700">Products Purchased</h2>
+        <div className="rounded-xl border border-mis-border bg-white overflow-hidden">
+          <div className="border-b border-mis-border-soft px-5 py-4">
+            <h2 className="text-sm font-semibold text-mis-text">Products Purchased</h2>
           </div>
-          <ul className="divide-y divide-neutral-100">
+          <ul className="divide-y divide-mis-border-soft">
             {products.map((p) => (
               <li key={p.slug} className="flex items-center justify-between px-5 py-3">
                 <div>
-                  <p className="text-sm font-medium text-neutral-900">{p.name}</p>
-                  <p className="text-xs text-neutral-400">{p.times} order{p.times !== 1 ? "s" : ""}</p>
+                  <p className="text-sm font-medium text-mis-text">{p.name}</p>
+                  <p className="text-xs text-mis-text-soft">{p.times} order{p.times !== 1 ? "s" : ""}</p>
                 </div>
-                <span className="rounded-full bg-neutral-100 px-2.5 py-0.5 text-xs font-semibold tabular-nums text-neutral-600">
+                <span className="rounded-full bg-mis-border-soft px-2.5 py-0.5 text-xs font-semibold tabular-nums text-mis-text-muted">
                   ×{p.qty}
                 </span>
               </li>
@@ -100,15 +100,15 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
       )}
 
       {/* Order history */}
-      <div className="rounded-xl border border-neutral-200 bg-white overflow-hidden">
-        <div className="border-b border-neutral-100 px-5 py-4">
-          <h2 className="text-sm font-semibold text-neutral-700">Order History</h2>
+      <div className="rounded-xl border border-mis-border bg-white overflow-hidden">
+        <div className="border-b border-mis-border-soft px-5 py-4">
+          <h2 className="text-sm font-semibold text-mis-text">Order History</h2>
         </div>
         <table className="w-full text-sm">
           <thead>
-            <tr className="border-b border-neutral-100 bg-neutral-50">
+            <tr className="border-b border-mis-border-soft bg-mis-bg">
               {["Order #", "Date", "Items", "Total", "Status", ""].map((h) => (
-                <th key={h} className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                <th key={h} className="px-5 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
               ))}
             </tr>
           </thead>
@@ -117,19 +117,19 @@ export default async function CustomerDetailPage({ params }: { params: Promise<{
               const sc = STATUS_STYLE[o.status] ?? { bg: "#f9fafb", text: "#6b7280" };
               return (
                 <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }}>
-                  <td className="px-5 py-3.5 font-mono text-xs font-semibold text-neutral-700">{o.orderNumber}</td>
-                  <td className="px-5 py-3.5 text-xs tabular-nums text-neutral-500">
+                  <td className="px-5 py-3.5 font-mono text-xs font-semibold text-mis-text">{o.orderNumber}</td>
+                  <td className="px-5 py-3.5 text-xs tabular-nums text-mis-text-muted">
                     {o.createdAt.toLocaleDateString("en-IN")}
                   </td>
-                  <td className="px-5 py-3.5 tabular-nums text-neutral-500">{o.items.length}</td>
-                  <td className="px-5 py-3.5 font-semibold tabular-nums text-neutral-900">{fmt(Number(o.total))}</td>
+                  <td className="px-5 py-3.5 tabular-nums text-mis-text-muted">{o.items.length}</td>
+                  <td className="px-5 py-3.5 font-semibold tabular-nums text-mis-text">{fmt(Number(o.total))}</td>
                   <td className="px-5 py-3.5">
                     <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold" style={{ background: sc.bg, color: sc.text }}>
                       {o.status.charAt(0) + o.status.slice(1).toLowerCase()}
                     </span>
                   </td>
                   <td className="px-5 py-3.5 text-right">
-                    <Link href={`/admin/orders/${o.id}`} className="text-xs text-neutral-500 hover:text-neutral-900 hover:underline">
+                    <Link href={`/admin/orders/${o.id}`} className="text-xs text-mis-text-muted hover:text-mis-text hover:underline">
                       View →
                     </Link>
                   </td>

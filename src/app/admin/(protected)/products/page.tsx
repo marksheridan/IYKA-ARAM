@@ -12,47 +12,47 @@ export default async function AdminProductsPage() {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-neutral-900">Products</h1>
-          <p className="mt-1 text-sm text-neutral-500">{products.length} total</p>
+          <h1 className="text-2xl font-bold text-mis-text">Products</h1>
+          <p className="mt-1 text-sm text-mis-text-muted">{products.length} total</p>
         </div>
         <Link
           href="/admin/products/new"
-          className="rounded-lg bg-neutral-900 px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80"
+          className="rounded-lg bg-mis-blue px-4 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80"
         >
           + New Product
         </Link>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-xl border border-mis-border bg-white">
         {products.length === 0 ? (
-          <p className="p-8 text-center text-sm text-neutral-400">No products yet. <Link href="/admin/products/new" className="underline">Add one →</Link></p>
+          <p className="p-8 text-center text-sm text-mis-text-soft">No products yet. <Link href="/admin/products/new" className="underline">Add one →</Link></p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-100 bg-neutral-50">
+              <tr className="border-b border-mis-border-soft bg-mis-bg">
                 {["Product", "Category", "Price", "Stock", "Live", ""].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
                 ))}
               </tr>
             </thead>
             <tbody>
               {products.map((p, i) => (
-                <tr key={p.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-neutral-50">
+                <tr key={p.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-mis-bg">
                   <td className="px-4 py-3.5">
                     <div>
-                      <p className="font-semibold text-neutral-900">{p.name}</p>
+                      <p className="font-semibold text-mis-text">{p.name}</p>
                       {p.badge && (
-                        <span className="mt-0.5 inline-block rounded-full bg-amber-50 px-2 py-0.5 text-[10px] font-semibold text-amber-700">
+                        <span className="mt-0.5 inline-block rounded-full bg-mis-warning-bg px-2 py-0.5 text-[10px] font-semibold text-mis-warning">
                           {p.badge}
                         </span>
                       )}
                     </div>
                   </td>
-                  <td className="px-4 py-3.5 text-neutral-500">{p.category ?? "—"}</td>
+                  <td className="px-4 py-3.5 text-mis-text-muted">{p.category ?? "—"}</td>
                   <td className="px-4 py-3.5 tabular-nums">
-                    <span className="font-semibold text-neutral-900">₹{Number(p.price).toLocaleString("en-IN")}</span>
+                    <span className="font-semibold text-mis-text">₹{Number(p.price).toLocaleString("en-IN")}</span>
                     {p.mrp && Number(p.mrp) > Number(p.price) && (
-                      <span className="ml-1.5 text-xs text-neutral-400 line-through">₹{Number(p.mrp).toLocaleString("en-IN")}</span>
+                      <span className="ml-1.5 text-xs text-mis-text-soft line-through">₹{Number(p.mrp).toLocaleString("en-IN")}</span>
                     )}
                   </td>
                   <td className="px-4 py-3.5">
@@ -95,14 +95,14 @@ export default async function AdminProductsPage() {
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/admin/products/${p.id}`}
-                        className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100"
+                        className="rounded-lg border border-mis-border px-3 py-1.5 text-xs font-medium text-mis-text hover:bg-mis-border-soft"
                       >
                         Edit
                       </Link>
                       <form action={async () => { "use server"; await deleteProduct(p.id); }}>
                         <button
                           type="submit"
-                          className="rounded-lg border border-red-100 px-3 py-1.5 text-xs font-medium text-red-600 hover:bg-red-50"
+                          className="rounded-lg border border-mis-danger/15 px-3 py-1.5 text-xs font-medium text-mis-danger hover:bg-mis-danger-bg"
                         >
                           Delete
                         </button>

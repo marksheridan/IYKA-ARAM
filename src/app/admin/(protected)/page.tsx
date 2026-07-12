@@ -54,17 +54,17 @@ export default async function AdminDashboard() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-neutral-500">Store overview</p>
+        <h1 className="text-2xl font-bold text-mis-text">Dashboard</h1>
+        <p className="mt-1 text-sm text-mis-text-muted">Store overview</p>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         {kpis.map((k) => (
-          <Link key={k.label} href={k.href} className="group rounded-xl border border-neutral-200 bg-white p-5 transition-shadow hover:shadow-md">
-            <p className="text-xs font-medium uppercase tracking-wider text-neutral-400">{k.label}</p>
-            <p className="mt-2 text-3xl font-bold tabular-nums text-neutral-900">{k.value}</p>
-            <p className="mt-1 text-xs text-neutral-400">{k.sub}</p>
+          <Link key={k.label} href={k.href} className="group rounded-xl border border-mis-border bg-white p-5 transition-shadow hover:shadow-md">
+            <p className="text-xs font-medium uppercase tracking-wider text-mis-text-soft">{k.label}</p>
+            <p className="mt-2 text-3xl font-bold tabular-nums text-mis-text">{k.value}</p>
+            <p className="mt-1 text-xs text-mis-text-soft">{k.sub}</p>
           </Link>
         ))}
       </div>
@@ -73,18 +73,18 @@ export default async function AdminDashboard() {
         {/* Recent orders */}
         <div className="lg:col-span-2">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-neutral-700">Recent Orders</h2>
-            <Link href="/admin/orders" className="text-xs text-neutral-500 hover:text-neutral-900">See all →</Link>
+            <h2 className="text-sm font-semibold text-mis-text">Recent Orders</h2>
+            <Link href="/admin/orders" className="text-xs text-mis-text-muted hover:text-mis-text">See all →</Link>
           </div>
-          <div className="mt-3 overflow-hidden rounded-xl border border-neutral-200 bg-white">
+          <div className="mt-3 overflow-hidden rounded-xl border border-mis-border bg-white">
             {recentOrders.length === 0 ? (
-              <p className="p-6 text-sm text-neutral-400">No orders yet.</p>
+              <p className="p-6 text-sm text-mis-text-soft">No orders yet.</p>
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-neutral-100 bg-neutral-50">
+                  <tr className="border-b border-mis-border-soft bg-mis-bg">
                     {["Order", "Customer", "Items", "Total", "Status"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
                     ))}
                   </tr>
                 </thead>
@@ -94,13 +94,13 @@ export default async function AdminDashboard() {
                     return (
                       <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }}>
                         <td className="px-4 py-3">
-                          <Link href={`/admin/orders/${o.id}`} className="font-mono text-xs font-semibold text-neutral-700 hover:underline">
+                          <Link href={`/admin/orders/${o.id}`} className="font-mono text-xs font-semibold text-mis-text hover:underline">
                             {o.orderNumber}
                           </Link>
                         </td>
-                        <td className="px-4 py-3 text-neutral-600">{o.customerName}</td>
-                        <td className="px-4 py-3 tabular-nums text-neutral-500">{o.items.length}</td>
-                        <td className="px-4 py-3 font-semibold tabular-nums text-neutral-900">{fmt(Number(o.total))}</td>
+                        <td className="px-4 py-3 text-mis-text-muted">{o.customerName}</td>
+                        <td className="px-4 py-3 tabular-nums text-mis-text-muted">{o.items.length}</td>
+                        <td className="px-4 py-3 font-semibold tabular-nums text-mis-text">{fmt(Number(o.total))}</td>
                         <td className="px-4 py-3">
                           <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize" style={{ background: sc.bg, color: sc.text }}>
                             {o.status.toLowerCase()}
@@ -118,19 +118,19 @@ export default async function AdminDashboard() {
         {/* Low stock */}
         <div>
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-neutral-700">Low Stock</h2>
-            <Link href="/admin/products" className="text-xs text-neutral-500 hover:text-neutral-900">Manage →</Link>
+            <h2 className="text-sm font-semibold text-mis-text">Low Stock</h2>
+            <Link href="/admin/products" className="text-xs text-mis-text-muted hover:text-mis-text">Manage →</Link>
           </div>
-          <div className="mt-3 rounded-xl border border-neutral-200 bg-white">
+          <div className="mt-3 rounded-xl border border-mis-border bg-white">
             {lowStock.length === 0 ? (
-              <p className="p-5 text-sm text-neutral-400">All products well-stocked.</p>
+              <p className="p-5 text-sm text-mis-text-soft">All products well-stocked.</p>
             ) : (
-              <ul className="divide-y divide-neutral-100">
+              <ul className="divide-y divide-mis-border-soft">
                 {lowStock.map((p) => (
                   <li key={p.id} className="flex items-center justify-between px-4 py-3">
                     <div>
-                      <p className="text-sm font-medium text-neutral-800">{p.name}</p>
-                      <p className="text-xs text-neutral-400">{p.category}</p>
+                      <p className="text-sm font-medium text-mis-text">{p.name}</p>
+                      <p className="text-xs text-mis-text-soft">{p.category}</p>
                     </div>
                     <span
                       className="rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums"
