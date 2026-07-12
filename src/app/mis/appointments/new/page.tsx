@@ -70,7 +70,7 @@ export default async function NewAppointment({ searchParams }: { searchParams: S
             {phone && !patient && (
               <div className="mt-4 rounded-lg border border-gold-soft bg-cream p-4">
                 <p className="text-sm text-ink">No patient found for <span className="font-medium">{phone}</span>. Register a new patient:</p>
-                {error === "details" && <p className="mt-2 text-xs text-red-600">Please enter a name and a valid phone number.</p>}
+                {error === "details" && <p className="mt-2 text-xs text-mis-danger">Please enter a name and a valid phone number.</p>}
                 <form action={quickRegisterPatient} className="mt-3 grid gap-3 sm:grid-cols-2">
                   <input type="hidden" name="carry" value={carry} />
                   <input name="name" placeholder="Full name *" required className={inputCls} />
@@ -121,7 +121,7 @@ export default async function NewAppointment({ searchParams }: { searchParams: S
       {/* STEP 3 — Slots */}
       {patient && selectedService && providerId && date && (
         <Step n={3} title="Pick a slot" done={false}>
-          {error === "taken" && <p className="mb-3 text-xs text-red-600">That slot was just taken — please pick another.</p>}
+          {error === "taken" && <p className="mb-3 text-xs text-mis-danger">That slot was just taken — please pick another.</p>}
           {!slots || slots.length === 0 ? (
             <p className="rounded-lg border border-sand bg-white p-4 text-sm text-muted">
               No available slots for this doctor on {date}. Try another date or doctor — booked, blocked and past times are hidden.

@@ -134,7 +134,7 @@ export default async function AppointmentDetail({
       <div className="mt-8">
         <h2 className="text-sm font-medium text-ink">Reschedule</h2>
         {sp.error === "taken" && (
-          <p className="mt-2 text-xs text-red-600">That slot was just taken — pick another.</p>
+          <p className="mt-2 text-xs text-mis-danger">That slot was just taken — pick another.</p>
         )}
         <form className="mt-3 flex gap-2">
           <input

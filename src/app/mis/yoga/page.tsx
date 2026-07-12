@@ -52,7 +52,7 @@ export default async function YogaPage({ searchParams }: { searchParams: SP }) {
       </div>
 
       {error === "missing" && (
-        <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <p className="mt-4 rounded-lg border border-mis-danger/25 bg-mis-danger-bg px-4 py-3 text-sm text-mis-danger">
           Please fill in the title, service, instructor and at least one day.
         </p>
       )}
