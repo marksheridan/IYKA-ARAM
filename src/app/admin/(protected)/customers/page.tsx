@@ -49,40 +49,41 @@ export default async function AdminCustomersPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Customers</h1>
-        <p className="mt-1 text-sm text-neutral-500">{customers.length} unique buyers</p>
+      <div className="animate-fade-in-up">
+        <p className="admin-eyebrow">Store</p>
+        <h1 className="admin-display mt-1 text-4xl text-mis-text">Customers</h1>
+        <p className="mt-1 text-sm text-mis-text-muted">{customers.length} unique buyers</p>
       </div>
 
-      <div className="overflow-hidden rounded-xl border border-neutral-200 bg-white">
+      <div className="overflow-hidden rounded-xl border border-mis-border bg-white">
         {customers.length === 0 ? (
-          <p className="p-8 text-center text-sm text-neutral-400">No customers yet.</p>
+          <p className="p-8 text-center text-sm text-mis-text-soft">No customers yet.</p>
         ) : (
           <table className="w-full text-sm">
             <thead>
-              <tr className="border-b border-neutral-100 bg-neutral-50">
+              <tr className="border-b border-mis-border-soft bg-mis-bg">
                 {["Customer", "Phone", "Orders", "Total Spent", "Last Order", ""].map((h) => (
-                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                  <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
                 ))}
               </tr>
             </thead>
-            <tbody>
-              {customers.map((c, i) => (
-                <tr key={c.phone} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }} className="hover:bg-neutral-50">
+            <tbody className="divide-y divide-mis-border-soft">
+              {customers.map((c) => (
+                <tr key={c.phone} className="transition-colors hover:bg-mis-bg/60">
                   <td className="px-4 py-3.5">
-                    <p className="font-semibold text-neutral-900">{c.name}</p>
-                    {c.email && <p className="text-xs text-neutral-400">{c.email}</p>}
+                    <p className="font-semibold text-mis-text">{c.name}</p>
+                    {c.email && <p className="text-xs text-mis-text-soft">{c.email}</p>}
                   </td>
-                  <td className="px-4 py-3.5 font-mono text-xs text-neutral-600">{c.phone}</td>
-                  <td className="px-4 py-3.5 tabular-nums text-neutral-700">{c.orderCount}</td>
-                  <td className="px-4 py-3.5 font-semibold tabular-nums text-neutral-900">{fmt(c.totalSpend)}</td>
-                  <td className="px-4 py-3.5 text-xs text-neutral-500 tabular-nums">
+                  <td className="px-4 py-3.5 font-mono text-xs text-mis-text-muted">{c.phone}</td>
+                  <td className="px-4 py-3.5 tabular-nums text-mis-text">{c.orderCount}</td>
+                  <td className="px-4 py-3.5 font-semibold tabular-nums text-mis-text">{fmt(c.totalSpend)}</td>
+                  <td className="px-4 py-3.5 text-xs text-mis-text-muted tabular-nums">
                     {c.lastOrder.toLocaleDateString("en-IN")}
                   </td>
                   <td className="px-4 py-3.5 text-right">
                     <Link
                       href={`/admin/customers/${encodeURIComponent(c.phone)}`}
-                      className="rounded-lg border border-neutral-200 px-3 py-1.5 text-xs font-medium text-neutral-700 hover:bg-neutral-100"
+                      className="rounded-lg border border-mis-border px-3 py-1.5 text-xs font-medium text-mis-text hover:bg-mis-border-soft"
                     >
                       View
                     </Link>

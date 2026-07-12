@@ -33,6 +33,7 @@
   --color-ink: #1c1b17;
   --color-muted: #6b6863;
   --color-gold: #c2a14d;
+  --color-gold-light: #deb86a; /* legible gold for text on dark green */
   --color-gold-soft: #e7d8ae;
   --color-forest: #2f4733;
   --color-sage: #7c8b6f;
@@ -41,34 +42,38 @@
   --font-sans: var(--font-inter);
   --font-display: var(--font-fraunces);
 
-  /* ── MIS dashboard design system (clinical blue) ── */
-  --color-mis-bg:              #f6f6f6;
+  /* ── MIS dashboard design system ──
+     Themed to the landing-page brand palette: warm cream surfaces,
+     forest-green primary, gold accents. Token names are kept stable
+     (mis-blue = primary) so components don't need to change. */
+  --color-mis-bg:              #f8f4ee; /* brand cream */
   --color-mis-surface:         #ffffff;
-  --color-mis-border:          #e5e7eb;
-  --color-mis-border-soft:     #f3f4f6;
+  --color-mis-border:          #e8e1d5; /* warm cream-deep border */
+  --color-mis-border-soft:     #f1ece3;
 
-  /* Primary blue */
-  --color-mis-blue:            #2563eb;
-  --color-mis-blue-dark:       #1d4ed8;
-  --color-mis-blue-light:      #dbeafe;
-  --color-mis-blue-subtle:     #eff6ff;
+  /* Primary — brand forest green */
+  --color-mis-blue:            #2c4028;
+  --color-mis-blue-dark:       #22331f;
+  --color-mis-blue-light:      #e8eee7; /* brand green-pale */
+  --color-mis-blue-subtle:     #f2f5f0;
 
-  /* Text */
-  --color-mis-text:            #111827;
-  --color-mis-text-muted:      #6b7280;
-  --color-mis-text-soft:       #9ca3af;
+  /* Text — warm ink */
+  --color-mis-text:            #1b1916;
+  --color-mis-text-muted:      #6f6a60;
+  --color-mis-text-soft:       #a39d8f;
 
-  /* Semantic status colours */
-  --color-mis-success:         #10b981;
-  --color-mis-success-bg:      #d1fae5;
-  --color-mis-warning:         #f59e0b;
-  --color-mis-warning-bg:      #fef3c7;
-  --color-mis-info:            #3b82f6;
-  --color-mis-info-bg:         #dbeafe;
-  --color-mis-purple:          #8b5cf6;
-  --color-mis-purple-bg:       #ede9fe;
-  --color-mis-danger:          #ef4444;
-  --color-mis-danger-bg:       #fee2e2;
+  /* Semantic status colours — warmed to sit on the brand palette */
+  --color-mis-success:         #3a7048;
+  --color-mis-success-bg:      #e4efe4;
+  --color-mis-warning:         #c8973c; /* brand gold */
+  --color-mis-warning-deep:    #8a6524; /* legible gold for small text */
+  --color-mis-warning-bg:      #f5ead1;
+  --color-mis-info:            #4a6580;
+  --color-mis-info-bg:         #e7eef4;
+  --color-mis-purple:          #8a6b9e;
+  --color-mis-purple-bg:       #efe8f3;
+  --color-mis-danger:          #b4452f; /* matches landing form error */
+  --color-mis-danger-bg:       #f7e4de;
 
   /* Sidebar dimensions */
   --mis-sidebar-w:             240px;
@@ -1625,7 +1630,7 @@ body {
   100% { background-position:  400px 0; }
 }
 .mis-shimmer {
-  background: linear-gradient(90deg, #f3f4f6 25%, #e5e7eb 50%, #f3f4f6 75%);
+  background: linear-gradient(90deg, #f1ece3 25%, #e8e1d5 50%, #f1ece3 75%);
   background-size: 800px 100%;
   animation: mis-shimmer 1.4s ease infinite;
 }
@@ -1646,6 +1651,21 @@ body {
 /* ── MIS trend badge ── */
 .mis-trend-up   { color: var(--color-mis-success); }
 .mis-trend-down { color: var(--color-mis-danger); }
+
+/* ── Admin backoffice — landing-page typography ── */
+.admin-display {
+  font-family: var(--font-cormorant), Georgia, serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.1;
+}
+.admin-eyebrow {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
 
 /* ── MIS form input ── */
 .mis-input {

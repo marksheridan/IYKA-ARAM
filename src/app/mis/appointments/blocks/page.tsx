@@ -35,8 +35,8 @@ export default async function TimeBlocksPage({ searchParams }: { searchParams: S
 
       {/* New block */}
       <form action={createTimeBlock} className="mt-4 grid gap-3 rounded-xl border border-sand bg-white p-5 sm:grid-cols-2">
-        {error === "missing" && <p className="text-xs text-red-600 sm:col-span-2">Please fill in the doctor, date and times.</p>}
-        {error === "range" && <p className="text-xs text-red-600 sm:col-span-2">End time must be after the start time.</p>}
+        {error === "missing" && <p className="text-xs text-mis-danger sm:col-span-2">Please fill in the doctor, date and times.</p>}
+        {error === "range" && <p className="text-xs text-mis-danger sm:col-span-2">End time must be after the start time.</p>}
         <div className="sm:col-span-2">
           <label className="mb-1 block text-xs uppercase tracking-wide text-muted">Doctor</label>
           <select name="staffId" required className={inputCls} defaultValue="">
@@ -85,7 +85,7 @@ export default async function TimeBlocksPage({ searchParams }: { searchParams: S
                 </div>
                 <form action={deleteTimeBlock}>
                   <input type="hidden" name="id" value={b.id} />
-                  <button className="rounded-lg border border-sand px-3 py-1 text-xs text-muted hover:border-red-300 hover:text-red-600">Remove</button>
+                  <button className="rounded-lg border border-sand px-3 py-1 text-xs text-muted hover:border-mis-danger/40 hover:text-mis-danger">Remove</button>
                 </form>
               </li>
             ))}

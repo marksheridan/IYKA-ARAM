@@ -23,10 +23,10 @@ const STATUS_COLOR: Record<string, string> = {
   REQUESTED: "bg-sand",
   CONFIRMED: "bg-gold-soft",
   CHECKED_IN: "bg-sage/50",
-  IN_CONSULTATION: "bg-blue-300",
+  IN_CONSULTATION: "bg-mis-info",
   COMPLETED: "bg-forest",
-  NO_SHOW: "bg-red-300",
-  CANCELLED: "bg-red-400",
+  NO_SHOW: "bg-mis-danger/60",
+  CANCELLED: "bg-mis-danger",
 };
 
 export default async function AppointmentsOverview() {
@@ -181,7 +181,7 @@ function Kpi({ label, value, accent }: { label: string; value: number; accent?: 
   return (
     <div className="rounded-2xl border border-sand bg-white p-4 shadow-sm">
       <div className="text-xs uppercase tracking-wide text-muted">{label}</div>
-      <div className={`mt-2 font-display text-2xl ${accent && value > 0 ? "text-red-600" : "text-ink"}`}>{value}</div>
+      <div className={`mt-2 font-display text-2xl ${accent && value > 0 ? "text-mis-danger" : "text-ink"}`}>{value}</div>
     </div>
   );
 }
