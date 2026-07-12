@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AdminIcon, type AdminIconName } from "./icons";
 
 export function AdminNavLink({
   href,
@@ -9,7 +10,7 @@ export function AdminNavLink({
   label,
 }: {
   href: string;
-  icon: string;
+  icon: AdminIconName;
   label: string;
 }) {
   const pathname = usePathname();
@@ -25,13 +26,12 @@ export function AdminNavLink({
           : "font-medium text-cream/65 hover:bg-white/5 hover:text-cream"
       }`}
     >
-      <span
-        className={`text-base leading-none transition-colors ${
+      <AdminIcon
+        name={icon}
+        className={`h-4 w-4 shrink-0 transition-colors ${
           active ? "text-gold-light" : "text-cream/40 group-hover:text-gold-light"
         }`}
-      >
-        {icon}
-      </span>
+      />
       {label}
     </Link>
   );

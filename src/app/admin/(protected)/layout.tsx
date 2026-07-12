@@ -1,13 +1,14 @@
 import { requireAdmin } from "@/lib/admin-session";
 import { adminLogout } from "./actions";
 import { AdminNavLink } from "@/components/admin/nav-link";
+import { AdminIcon, type AdminIconName } from "@/components/admin/icons";
 
-const NAV = [
-  { href: "/admin", label: "Dashboard", icon: "▦" },
-  { href: "/admin/products", label: "Products", icon: "⬡" },
-  { href: "/admin/orders", label: "Orders", icon: "◫" },
-  { href: "/admin/customers", label: "Customers", icon: "◎" },
-  { href: "/admin/blog", label: "Blog", icon: "✎" },
+const NAV: { href: string; label: string; icon: AdminIconName }[] = [
+  { href: "/admin", label: "Dashboard", icon: "dashboard" },
+  { href: "/admin/products", label: "Products", icon: "products" },
+  { href: "/admin/orders", label: "Orders", icon: "orders" },
+  { href: "/admin/customers", label: "Customers", icon: "customers" },
+  { href: "/admin/blog", label: "Blog", icon: "blog" },
 ];
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -32,9 +33,9 @@ export default async function AdminLayout({ children }: { children: React.ReactN
           <form action={adminLogout}>
             <button
               type="submit"
-              className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-cream/50 transition-colors hover:bg-white/5 hover:text-cream"
+              className="flex w-full items-center gap-2.5 rounded-lg px-3 py-2 text-sm text-cream/50 transition-colors hover:bg-white/5 hover:text-cream"
             >
-              <span>↩</span> Sign out
+              <AdminIcon name="signOut" className="h-4 w-4 shrink-0" /> Sign out
             </button>
           </form>
         </div>
