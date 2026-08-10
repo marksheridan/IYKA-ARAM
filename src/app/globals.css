@@ -118,6 +118,10 @@ body {
   --gold-pale:  #F0DEB8;
   --green:      #2C4028;
   --green-mid:  #3A5234;
+  /* --cream one step down in lightness, same hue. A neutral grey here
+     fought the warm off-white of the section above; keeping the hue and
+     only dropping lightness makes the two bands relate. */
+  --cream-band: #ECE8E2;
 
   /* Design-system fonts (loaded via next/font in layout.tsx) */
   --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
@@ -195,7 +199,7 @@ h3 em {
 /* ── Hero ── */
 .v2-hero {
   position: relative;
-  min-height: 100svh;
+  min-height: 80svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -263,8 +267,12 @@ h3 em {
   position: relative;
   width: min(90rem, 100% - 3rem);
   margin-inline: auto;
-  padding-top: 9rem;
-  padding-bottom: 11rem;
+  /* The nav is fixed and 88px tall over the hero, so this can't go much
+     below 7.5rem without the kicker crowding it. */
+  padding-top: 7.5rem;
+  /* Must stay clear of .v2-hero-meta, which is pinned to the section's
+     bottom edge and stands ~5.5rem tall. */
+  padding-bottom: 7rem;
 }
 .v2-hero-copy {
   max-width: 48rem;
@@ -289,7 +297,7 @@ h3 em {
   flex-shrink: 0;
 }
 .v2-hero-title {
-  font-size: clamp(3.2rem, 8.5vw, 6.5rem);
+  font-size: clamp(2.6rem, 6.5vw, 5rem);
   color: var(--cream);
   font-weight: 700;
   line-height: 0.98;
@@ -387,15 +395,20 @@ h3 em {
     padding-left: clamp(1rem, 3vw, 2.5rem);
   }
   .v2-hero-content {
-    padding-bottom: 14rem;
+    /* The meta strip wraps to two rows below 900px and stands ~187px
+       tall, so this can't come down as far as the desktop value. */
+    padding-bottom: 13rem;
   }
 }
 
+/* Parked at the right edge rather than centred: the shorter hero leaves
+   only ~30px between the CTA row and the meta strip, and a centred cue
+   lands on top of the "Explore Services" button. The copy column never
+   reaches this far right. */
 .v2-scroll-indicator {
   position: absolute;
   bottom: 8rem;
-  left: 50%;
-  transform: translateX(-50%);
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1502,7 +1515,7 @@ h3 em {
   justify-content: center;
   font-family: var(--font-display);
   font-size: 1.1rem;
-  color: var(--gold-light);
+  color: var(--green);
   letter-spacing: 0.02em;
   transition: border-color 0.3s, background 0.3s;
 }
@@ -1510,9 +1523,11 @@ h3 em {
   border-color: var(--gold);
   background: rgba(200, 151, 60, 0.08);
 }
-/* Logo plate. Official emblems are almost always dark-on-white artwork,
-   which disappears against --green, so they sit on a cream plate. Wider
-   than the monogram box because wordmarks need the horizontal room. */
+/* Logo plate. Official emblems are almost always dark-on-white artwork
+   with an opaque white box, so the plate is white rather than cream —
+   on the grey band a cream plate would leave a visible warm halo around
+   each emblem. Wider than the monogram box because wordmarks need the
+   horizontal room. */
 .v2-recognition-logo {
   width: 8rem;
   height: 4.25rem;
@@ -1520,7 +1535,7 @@ h3 em {
   align-items: center;
   justify-content: center;
   padding: 0.5rem 0.75rem;
-  background: var(--cream);
+  background: #fff;
   border: 1px solid rgba(200, 151, 60, 0.4);
   transition: border-color 0.3s;
 }
@@ -1533,13 +1548,13 @@ h3 em {
 .v2-recognition-name {
   font-size: 0.8rem;
   font-weight: 500;
-  color: var(--cream);
+  color: var(--dark);
   letter-spacing: 0.04em;
   text-align: center;
 }
 .v2-recognition-sub {
   font-size: 0.7rem;
-  color: var(--gold-light);
+  color: rgba(27, 25, 22, 0.6);
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }

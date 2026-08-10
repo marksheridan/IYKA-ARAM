@@ -23,13 +23,16 @@ export function Recognition() {
     <section
       id="recognition"
       className="v2-landing scroll-mt-20"
-      style={{ background: "var(--green)", paddingBlock: "3.5rem" }}
+      style={{ background: "var(--cream-band)", paddingBlock: "3.5rem" }}
     >
       <div className="v2-container">
         <Reveal>
+          {/* Green rather than the default gold of .v2-section-label: gold
+              on this near-white band lands at 2.4:1, too weak for text
+              this small and this widely tracked. Green is 9.2:1. */}
           <p
             className="v2-section-label"
-            style={{ textAlign: "center", color: "var(--gold-light)", marginBottom: "2.5rem" }}
+            style={{ textAlign: "center", color: "var(--green)", marginBottom: "2.5rem" }}
           >
             Recognised &amp; Collaborated With
           </p>
