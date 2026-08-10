@@ -108,7 +108,7 @@ export function GalleryClient() {
           <p className="v2-section-label v2-reveal mb-4" style={{ color: "var(--gold-light)" }}>
             Iyka-Aram Wellness
           </p>
-          <h1 className="v2-reveal v2-reveal-1" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", color: "var(--cream)", fontWeight: 300, lineHeight: 1.05 }}>
+          <h1 className="v2-reveal v2-reveal-1" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1.05 }}>
             Our Gallery
           </h1>
           <p

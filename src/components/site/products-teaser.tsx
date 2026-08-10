@@ -23,7 +23,7 @@ export function ProductsTeaser() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               IYKA Living
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 300 }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
               Wellness you can
               <br />
               <em style={{ color: "var(--gold)" }}>hold in your hands.</em>
@@ -50,7 +50,7 @@ export function ProductsTeaser() {
                 <div className="v2-product-overlay">
                   <a
                     href="/store"
-                    className="v2-btn v2-btn-gold rounded-none"
+                    className="v2-btn v2-btn-gold"
                     style={{ fontSize: "0.75rem", padding: "0.6rem 1.2rem" }}
                   >
                     View Product

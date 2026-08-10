@@ -57,7 +57,7 @@ export default function ProfilePage() {
             <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.4rem" }}>
               My Account
             </p>
-            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 300, color: "var(--dark)" }}>
+            <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "var(--dark)" }}>
               Welcome back
             </h1>
           </div>
@@ -103,7 +103,7 @@ export default function ProfilePage() {
               background: "#fff", border: "1px solid var(--cream-deep)", borderRadius: "0.75rem",
               padding: "1.25rem 1.5rem",
             }}>
-              <p style={{ fontSize: "1.8rem", fontFamily: "var(--font-display)", fontWeight: 300, color: "var(--dark)", lineHeight: 1 }}>{s.value}</p>
+              <p style={{ fontSize: "1.8rem", fontFamily: "var(--font-display)", fontWeight: 700, color: "var(--dark)", lineHeight: 1 }}>{s.value}</p>
               <p style={{ fontSize: "0.75rem", color: "var(--dark-soft)", marginTop: "0.35rem" }}>{s.label}</p>
             </div>
           ))}
@@ -111,7 +111,7 @@ export default function ProfilePage() {
 
         {/* Orders */}
         <div style={{ marginBottom: "1rem" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 300, color: "var(--dark)", marginBottom: "1rem" }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.3rem", fontWeight: 700, color: "var(--dark)", marginBottom: "1rem" }}>
             Order history
           </h2>
           {orders.length === 0 ? (

@@ -12,20 +12,27 @@
 export const business = {
   name: "IYKA-ARAM Wellness",
   shortName: "IYKA-ARAM",
+  legalName: "Iyka-Aram Wellness Center",
   tagline: "Wellness Starts Here.",
-  // PLACEHOLDER contact details — replace with the real ones.
-  phone: "+91 00000 00000",
-  phoneHref: "tel:+910000000000",
-  whatsapp: "+91 00000 00000",
-  whatsappHref: "https://wa.me/910000000000",
-  email: "hello@iyka-aram.com",
+  phone: "+91 60096 96208",
+  phoneHref: "tel:+916009696208",
+  // Same line handles calls, WhatsApp and enquiries.
+  whatsapp: "+91 60096 96208",
+  whatsappHref: "https://wa.me/916009696208",
+  email: "yonawellnessandhealthcare@gmail.com",
+  emailHref: "mailto:yonawellnessandhealthcare@gmail.com",
   location: "Meghalaya, Northeast India",
-  address: "PLACEHOLDER — full street address, Meghalaya",
-  mapEmbedUrl: "", // paste a Google Maps embed URL to show a live map
+  address:
+    "HV89+8Q4, Gate-1 New, Kench's Trace, Laban, Bishnupur, Shillong, Meghalaya 793004",
+  // Short form for tight spots (contact rows, location list).
+  addressShort: "Laban, Shillong, Meghalaya 793004",
+  mapEmbedUrl:
+    "https://www.google.com/maps?q=Iyka-Aram%20Wellness%20Center%2C%20Kench%27s%20Trace%2C%20Laban%2C%20Shillong%2C%20Meghalaya%20793004&output=embed",
+  mapLinkUrl:
+    "https://www.google.com/maps/search/?api=1&query=Iyka-Aram%20Wellness%20Center%2C%20Kench%27s%20Trace%2C%20Laban%2C%20Shillong%2C%20Meghalaya%20793004",
+  // PLACEHOLDER — handles not yet confirmed by the client.
   socials: [
-    { label: "Instagram", href: "#" },
-    { label: "YouTube", href: "#" },
-    { label: "Facebook", href: "#" },
+    { label: "Instagram", href: "https://instagram.com/iyka_aram" },
   ],
   // Production domain (used for SEO/social links). Update when the domain is live.
   url: "https://iyka-aram.com",
@@ -36,8 +43,7 @@ export const nav = [
   { href: "/#services", label: "Services" },
   { href: "/#team", label: "Team" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/blog", label: "Blog" },
-  { href: "/#contact", label: "Contact" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export const hero = {

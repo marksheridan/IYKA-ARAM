@@ -53,7 +53,8 @@ export default async function BlogPage() {
             Wellness Journal
           </h1>
           <p className="mt-4 max-w-[32rem] font-light leading-[1.7]" style={{ fontSize: "1.05rem", color: "rgba(248,244,238,0.65)" }}>
-            Insights on Ayurveda, yoga, and holistic living from the IYKA-ARAM team.
+            Insights on functional medicine, yoga, nutrition and holistic living
+            from the IYKA-ARAM team.
           </p>
         </div>
       </section>

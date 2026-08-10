@@ -181,7 +181,7 @@ export default function CheckoutPage() {
               <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
             </svg>
           </div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", fontWeight: 300, marginBottom: "1rem" }}>Order Placed!</h1>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2.5rem", fontWeight: 700, marginBottom: "1rem" }}>Order Placed!</h1>
           <p style={{ color: "rgba(27,25,22,0.6)", lineHeight: 1.7, marginBottom: "0.5rem" }}>
             Thank you for your order. Your order ID is <strong>{orderId}</strong>.
           </p>
@@ -199,7 +199,7 @@ export default function CheckoutPage() {
   if (cart.length === 0) {
     return (
       <div style={{ textAlign: "center", padding: "5rem 2rem" }}>
-        <p style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 300, color: "rgba(27,25,22,0.3)", marginBottom: "1.5rem" }}>Your cart is empty.</p>
+        <p style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 700, color: "rgba(27,25,22,0.3)", marginBottom: "1.5rem" }}>Your cart is empty.</p>
         <Link href="/store" className="btn-store-primary" style={{ display: "inline-flex", width: "auto", padding: "0.9rem 2.5rem" }}>Browse Products</Link>
       </div>
     );
@@ -220,7 +220,7 @@ export default function CheckoutPage() {
       <div className="store-checkout-grid">
         {/* Form */}
         <div>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 300, marginBottom: "2rem" }}>Checkout</h1>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 700, marginBottom: "2rem" }}>Checkout</h1>
 
           <div className="store-checkout-section">
             <h2 className="store-checkout-section-title">Contact &amp; Delivery</h2>

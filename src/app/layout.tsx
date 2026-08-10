@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, Cormorant_Garamond, DM_Sans } from "next/font/google";
+import { Inter, DM_Sans, Bricolage_Grotesque } from "next/font/google";
 import "./globals.css";
 import { business } from "@/content/site";
 
@@ -9,24 +9,20 @@ const inter = Inter({
   display: "swap",
 });
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+/* Body face. Italic is loaded because Bricolage has none — anything that
+   needs a real italic (pull quotes, attributions) uses this instead. */
+const dmSans = DM_Sans({
+  variable: "--font-dmsans",
   subsets: ["latin"],
-  display: "swap",
-});
-
-// Astro landing design system fonts
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dmsans",
+// Display face for every heading, site and store. See --font-display.
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -73,7 +69,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${fraunces.variable} ${cormorant.variable} ${dmSans.variable} h-full antialiased`}
+      className={`${inter.variable} ${dmSans.variable} ${bricolage.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         {children}

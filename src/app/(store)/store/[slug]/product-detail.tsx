@@ -172,7 +172,7 @@ export function ProductDetail({ product, related }: { product: Product; related:
 
       {related.length > 0 && (
         <div style={{ marginTop: "5rem" }}>
-          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 300, marginBottom: "2rem" }}>
+          <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.8rem", fontWeight: 700, marginBottom: "2rem" }}>
             You may also like
           </h2>
           <div className="store-related-grid">

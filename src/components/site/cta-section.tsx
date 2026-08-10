@@ -13,7 +13,7 @@ export function CtaSection() {
             style={{
               fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
               color: "var(--cream)",
-              fontWeight: 300,
+              fontWeight: 700,
               lineHeight: 1.1,
               maxWidth: "30rem",
             }}
@@ -40,7 +40,7 @@ export function CtaSection() {
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
             <BookButton
               interest="GENERAL"
-              className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit]"
+              className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
             >
               Book a Free Call
             </BookButton>

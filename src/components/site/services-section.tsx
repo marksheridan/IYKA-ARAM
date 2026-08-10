@@ -1,16 +1,22 @@
 import { Reveal } from "./reveal";
 
+/* Client-supplied service list (26 Jul 2026), in their order.
+   IYKA-ARAM is NOT an Ayurveda clinic — Ayurveda and Panchakarma were
+   removed at the client's request. Focus: Naturopathy & Yoga,
+   Functional Medicine, Integrative Healthcare. */
 const services = [
-  { num: "01", name: "Functional Medicine Consultation", desc: "Root-cause analysis to understand what drives your symptoms" },
-  { num: "02", name: "Clinical Nutrition", desc: "Food as medicine — personalised therapeutic diet plans" },
-  { num: "03", name: "Naturopathy", desc: "Drug-free healing using natural methods and elements" },
-  { num: "04", name: "Yoga Therapy", desc: "Therapeutic yoga for chronic conditions & mental wellness" },
-  { num: "05", name: "Ayurveda", desc: "Ancient wisdom adapted to modern clinical protocols" },
-  { num: "06", name: "Panchakarma", desc: "Detox, cleanse and rejuvenate through classical Ayurvedic procedures" },
-  { num: "07", name: "Hydrotherapy", desc: "Water-based treatments for pain, injury and recovery" },
-  { num: "08", name: "Mud Therapy", desc: "Therapeutic earth applications for inflammation and skin" },
-  { num: "09", name: "Physiotherapy", desc: "Movement-based rehabilitation and chronic pain management" },
-  { num: "10", name: "Online Consultation", desc: "Access expert care from anywhere in Northeast India and beyond" },
+  { num: "01", name: "Acupuncture", desc: "Precision needling to regulate pain, nerve function and energy flow" },
+  { num: "02", name: "Naturopathy", desc: "Drug-free healing using natural methods and elements" },
+  { num: "03", name: "Yoga Therapy", desc: "Therapeutic yoga for chronic conditions & mental wellness" },
+  { num: "04", name: "Ozone Therapy", desc: "Oxygen-based therapy for inflammation, immunity and recovery" },
+  { num: "05", name: "Functional Medicine Consultation", desc: "Root-cause analysis to understand what drives your symptoms" },
+  { num: "06", name: "Functional Nutrition Consultation", desc: "Food as medicine — personalised therapeutic diet plans" },
+  { num: "07", name: "Gut Health Reset Programs", desc: "Structured protocols to rebuild digestion and the microbiome" },
+  { num: "08", name: "Energy Medicine", desc: "Restoring the body's energetic balance to support deep healing" },
+  { num: "09", name: "Longevity", desc: "Preventive, science-led care designed for a longer, fuller life" },
+  { num: "10", name: "Biohacking", desc: "Data-driven optimisation of sleep, energy, metabolism and focus" },
+  { num: "11", name: "Massage", desc: "Therapeutic bodywork for tension, circulation and recovery" },
+  { num: "12", name: "Physiotherapy", desc: "Movement-based rehabilitation and chronic pain management" },
 ];
 
 export function ServicesSection() {
@@ -30,7 +36,7 @@ export function ServicesSection() {
               style={{
                 fontSize: "clamp(2.2rem, 5vw, 3.5rem)",
                 color: "var(--cream)",
-                fontWeight: 300,
+                fontWeight: 700,
                 maxWidth: "22rem",
               }}
             >

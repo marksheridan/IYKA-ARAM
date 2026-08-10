@@ -1,3 +1,4 @@
+import { business } from "@/content/site";
 import { Reveal } from "./reveal";
 
 export function LocationSection() {
@@ -16,7 +17,7 @@ export function LocationSection() {
             <h2
               style={{
                 fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-                fontWeight: 300,
+                fontWeight: 700,
                 marginBottom: "1.5rem",
               }}
             >
@@ -35,7 +36,7 @@ export function LocationSection() {
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
-                <span>Shillong, Meghalaya 793001, India</span>
+                <span>{business.address}</span>
               </div>
               <div className="v2-location-detail">
                 <svg width="18" height="18" fill="none" stroke="var(--gold)" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -55,7 +56,7 @@ export function LocationSection() {
           {/* Map embed */}
           <Reveal className="v2-map-embed" delay={0.2}>
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d57432.48!2d91.8933!3d25.5788!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3750452ef51e06cf%3A0x15dcfd9af414e6b5!2sShillong%2C%20Meghalaya!5e0!3m2!1sen!2sin!4v1700000000000"
+              src={business.mapEmbedUrl}
               width="100%"
               height="100%"
               style={{ border: 0 }}

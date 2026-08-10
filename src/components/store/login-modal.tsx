@@ -99,7 +99,7 @@ export function LoginModal({ open, onClose, onLogin }: Props) {
               <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.4rem" }}>
                 IYKA Living
               </p>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 300, color: "var(--dark)" }}>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "var(--dark)" }}>
                 {step === "phone" ? "Sign in" : "Enter OTP"}
               </h2>
               <p style={{ fontSize: "0.82rem", color: "var(--dark-soft)", marginTop: "0.3rem" }}>

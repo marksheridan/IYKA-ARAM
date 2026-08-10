@@ -25,12 +25,16 @@ const team = [
   },
   {
     name: "Banri Phira",
-    role: "Ayurveda & Naturopath",
+    role: "Naturopath & Therapist",
     initials: "BP",
-    speciality: "Ayurveda · Panchakarma",
+    speciality: "Naturopathy · Acupuncture",
     photo: "",
   },
 ];
+
+/* TODO(client): full write-ups + photos for each practitioner are pending —
+   the team is sending resumes. Replace `role`/`speciality` and drop portraits
+   into /public, then set `photo` to the file path. */
 
 export function TeamSection() {
   return (
@@ -45,7 +49,7 @@ export function TeamSection() {
             <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
               The Practitioners
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 300 }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 700 }}>
               Guided by specialists,
               <br />
               <em style={{ color: "var(--gold-light)" }}>not generalists.</em>

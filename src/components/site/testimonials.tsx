@@ -37,7 +37,7 @@ export function Testimonials() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Patient Stories
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 300 }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
               Healing that speaks
               <br />
               <em style={{ color: "var(--gold)" }}>for itself.</em>

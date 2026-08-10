@@ -39,7 +39,7 @@
 
   /* Typography (fonts injected by next/font in layout.tsx) */
   --font-sans: var(--font-inter);
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-bricolage);
 
   /* ── MIS dashboard design system (clinical blue) ── */
   --color-mis-bg:              #f6f6f6;
@@ -120,7 +120,7 @@ body {
   --green-mid:  #3A5234;
 
   /* Design-system fonts (loaded via next/font in layout.tsx) */
-  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
   --font-body:    var(--font-dmsans), system-ui, sans-serif;
 
   --section-py: clamp(4rem, 10vw, 8rem);
@@ -134,9 +134,18 @@ body {
 .v2-landing h2,
 .v2-landing h3 {
   font-family: var(--font-display);
-  font-weight: 400;
+  font-weight: 700;
   line-height: 1.1;
   letter-spacing: -0.01em;
+}
+
+/* Bricolage ships no italic, so a bare <em> in a heading would be
+   synthesised into a slanted fake. Headings carry emphasis with gold
+   instead. Body <em> is untouched — DM Sans has a real italic. */
+h1 em,
+h2 em,
+h3 em {
+  font-style: normal;
 }
 
 .v2-section-label {
@@ -162,6 +171,7 @@ body {
   cursor: pointer;
   transition: var(--transition-base);
   border: 1px solid transparent;
+  border-radius: 9999px;
 }
 .v2-btn-gold {
   background: var(--gold);
@@ -221,41 +231,94 @@ body {
 .v2-hero-slide-2.is-active {
   animation: v2-ken-burns-out 8s ease-in-out forwards;
 }
+/* Softer, bottom-weighted wash: the photograph stays legible (premium,
+   editorial) instead of being flooded by a flat green panel. */
 .v2-hero-overlay {
   position: absolute;
   inset: 0;
   background:
     linear-gradient(to right,
-      rgba(20, 35, 18, 0.92) 0%,
-      rgba(20, 35, 18, 0.75) 40%,
-      rgba(20, 35, 18, 0.35) 70%,
-      rgba(20, 35, 18, 0.15) 100%),
+      rgba(16, 26, 15, 0.82) 0%,
+      rgba(16, 26, 15, 0.55) 35%,
+      rgba(16, 26, 15, 0.18) 62%,
+      rgba(16, 26, 15, 0.05) 100%),
     linear-gradient(to top,
-      rgba(20, 35, 18, 0.6) 0%,
-      transparent 40%);
+      rgba(12, 20, 12, 0.85) 0%,
+      rgba(12, 20, 12, 0.25) 32%,
+      transparent 55%),
+    radial-gradient(ellipse 120% 90% at 50% 50%,
+      transparent 35%,
+      rgba(12, 20, 12, 0.45) 100%);
+}
+/* Fine film grain — reads as depth, not texture, at normal viewing size. */
+.v2-hero-grain {
+  position: absolute;
+  inset: 0;
+  opacity: 0.13;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 .v2-hero-content {
   position: relative;
   width: min(90rem, 100% - 3rem);
   margin-inline: auto;
-  padding-top: 8rem;
-  padding-bottom: 5rem;
+  padding-top: 9rem;
+  padding-bottom: 11rem;
+}
+.v2-hero-copy {
+  max-width: 48rem;
+}
+.v2-hero-kicker {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.75rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.v2-hero-kicker-rule {
+  display: block;
+  width: 3.5rem;
+  height: 1px;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+.v2-hero-title {
+  font-size: clamp(3.2rem, 8.5vw, 6.5rem);
+  color: var(--cream);
+  font-weight: 700;
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
+}
+/* Bricolage has no true italic, so an <em> would be synthesised into a
+   slanted fake. The title is already bold, so gold alone carries the
+   emphasis. */
+.v2-hero-title em {
+  font-style: normal;
+  color: var(--gold-light);
 }
 .v2-hero-rotate {
   position: relative;
-  min-height: 3.5rem;
-  margin-bottom: 2.5rem;
+  min-height: 4.25rem;
+  margin-bottom: 2.75rem;
   overflow: hidden;
 }
 .v2-hero-rotate-line {
   position: absolute;
   inset-inline: 0;
   font-family: var(--font-body);
-  font-size: 1.05rem;
-  color: rgba(248, 244, 238, 0.7);
-  max-width: 32rem;
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  color: rgba(248, 244, 238, 0.82);
+  max-width: 34rem;
   font-weight: 300;
-  line-height: 1.7;
+  line-height: 1.65;
   opacity: 0;
   transform: translateY(1rem);
   transition: opacity 0.7s ease, transform 0.7s ease;
@@ -264,15 +327,91 @@ body {
   opacity: 1;
   transform: translateY(0);
 }
+.v2-hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* ── Hero credential strip ── */
+.v2-hero-meta {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  border-top: 1px solid rgba(200, 151, 60, 0.25);
+  background: linear-gradient(to top, rgba(12, 20, 12, 0.72), rgba(12, 20, 12, 0.28));
+  backdrop-filter: blur(6px);
+}
+.v2-hero-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  padding: 1.4rem clamp(1rem, 3vw, 2.5rem);
+  border-left: 1px solid rgba(200, 151, 60, 0.16);
+}
+/* Align the first cell with the hero copy, which sits in a
+   min(90rem, 100% - 3rem) container. */
+.v2-hero-meta-item:first-child {
+  border-left: none;
+  padding-left: max(1.5rem, calc((100vw - 90rem) / 2));
+}
+.v2-hero-meta-k {
+  font-family: var(--font-display);
+  font-size: clamp(1rem, 1.6vw, 1.25rem);
+  font-weight: 600;
+  color: var(--gold-light);
+  line-height: 1.2;
+}
+.v2-hero-meta-v {
+  font-family: var(--font-body);
+  font-size: 0.66rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.55);
+}
+@media (max-width: 900px) {
+  .v2-hero-meta {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .v2-hero-meta-item:nth-child(odd) {
+    border-left: none;
+  }
+  .v2-hero-meta-item:nth-child(n + 3) {
+    border-top: 1px solid rgba(200, 151, 60, 0.16);
+  }
+  .v2-hero-meta-item:first-child {
+    padding-left: clamp(1rem, 3vw, 2.5rem);
+  }
+  .v2-hero-content {
+    padding-bottom: 14rem;
+  }
+}
+
 .v2-scroll-indicator {
   position: absolute;
-  bottom: 2.5rem;
+  bottom: 8rem;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
+}
+.v2-scroll-indicator span {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.4);
+}
+@media (max-width: 900px) {
+  .v2-scroll-indicator {
+    display: none;
+  }
 }
 .v2-scroll-line {
   width: 1px;
@@ -309,9 +448,10 @@ body {
   display: inline-flex;
   align-items: center;
   padding-inline: 2rem;
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-style: italic;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: var(--gold-light);
   white-space: nowrap;
 }
@@ -479,7 +619,7 @@ body {
 .v2-stat-num {
   font-family: var(--font-display);
   font-size: 3.5rem;
-  font-weight: 300;
+  font-weight: 700;
   color: var(--dark);
   line-height: 1;
 }
@@ -525,7 +665,7 @@ body {
 .v2-pillar-title {
   font-family: var(--font-display);
   font-size: 1.5rem;
-  font-weight: 300;
+  font-weight: 700;
   color: var(--dark);
   letter-spacing: -0.01em;
 }
@@ -653,7 +793,7 @@ body {
 .v2-about-badge-num {
   font-family: var(--font-display);
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 700;
   color: var(--dark);
   line-height: 1;
 }
@@ -703,7 +843,7 @@ body {
 .v2-team-initials {
   font-family: var(--font-display);
   font-size: 3rem;
-  font-weight: 300;
+  font-weight: 700;
   color: var(--gold);
   opacity: 0.6;
 }
@@ -934,13 +1074,15 @@ body {
 .v2-testimonial-quote-mark {
   opacity: 0.8;
 }
+/* Pull quote keeps its italic, so it stays on the body face — Bricolage
+   has no italic and would be synthesised into a slant. */
 .v2-testimonial-text {
-  font-family: var(--font-display);
+  font-family: var(--font-body);
   font-size: 1.15rem;
   font-style: italic;
   color: var(--dark);
   line-height: 1.6;
-  font-weight: 300;
+  font-weight: 400;
   flex: 1;
 }
 .v2-testimonial-author {
@@ -983,27 +1125,80 @@ body {
 }
 
 /* ── Booking (3 paths) ── */
+/* Meditation-on-the-hill photograph behind the booking cards. The wash is
+   heavy enough to keep cream text legible but light enough that the ridge
+   line and figure still read. `--dark` stays as the fallback colour so the
+   section never renders as bare white if the image 404s. */
+.v2-booking {
+  position: relative;
+  background-color: var(--dark);
+  background-image:
+    linear-gradient(to bottom,
+      rgba(27, 25, 22, 0.90) 0%,
+      rgba(27, 25, 22, 0.80) 45%,
+      rgba(27, 25, 22, 0.92) 100%),
+    url("/booking-bg.jpg");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+/* ── Card corners ──────────────────────────────────────────────
+   4px on every card surface across the site and store. Targets what
+   actually paints: .v2-team-card and .v2-product-card have no
+   background or border of their own, so their inner image wrap is the
+   visible block and carries the radius instead.
+   .v2-service-card is excluded — it only draws border-bottom/right as
+   part of a grid rule, and rounding a partial border looks broken.
+   MIS and admin keep their own rounding, as with the buttons. */
+.v2-pillar-card,
+.v2-testimonial-card,
+.v2-book-card,
+.v2-team-photo,
+.v2-product-image-wrap,
+.vtc-card,
+.tm-card,
+.mg-card,
+.pl-card,
+.store-product-card,
+.store-related-card,
+.store-otp-card {
+  border-radius: 4px;
+}
+/* These images sit flush against the top edge of a bordered card whose
+   parent has no overflow:hidden, so square corners would poke out. */
+.store-product-img-wrap,
+.store-related-img {
+  border-radius: 4px 4px 0 0;
+}
+
 .v2-book-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
+/* Solid white panels on the photograph. Gold is reserved for the two
+   things meant to be noticed — the CTA and the "Most Popular" tag —
+   so everything else here reads in the primary ink. */
 .v2-book-card {
   position: relative;
-  background: rgba(248, 244, 238, 0.04);
-  border: 1px solid rgba(248, 244, 238, 0.08);
+  background: #fff;
+  border: 1px solid var(--cream-deep);
   padding: 2rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, box-shadow 0.3s;
 }
 .v2-book-card:hover {
-  border-color: rgba(200, 151, 60, 0.3);
+  border-color: rgba(200, 151, 60, 0.45);
+  box-shadow: 0 10px 34px rgba(27, 25, 22, 0.18);
 }
+/* Featured card is the same white panel — the gold tag above it does the
+   distinguishing, backed by a slightly stronger border and lift. */
 .v2-book-card--featured {
-  background: var(--green-mid);
-  border-color: rgba(200, 151, 60, 0.25);
+  border-color: rgba(200, 151, 60, 0.5);
+  box-shadow: 0 10px 34px rgba(27, 25, 22, 0.18);
 }
 .v2-book-card-tag {
   position: absolute;
@@ -1022,21 +1217,22 @@ body {
 .v2-book-card-icon {
   width: 3rem;
   height: 3rem;
-  background: rgba(248, 244, 238, 0.06);
+  background: var(--cream);
+  border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--gold);
+  color: var(--dark);
 }
 .v2-book-card-title {
   font-family: var(--font-display);
   font-size: 1.4rem;
-  font-weight: 300;
-  color: var(--cream);
+  font-weight: 700;
+  color: var(--dark);
 }
 .v2-book-card-desc {
   font-size: 0.88rem;
-  color: rgba(248, 244, 238, 0.5);
+  color: rgba(27, 25, 22, 0.65);
   line-height: 1.7;
   flex: 1;
 }
@@ -1045,10 +1241,10 @@ body {
   flex-direction: column;
   gap: 0.2rem;
   padding-block: 0.75rem;
-  border-top: 1px solid rgba(248, 244, 238, 0.07);
-  border-bottom: 1px solid rgba(248, 244, 238, 0.07);
+  border-top: 1px solid var(--cream-deep);
+  border-bottom: 1px solid var(--cream-deep);
   font-size: 0.8rem;
-  color: rgba(248, 244, 238, 0.4);
+  color: rgba(27, 25, 22, 0.5);
   letter-spacing: 0.02em;
 }
 @media (max-width: 900px) {
@@ -1059,20 +1255,6 @@ body {
 .v2-cta-panel {
   background: var(--green);
   padding-block: clamp(4rem, 10vw, 8rem);
-  position: relative;
-  overflow: hidden;
-}
-.v2-cta-panel::before {
-  content: "";
-  position: absolute;
-  right: -4rem;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 32rem;
-  height: 32rem;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(200, 151, 60, 0.08) 0%, transparent 70%);
-  pointer-events: none;
 }
 .v2-cta-inner {
   position: relative;
@@ -1294,6 +1476,9 @@ body {
 .v2-recognition-grid {
   display: flex;
   justify-content: center;
+  /* Logo-only items are shorter than the monogram fallback (which still
+     carries two lines of text), so centre them against each other. */
+  align-items: center;
   flex-wrap: wrap;
   gap: 2rem 4rem;
 }
@@ -1325,6 +1510,26 @@ body {
   border-color: var(--gold);
   background: rgba(200, 151, 60, 0.08);
 }
+/* Logo plate. Official emblems are almost always dark-on-white artwork,
+   which disappears against --green, so they sit on a cream plate. Wider
+   than the monogram box because wordmarks need the horizontal room. */
+.v2-recognition-logo {
+  width: 8rem;
+  height: 4.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 0.75rem;
+  background: var(--cream);
+  border: 1px solid rgba(200, 151, 60, 0.4);
+  transition: border-color 0.3s;
+}
+.v2-recognition-item:hover .v2-recognition-logo {
+  border-color: var(--gold);
+}
+.v2-recognition-logo img {
+  object-fit: contain;
+}
 .v2-recognition-name {
   font-size: 0.8rem;
   font-weight: 500;
@@ -1350,30 +1555,48 @@ body {
 
 /* ── Video Testimonial Carousel ── */
 .vtc-root { display: flex; align-items: center; gap: 1.5rem; justify-content: center; }
-.vtc-window { overflow: hidden; width: min(780px, 94vw); flex-shrink: 0; }
-.vtc-track { display: flex; gap: 0.75rem; transition: transform 0.45s var(--ease-out-expo); }
-.vtc-slide { flex: 0 0 calc((100% - 1.5rem) / 3); }
+/* Enlarged at the client's request — the reels are the loudest thing here. */
+.vtc-window { overflow: hidden; width: min(1180px, 92vw); flex-shrink: 0; }
+.vtc-track { display: flex; gap: 12px; transition: transform 0.6s var(--ease-out-expo); }
+.vtc-slide { flex: 0 0 calc((100% - 24px) / 3); }
 .vtc-card {
   position: relative; aspect-ratio: 9/16; background: var(--dark-soft);
-  overflow: hidden; opacity: 0.5; transform: scale(0.94);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  overflow: hidden; opacity: 0.45; transform: scale(0.92); cursor: pointer;
+  transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
 }
-.vtc-card.vtc-center { opacity: 1; transform: scale(1); }
+.vtc-card:not(.vtc-center):hover { opacity: 0.7; }
+.vtc-card.vtc-center { cursor: default; }
+.vtc-card.vtc-center {
+  opacity: 1; transform: scale(1);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+}
 .vtc-video { width: 100%; height: 100%; object-fit: cover; display: block; }
-.vtc-overlay {
-  position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-  background: rgba(27,25,22,0.35); opacity: 1; transition: opacity 0.3s ease, background 0.3s ease;
+/* Sound toggle — videos autoplay muted, this is the only control needed. */
+.vtc-sound {
+  position: absolute; top: 0.75rem; right: 0.75rem; z-index: 2;
+  width: 2.5rem; height: 2.5rem; border-radius: 50%;
+  background: rgba(27, 25, 22, 0.55); border: 1px solid rgba(200, 151, 60, 0.45);
+  color: var(--cream); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; backdrop-filter: blur(8px);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
 }
-.vtc-card.playing .vtc-overlay { opacity: 0; background: transparent; }
-.vtc-card.playing:hover .vtc-overlay { opacity: 1; background: rgba(27,25,22,0.25); }
-.vtc-btn {
-  width: 3.6rem; height: 3.6rem; background: rgba(200,151,60,0.92); border: none;
-  border-radius: 50%; color: var(--dark); display: flex; align-items: center; justify-content: center;
-  cursor: pointer; transition: transform 0.2s, background 0.2s; backdrop-filter: blur(6px);
+.vtc-sound:hover { background: var(--gold); color: var(--dark); transform: scale(1.06); }
+/* Shown once a story finishes — it stops there and waits for the visitor. */
+.vtc-replay {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.9rem;
+  background: rgba(27, 25, 22, 0.55); backdrop-filter: blur(3px);
+  border: none; cursor: pointer; color: var(--cream);
+  font-family: var(--font-body); font-size: 0.66rem; font-weight: 500;
+  letter-spacing: 0.18em; text-transform: uppercase;
 }
-.vtc-btn:hover { transform: scale(1.08); background: var(--gold); }
-.vtc-card.playing .vtc-play { display: none; }
-.vtc-card:not(.playing) .vtc-pause { display: none; }
+.vtc-replay-icon {
+  width: 3.4rem; height: 3.4rem; border-radius: 50%;
+  background: rgba(200, 151, 60, 0.92); color: var(--dark);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.2s, background 0.2s;
+}
+.vtc-replay:hover .vtc-replay-icon { transform: scale(1.08); background: var(--gold); }
 .vtc-badge {
   position: absolute; bottom: 0.65rem; left: 0.65rem; display: flex; align-items: center;
   gap: 0.35rem; font-size: 0.6rem; font-weight: 500; letter-spacing: 0.05em;
@@ -1396,11 +1619,272 @@ body {
 }
 .vtc-dot.active { background: var(--gold); transform: scale(1.3); }
 .vtc-counter { text-align: center; margin-top: 0.9rem; font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(248,244,238,0.3); }
+@media (max-width: 900px) {
+  .vtc-window { width: 92vw; }
+  .vtc-slide { flex: 0 0 calc((100% - 12px) / 2); }
+}
 @media (max-width: 600px) {
   .vtc-arrow { display: none; }
-  .vtc-window { width: 88vw; }
+  .vtc-window { width: 84vw; }
   .vtc-slide { flex: 0 0 100%; }
   .vtc-card { opacity: 1; transform: scale(1); }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOVING TESTIMONIALS — full-bleed marquee of patient quotes
+   ════════════════════════════════════════════════════════════════ */
+.tm-marquee {
+  overflow: hidden;
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+}
+@keyframes tm-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.tm-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  animation: tm-scroll 60s linear infinite;
+}
+.tm-marquee:hover .tm-track { animation-play-state: paused; }
+.tm-card {
+  position: relative;
+  flex: 0 0 min(26rem, 82vw);
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 2.2rem;
+  background: rgba(248, 244, 238, 0.035);
+  border: 1px solid rgba(200, 151, 60, 0.16);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   MOVING GALLERY — two self-scrolling rows of large imagery
+   ════════════════════════════════════════════════════════════════ */
+.mg-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  flex-wrap: wrap;
+  margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+}
+.mg-title {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  color: var(--cream);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.mg-title em { font-style: normal; color: var(--gold-light); }
+
+.mg-rows { display: flex; flex-direction: column; gap: 1.1rem; }
+.mg-row { overflow: hidden; width: 100%; }
+@keyframes mg-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes mg-scroll-reverse {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+.mg-track {
+  display: flex;
+  gap: 1.1rem;
+  width: max-content;
+  animation: mg-scroll 55s linear infinite;
+}
+.mg-track--reverse { animation-name: mg-scroll-reverse; animation-duration: 65s; }
+.mg-row:hover .mg-track { animation-play-state: paused; }
+
+.mg-card {
+  position: relative;
+  flex: 0 0 auto;
+  /* Deliberately large — this is the "loud" part of the page. */
+  width: clamp(300px, 34vw, 560px);
+  height: clamp(230px, 26vw, 400px);
+  margin: 0;
+  overflow: hidden;
+  background: var(--green-mid);
+}
+.mg-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s var(--ease-out-expo);
+}
+.mg-card:hover .mg-img { transform: scale(1.05); }
+.mg-caption {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  padding: 1.5rem;
+  background: linear-gradient(to top, rgba(12, 20, 12, 0.88) 0%, rgba(12, 20, 12, 0.35) 55%, transparent 100%);
+}
+.mg-tag {
+  display: inline-block;
+  margin-bottom: 0.4rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.mg-caption p {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 1.8vw, 1.45rem);
+  font-weight: 300;
+  line-height: 1.25;
+  color: var(--cream);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   5 PILLARS OF IYKA-ARAM
+   ════════════════════════════════════════════════════════════════ */
+.pl-head {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+  align-items: end;
+  margin-bottom: clamp(3rem, 6vw, 4.5rem);
+}
+.pl-title {
+  font-size: clamp(2.2rem, 5.5vw, 4rem);
+  color: var(--dark);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+}
+.pl-title em { font-style: normal; color: var(--gold); }
+.pl-intro {
+  color: var(--dark-soft);
+  line-height: 1.8;
+  font-size: 1.05rem;
+  max-width: 30rem;
+}
+.pl-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  background: rgba(27, 25, 22, 0.12);
+  border-block: 1px solid rgba(27, 25, 22, 0.12);
+}
+.pl-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  padding: 2.5rem 1.75rem 3rem;
+  background: var(--cream);
+  transition: background 0.4s var(--ease-out-expo);
+}
+.pl-card:hover { background: var(--cream-deep); }
+.pl-num {
+  font-family: var(--font-display);
+  font-size: 2.6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--gold);
+  opacity: 0.45;
+  transition: opacity 0.4s ease;
+}
+.pl-card:hover .pl-num { opacity: 1; }
+.pl-name {
+  font-size: 1.35rem;
+  font-weight: 400;
+  color: var(--dark);
+  letter-spacing: -0.01em;
+}
+.pl-desc {
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: var(--dark-soft);
+  opacity: 0.85;
+}
+@media (max-width: 1100px) {
+  .pl-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 900px) {
+  .pl-head { grid-template-columns: 1fr; align-items: start; }
+}
+@media (max-width: 560px) {
+  .pl-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════════════════════
+   STORE — COMING SOON BANNER
+   ════════════════════════════════════════════════════════════════ */
+.st-banner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: clamp(2rem, 4vw, 3.5rem);
+  background: var(--cream);
+  border: 1px solid rgba(200, 151, 60, 0.35);
+}
+.st-badge {
+  display: inline-block;
+  margin-bottom: 1.2rem;
+  padding: 0.4rem 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: var(--gold);
+}
+.st-title {
+  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+  font-weight: 700;
+  line-height: 1.08;
+  color: var(--dark);
+  margin-bottom: 1.2rem;
+}
+.st-title em { font-style: normal; color: var(--gold); }
+.st-text {
+  color: var(--dark-soft);
+  line-height: 1.8;
+  font-size: 1rem;
+  max-width: 30rem;
+}
+.st-visual { position: relative; aspect-ratio: 16 / 10; }
+.st-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+.st-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.9rem;
+  color: var(--gold);
+  background: var(--cream-deep);
+  border: 1px dashed rgba(200, 151, 60, 0.55);
+}
+.st-placeholder span {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+@media (max-width: 800px) {
+  .st-banner { grid-template-columns: 1fr; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mg-track,
+  .tm-track,
+  .v2-marquee-track { animation: none; }
+  .mg-row,
+  .tm-marquee { overflow-x: auto; }
 }
 
 /* ── IYKA Living Store ── */
@@ -1413,7 +1897,7 @@ body {
   display: flex; align-items: center; gap: 2rem;
 }
 .store-logo { display: flex; flex-direction: column; line-height: 1; flex-shrink: 0; text-decoration: none; }
-.store-logo-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 300; letter-spacing: 0.06em; color: var(--dark); }
+.store-logo-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; letter-spacing: 0.06em; color: var(--dark); }
 .store-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
 .store-nav-links { display: flex; list-style: none; gap: 1.8rem; margin-left: auto; align-items: center; padding: 0; }
 .store-nav-link { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; color: var(--dark-soft); transition: color 0.2s; text-decoration: none; }
@@ -1451,7 +1935,7 @@ body {
   max-width: 1280px; margin: 0 auto; display: flex; flex-wrap: wrap;
   gap: 2rem; justify-content: space-between; align-items: flex-start;
 }
-.store-footer-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 300; color: var(--cream); margin-bottom: 0.5rem; }
+.store-footer-brand { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--cream); margin-bottom: 0.5rem; }
 .store-footer-tagline { font-size: 0.8rem; letter-spacing: 0.08em; color: rgba(248,244,238,0.45); margin-bottom: 1rem; }
 .store-footer-back { font-size: 0.78rem; color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 .store-footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; padding: 0; }
@@ -1463,6 +1947,21 @@ body {
 .store-breadcrumb a { text-decoration: none; transition: color 0.2s; }
 .store-breadcrumb a:hover { color: var(--gold); }
 .store-breadcrumb-sep { opacity: 0.4; }
+
+/* Pill corners across the storefront, matching .v2-btn on the marketing
+   site. Tabs and the plain text buttons (remove, cancel) are excluded —
+   they have no fill, so a radius does nothing but confuse the intent. */
+.btn-store-primary,
+.btn-store-outline,
+.btn-store-gold,
+.store-profile-btn,
+.store-filter-btn,
+.store-add-to-cart-btn,
+.store-qty-btn,
+.store-qty-btn-small {
+  border-radius: 9999px;
+}
+
 .btn-store-primary {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   background: var(--dark); color: #fff; border: none; padding: 0.9rem 2rem;
@@ -1526,7 +2025,7 @@ body {
 .store-detail-badge { position: absolute; top: 1rem; left: 1rem; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
 .store-detail-saving { margin-top: 0.75rem; background: #f0faf0; border: 1px solid #c6e6c6; color: #2a6a2a; font-size: 0.8rem; font-weight: 500; padding: 0.6rem 1rem; text-align: center; }
 .store-detail-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
-.store-detail-name { font-family: var(--font-display); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 300; color: var(--dark); margin: 0.5rem 0 0.4rem; line-height: 1.15; }
+.store-detail-name { font-family: var(--font-display); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 700; color: var(--dark); margin: 0.5rem 0 0.4rem; line-height: 1.15; }
 .store-detail-tagline { font-size: 0.9rem; color: rgba(27,25,22,0.55); line-height: 1.6; margin-bottom: 1rem; }
 .store-detail-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.2rem; }
 .store-detail-price-block { display: flex; align-items: baseline; gap: 0.8rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
@@ -1606,7 +2105,7 @@ body {
 .store-otp-card { background: #fff; border: 1px solid var(--cream-deep); padding: 2.5rem 2rem; width: 100%; max-width: 400px; box-shadow: 0 24px 80px rgba(27,25,22,0.3); text-align: center; animation: storeSlideUp 0.3s ease; }
 @keyframes storeSlideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 .store-otp-icon { font-size: 2.5rem; margin-bottom: 1rem; }
-.store-otp-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 300; color: var(--dark); margin-bottom: 0.5rem; }
+.store-otp-title { font-family: var(--font-display); font-size: 1.7rem; font-weight: 700; color: var(--dark); margin-bottom: 0.5rem; }
 .store-otp-subtitle { font-size: 0.85rem; color: rgba(27,25,22,0.55); line-height: 1.6; margin-bottom: 1.5rem; }
 .store-otp-phone-display { background: var(--cream); border: 1px solid var(--cream-deep); padding: 0.9rem 1rem; margin-bottom: 1.5rem; }
 .store-otp-input-row { display: flex; gap: 0.5rem; justify-content: center; margin-bottom: 1.2rem; }

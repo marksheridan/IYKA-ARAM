@@ -20,7 +20,7 @@ export default async function StorePage() {
           <p style={{ fontSize: "0.7rem", fontWeight: 600, letterSpacing: "0.18em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "1rem" }}>
             Iyka-Aram · IYKA Living
           </p>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 300, lineHeight: 1.1, marginBottom: "1rem" }}>
+          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2.5rem,5vw,4rem)", fontWeight: 700, lineHeight: 1.1, marginBottom: "1rem" }}>
             Wellness you can<br /><em style={{ color: "var(--gold)" }}>hold in your hands.</em>
           </h1>
           <p style={{ fontSize: "0.95rem", color: "rgba(248,244,238,0.65)", maxWidth: "36rem", lineHeight: 1.7 }}>

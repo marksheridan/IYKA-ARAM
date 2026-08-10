@@ -1,0 +1,95 @@
+{
+  "_comment": "Token values extracted from src/app/globals.css on 2026-07-26. Path-independent source of truth for rebuilding foundations in a fresh Figma file (the original foundations were built via MCP and never scripted). Consumed by either the MCP route or a Scripter 00-foundations.js.",
+  "_source": "C:/iyak-aram 2/IYKA-ARAM/src/app/globals.css",
+  "_note": "The old file cmFt5G4SRLrDXGmHHSb0PS holds 56 primitives; CSS yields 41 hex tokens. The remainder were derived tints/shades created during the MCP build. Read the old file to recover the exact set once MCP quota is available.",
+
+  "primitives": {
+    "brand": {
+      "cream": "#F8F4EE",
+      "cream-deep": "#EEE8DF",
+      "cream-page": "#faf7f0",
+      "sand": "#efe9dc",
+      "dark": "#1B1916",
+      "dark-soft": "#2A2520",
+      "ink": "#1c1b17",
+      "muted": "#6b6863",
+      "gold": "#C8973C",
+      "gold-alt": "#c2a14d",
+      "gold-light": "#DEB86A",
+      "gold-pale": "#F0DEB8",
+      "gold-soft": "#e7d8ae",
+      "green": "#2C4028",
+      "green-mid": "#3A5234",
+      "green-pale": "#E8EEE7",
+      "forest": "#2f4733",
+      "sage": "#7c8b6f"
+    },
+    "mis": {
+      "bg": "#f6f6f6",
+      "surface": "#ffffff",
+      "border": "#e5e7eb",
+      "border-soft": "#f3f4f6",
+      "blue": "#2563eb",
+      "blue-dark": "#1d4ed8",
+      "blue-light": "#dbeafe",
+      "blue-subtle": "#eff6ff",
+      "text": "#111827",
+      "text-muted": "#6b7280",
+      "text-soft": "#9ca3af",
+      "success": "#10b981",
+      "success-bg": "#d1fae5",
+      "warning": "#f59e0b",
+      "warning-bg": "#fef3c7",
+      "info": "#3b82f6",
+      "info-bg": "#dbeafe",
+      "purple": "#8b5cf6",
+      "purple-bg": "#ede9fe",
+      "danger": "#ef4444",
+      "danger-bg": "#fee2e2"
+    }
+  },
+
+  "radius": {
+    "_comment": "radius/none is the brand default — square corners on site and store are deliberate. Rounding is reserved for MIS and admin.",
+    "none": 0,
+    "xs": 2,
+    "sm": 8,
+    "md": 10,
+    "lg": 16,
+    "full": 9999
+  },
+
+  "elevation": {
+    "_comment": "Gold-tinted on brand surfaces, neutral on internal tools.",
+    "gold-hairline": "0 1px 0 rgba(200, 151, 60, 0.15)",
+    "gold-soft": "0 4px 24px rgba(200, 151, 60, 0.08)",
+    "gold-glow": "0 8px 40px rgba(200, 151, 60, 0.10)",
+    "gold-glow-strong": "0 8px 40px rgba(200, 151, 60, 0.12)",
+    "ui-subtle": "0 1px 30px rgba(27, 25, 22, 0.06)",
+    "ui-raised": "0 4px 20px rgba(0, 0, 0, 0.08)",
+    "ui-card": "0 8px 32px rgba(27, 25, 22, 0.10)",
+    "ui-modal": "0 24px 80px rgba(27, 25, 22, 0.30)"
+  },
+
+  "fonts": {
+    "_trap": "Inter spells it 'Semi Bold' and 'Extra Bold' WITH a space; Cormorant Garamond, DM Sans and Fraunces use 'SemiBold' without. Verify with listAvailableFontsAsync().",
+    "display": { "family": "Cormorant Garamond", "styles": ["Light", "Regular", "Light Italic", "Italic"] },
+    "displayAlt": { "family": "Fraunces", "styles": ["Regular", "SemiBold"] },
+    "body": { "family": "DM Sans", "styles": ["Regular", "Medium", "SemiBold", "Bold"] },
+    "ui": { "family": "Inter", "styles": ["Regular", "Medium", "Semi Bold", "Bold"] }
+  },
+
+  "layout": {
+    "mis-sidebar-w": 240,
+    "section-py": "clamp(4rem, 10vw, 8rem)",
+    "screen-gutter": 80,
+    "_gutter_note": "80px, NOT the literal CSS 24px from min(90rem, 100% - 3rem). 24px reads as no padding in a Figma canvas.",
+    "ease-out-expo": "cubic-bezier(0.16, 1, 0.3, 1)",
+    "transition-base": "0.35s var(--ease-out-expo)"
+  },
+
+  "planNotes": {
+    "starter": "1 mode per collection and 3 pages per file. Cream/dark encoded in token NAMES; hierarchy via Sections.",
+    "professional": "Convert the cream/* and dark/* token groups into real light/dark MODES, and split Sections back into proper pages."
+  }
+}

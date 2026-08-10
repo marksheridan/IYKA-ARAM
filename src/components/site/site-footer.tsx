@@ -1,11 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { business } from "@/content/site";
 
+/* Store links are removed until the shop launches — restore
+   { href: "/store", label: "IYKA Living Store" } here when it goes live. */
 const platform = [
   { href: "/#services", label: "Services" },
+  { href: "/#pillars", label: "The 5 Pillars" },
   { href: "/#about", label: "About Dr. Emidaka" },
-  { href: "/store", label: "IYKA Living Store" },
-  { href: "/store?tab=satwik", label: "Satwik Meals" },
+  { href: "/gallery", label: "Gallery" },
   { href: "/blog", label: "Wellness Blog" },
 ];
 
@@ -43,7 +46,7 @@ export function SiteFooter() {
             <ul className="v2-footer-links">
               {brands.map((b) => (
                 <li key={b}>
-                  <a href="#">{b}</a>
+                  <Link href="/#pillars">{b}</Link>
                 </li>
               ))}
             </ul>
@@ -54,17 +57,19 @@ export function SiteFooter() {
             <p className="v2-footer-heading">Contact</p>
             <ul className="v2-footer-links">
               <li>
-                <a href="tel:+919800000000">+91 98000 00000</a>
+                <a href={business.phoneHref}>{business.phone}</a>
               </li>
               <li>
-                <a href="mailto:hello@iyka-aram.com">hello@iyka-aram.com</a>
+                <a href={business.emailHref}>{business.email}</a>
               </li>
-              <li>
-                <a href="https://instagram.com/iyka_aram" target="_blank" rel="noopener">
-                  Instagram
-                </a>
-              </li>
-              <li className="v2-footer-muted">Shillong, Meghalaya</li>
+              {business.socials.map((s) => (
+                <li key={s.label}>
+                  <a href={s.href} target="_blank" rel="noopener">
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+              <li className="v2-footer-muted">{business.addressShort}</li>
             </ul>
           </div>
         </div>

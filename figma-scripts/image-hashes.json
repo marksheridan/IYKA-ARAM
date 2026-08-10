@@ -1,0 +1,27 @@
+{
+  "note": "imageHash values for IYKA-ARAM assets uploaded to Figma file cmFt5G4SRLrDXGmHHSb0PS. Apply with node.fills = [{type:'IMAGE', imageHash: '<hash>', scaleMode:'FILL'}]. Staging nodes live on page 01.",
+  "logoSvgNodeId": "7:6",
+  "assets": {
+    "logo.png":        { "hash": "b83fd77e3630004cc101e4d17132e348fd1fbcd6", "node": "7:46" },
+    "hero.jpg":        { "hash": "7033c781b15e45f146699cd863fb5d1b5f6de74a", "node": "7:47" },
+    "hero2.jpg":       { "hash": "01f504daf4d31050d5fda4989f06a6e5ebe79672", "node": "7:48" },
+    "dr-emidaka.jpg":  { "hash": "3134edec6ea291736c3b6888e3a1ce370dfd8be1", "node": "7:49" },
+    "event-1.jpg":     { "hash": "c885d91d212e46529d9a3e9f3f19b47c9df02e6b", "node": "7:50" },
+    "event-2.jpg":     { "hash": "5da4363be1c5abaace017a7a85d20fa1f182f805", "node": "7:51" },
+    "event-3.jpg":     { "hash": "0ead4d27ec62d2e46336f733aea6fe94be913856", "node": "7:52" },
+    "keshanidhi-hair-oil.jpg": { "hash": "74bac57e95fdd528a5c42cb724d195b2a5f9e59f", "node": "7:53" },
+    "organic-soap.jpg":        { "hash": "d252ae4968886a64e6a33579861a56cb58fc596e", "node": "7:54" },
+    "aloe-vera-gel.jpg":       { "hash": "9dd03b23851e3cb43cecc1dbdc75d4a795f1f2a1", "node": "7:55" },
+    "gastro-oil.jpg":          { "hash": "f9b44659649af50cc5b70bfb072d7691be6b261d", "node": "7:56" },
+    "muscle-oil.jpg":          { "hash": "050ea2d7b4066635e28a74b8a40e6e8a651e5fb4", "node": "7:57" },
+    "stress-oil.jpg":          { "hash": "a1db725b438088074ae9bbb28e0a829d19221a06", "node": "7:58" },
+    "aura-cleanser.jpg":       { "hash": "dbd4fd8b3fb516f1ed6eb9c8bbbcb5c27cc1747f", "node": "7:59" },
+    "yoga-mat.jpg":            { "hash": "3e3bd0f86e494886075d706e59af154f5bd0247c", "node": "7:60" },
+    "gift-box.jpg":            { "hash": "3ce4747694f4a265341ff3b320d6900d2914964c", "node": "7:61" },
+    "gallery-img1.jpg":        { "hash": "f739e93911c83a8c9c2889dc62ed6ad82ccc4d3d", "node": "7:62" },
+    "gallery-img2.jpg":        { "hash": "5afab62284143afb42a1c289e141e063d8a8ad1c", "node": "7:63" },
+    "gallery-img3.jpg":        { "hash": "e3664848217ccb86437b053d7bcd5f3f8d88747b", "node": "7:64" },
+    "gallery-img4.jpg":        { "hash": "5e2a3f3126832330a381b71d869db7deab82038a", "node": "7:65" },
+    "gallery-img5.jpg":        { "hash": "83850de433a19936d9679fc84b039156b3524b9f", "node": "7:66" }
+  }
+}

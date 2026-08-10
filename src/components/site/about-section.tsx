@@ -37,7 +37,7 @@ export function AboutSection() {
             <p className="v2-section-label" style={{ marginBottom: "1.2rem" }}>
               Meet the Founder
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 300, marginBottom: "0.5rem" }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginBottom: "0.5rem" }}>
               Dr. Emidaka
             </h2>
             <p
@@ -62,12 +62,13 @@ export function AboutSection() {
             >
               <p
                 style={{
-                  fontFamily: "var(--font-display)",
+                  /* Body face: the italic is real there, Bricolage has none. */
+                  fontFamily: "var(--font-body)",
                   fontSize: "1.5rem",
                   fontStyle: "italic",
                   color: "var(--dark)",
                   lineHeight: 1.4,
-                  fontWeight: 300,
+                  fontWeight: 400,
                 }}
               >
                 &ldquo;Making healthcare understandable and simple for all.&rdquo;
@@ -91,7 +92,7 @@ export function AboutSection() {
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <BookButton
                 interest="CONSULTATION"
-                className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit]"
+                className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
               >
                 Book with Dr. Emidaka
               </BookButton>

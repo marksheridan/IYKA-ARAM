@@ -1,14 +1,13 @@
 import { Reveal } from "./reveal";
 import { BookButton } from "./book-button";
 
-const goldBtn = "v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit] w-full justify-center";
+const goldBtn = "v2-btn v2-btn-gold bg-transparent text-[inherit] w-full justify-center";
 
 export function BookingSection() {
   return (
     <section
       id="book"
-      className="v2-landing v2-section-py scroll-mt-20"
-      style={{ background: "var(--dark)" }}
+      className="v2-landing v2-section-py v2-booking scroll-mt-20"
     >
       <div className="v2-container">
         <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
@@ -16,7 +15,7 @@ export function BookingSection() {
             <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
               Begin Your Healing
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 300 }}>
+            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 700 }}>
               Choose how you want to connect.
             </h2>
           </Reveal>
@@ -47,21 +46,16 @@ export function BookingSection() {
           {/* Online Consultation — featured */}
           <Reveal className="v2-book-card v2-book-card--featured" delay={0.15}>
             <div className="v2-book-card-tag">Most Popular</div>
-            <div className="v2-book-card-icon" style={{ background: "var(--gold)", color: "var(--dark)" }}>
+            <div className="v2-book-card-icon">
               <svg width="28" height="28" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" />
               </svg>
             </div>
-            <h3 className="v2-book-card-title" style={{ color: "var(--cream)" }}>
-              Online Consultation
-            </h3>
-            <p className="v2-book-card-desc" style={{ color: "rgba(248,244,238,0.65)" }}>
+            <h3 className="v2-book-card-title">Online Consultation</h3>
+            <p className="v2-book-card-desc">
               Expert guidance from Dr. Emidaka via video call — anywhere in India and beyond.
             </p>
-            <div
-              className="v2-book-card-detail"
-              style={{ borderColor: "rgba(248,244,238,0.1)", color: "rgba(248,244,238,0.5)" }}
-            >
+            <div className="v2-book-card-detail">
               <span>Video Call</span>
               <span>All days, flexible hours</span>
             </div>

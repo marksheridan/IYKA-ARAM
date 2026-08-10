@@ -65,13 +65,13 @@ export default function CartPage() {
         <span style={{ color: "var(--dark)" }}>Cart</span>
       </nav>
 
-      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2.2rem", fontWeight: 300, marginBottom: "2.5rem" }}>
+      <h1 style={{ fontFamily: "var(--font-display)", fontSize: "2.2rem", fontWeight: 700, marginBottom: "2.5rem" }}>
         Your Cart
       </h1>
 
       {cart.length === 0 ? (
         <div style={{ textAlign: "center", padding: "5rem 2rem" }}>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 300, color: "rgba(27,25,22,0.3)", marginBottom: "1.5rem" }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "2rem", fontWeight: 700, color: "rgba(27,25,22,0.3)", marginBottom: "1.5rem" }}>
             Your cart is empty.
           </p>
           <Link href="/store" className="btn-store-primary" style={{ display: "inline-flex", width: "auto", padding: "0.9rem 2.5rem" }}>

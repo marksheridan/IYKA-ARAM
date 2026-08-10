@@ -20,7 +20,7 @@ export function EventsSection() {
               style={{
                 fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
                 color: "var(--cream)",
-                fontWeight: 300,
+                fontWeight: 700,
                 maxWidth: "26rem",
               }}
             >

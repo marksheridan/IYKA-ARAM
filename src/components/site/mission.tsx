@@ -1,9 +1,9 @@
 import { Reveal } from "./reveal";
 
 const stats = [
-  { num: "10", sup: "+", label: "Disciplines of healing" },
-  { num: "5", sup: "", label: "Sub-brands under IYKA" },
-  { num: "2019", sup: "", label: "Founded in Shillong" },
+  { num: "12", sup: "", label: "Disciplines of healing" },
+  { num: "5", sup: "", label: "Pillars under IYKA" },
+  { num: "2025", sup: "", label: "Founded in Shillong" },
 ];
 
 const pillars = [
@@ -15,7 +15,7 @@ const pillars = [
   {
     icon: "⚕️",
     title: "Integrative",
-    desc: "Ten healing disciplines working in harmony: Naturopathy, Yoga, Ayurveda, Nutrition, and more.",
+    desc: "Twelve healing disciplines working in harmony: Naturopathy, Yoga Therapy, Functional Medicine, Nutrition, and more.",
   },
   {
     icon: "∞",
@@ -59,7 +59,7 @@ export function Mission() {
                 fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
                 color: "var(--dark)",
                 marginBottom: "1.5rem",
-                fontWeight: 300,
+                fontWeight: 700,
               }}
             >
               Making healthcare <em>understandable</em> and simple for all.
@@ -74,8 +74,8 @@ export function Mission() {
             >
               We believe your body has an innate ability to heal — when given the
               right conditions. At IYKA-ARAM, we combine the precision of
-              functional medicine with the wisdom of naturopathy, yoga, and
-              Ayurveda to address the root cause of illness, not just its symptoms.
+              functional medicine with naturopathy, yoga therapy and clinical
+              nutrition to address the root cause of illness, not just its symptoms.
             </p>
             <p
               style={{
@@ -98,7 +98,8 @@ export function Mission() {
               <span className="v2-gold-line" />
               <span
                 style={{
-                  fontFamily: "var(--font-display)",
+                  /* Body face: the italic is real there, Bricolage has none. */
+                  fontFamily: "var(--font-body)",
                   fontSize: "1.1rem",
                   fontStyle: "italic",
                   color: "var(--gold)",

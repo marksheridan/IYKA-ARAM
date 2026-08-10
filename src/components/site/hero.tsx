@@ -3,35 +3,45 @@
 import { useEffect, useState } from "react";
 import { BookButton } from "./book-button";
 
+/* ────────────────────────────────────────────────────────────────
+   HERO IMAGE — swap this when the new photography arrives.
+   Drop the file into /public and change the string below;
+   nothing else in this file needs to be touched.
+   ──────────────────────────────────────────────────────────── */
+const heroImage = "/hero.png";
+
 const heroLines = [
-  "Ancient wisdom meets modern clinical science.",
+  "Functional medicine, naturopathy and yoga therapy — under one roof.",
   "Root-cause healing, no prescription pad.",
-  "Northeast India's first functional medicine startup.",
+  "Northeast India's first drugless healthcare startup.",
   "Where nature and evidence-based care unite.",
 ];
 
+/* The full service list — also drives the scrolling band under the hero. */
 const marqueeItems = [
-  "Functional Medicine",
-  "Yoga Therapy",
+  "Acupuncture",
   "Naturopathy",
-  "Clinical Nutrition",
-  "Ayurveda",
-  "Panchakarma",
-  "Hydrotherapy",
+  "Yoga Therapy",
+  "Ozone Therapy",
+  "Functional Medicine Consultation",
+  "Functional Nutrition Consultation",
+  "Gut Health Reset Programs",
+  "Energy Medicine",
+  "Longevity",
+  "Biohacking",
+  "Massage",
   "Physiotherapy",
-  "Mud Therapy",
-  "Online Consultation",
+];
+
+const heroMeta = [
+  { k: "Est. 2025", v: "Shillong, Meghalaya" },
+  { k: "12 Modalities", v: "Integrative Healthcare" },
+  { k: "Recognised", v: "Ministry of AYUSH" },
+  { k: "In-Clinic & Online", v: "Across India" },
 ];
 
 export function Hero() {
-  const [slide, setSlide] = useState(0);
   const [line, setLine] = useState(0);
-
-  // Cross-fade the two hero photos every 7s.
-  useEffect(() => {
-    const id = setInterval(() => setSlide((s) => (s + 1) % 2), 7000);
-    return () => clearInterval(id);
-  }, []);
 
   // Rotate the sub-headline lines every 3.5s.
   useEffect(() => {
@@ -47,42 +57,25 @@ export function Hero() {
       <section className="v2-hero" aria-label="Hero">
         <div className="v2-hero-bg">
           <div
-            className={`v2-hero-slide ${slide === 0 ? "is-active" : ""}`}
-            style={{ backgroundImage: "url('/hero.jpg')", opacity: slide === 0 ? 1 : 0 }}
-            aria-hidden="true"
-          />
-          <div
-            className={`v2-hero-slide v2-hero-slide-2 ${slide === 1 ? "is-active" : ""}`}
-            style={{ backgroundImage: "url('/hero2.jpg')", opacity: slide === 1 ? 1 : 0 }}
+            className="v2-hero-slide is-active"
+            style={{ backgroundImage: `url('${heroImage}')` }}
             aria-hidden="true"
           />
           <div className="v2-hero-overlay" aria-hidden="true" />
+          <div className="v2-hero-grain" aria-hidden="true" />
         </div>
 
         <div className="v2-hero-content">
-          <div style={{ maxWidth: "44rem" }}>
-            <p
-              className="v2-section-label v2-reveal"
-              style={{ color: "var(--gold-light)", marginBottom: "1.5rem" }}
-            >
-              Shillong · Meghalaya · Northeast India
+          <div className="v2-hero-copy">
+            <p className="v2-hero-kicker v2-reveal">
+              <span className="v2-hero-kicker-rule" aria-hidden="true" />
+              Shillong · Meghalaya · Est. 2025
             </p>
 
-            <h1
-              className="v2-reveal v2-reveal-1"
-              style={{
-                fontSize: "clamp(3rem, 7vw, 5.5rem)",
-                color: "var(--cream)",
-                fontWeight: 300,
-                lineHeight: 1.05,
-                marginBottom: "1.5rem",
-              }}
-            >
+            <h1 className="v2-hero-title v2-reveal v2-reveal-1">
               Clinical Wellness.
               <br />
-              <em style={{ fontStyle: "italic", color: "var(--gold-light)" }}>
-                The Drugless
-              </em>
+              <em>The Drugless</em>
               <br />
               Healthcare.
             </h1>
@@ -98,13 +91,10 @@ export function Hero() {
               ))}
             </div>
 
-            <div
-              className="v2-reveal v2-reveal-3"
-              style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
-            >
+            <div className="v2-hero-actions v2-reveal v2-reveal-3">
               <BookButton
                 interest="CONSULTATION"
-                className="v2-btn v2-btn-gold rounded-none bg-transparent text-[inherit]"
+                className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
               >
                 Book a Consultation
                 <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
@@ -118,19 +108,19 @@ export function Hero() {
           </div>
 
           <div className="v2-scroll-indicator v2-reveal v2-reveal-5">
-            <span
-              style={{
-                fontFamily: "var(--font-body)",
-                fontSize: "0.7rem",
-                letterSpacing: "0.15em",
-                textTransform: "uppercase",
-                color: "rgba(248,244,238,0.4)",
-              }}
-            >
-              Scroll
-            </span>
+            <span>Scroll</span>
             <div className="v2-scroll-line" />
           </div>
+        </div>
+
+        {/* Credential strip — anchors the fold and reads "premium" at a glance */}
+        <div className="v2-hero-meta v2-reveal v2-reveal-5">
+          {heroMeta.map((m) => (
+            <div className="v2-hero-meta-item" key={m.k}>
+              <span className="v2-hero-meta-k">{m.k}</span>
+              <span className="v2-hero-meta-v">{m.v}</span>
+            </div>
+          ))}
         </div>
       </section>
 

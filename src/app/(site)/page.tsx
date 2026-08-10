@@ -2,15 +2,15 @@ import { Hero } from "@/components/site/hero";
 import { Mission } from "@/components/site/mission";
 import { Recognition } from "@/components/site/recognition";
 import { ServicesSection } from "@/components/site/services-section";
+import { MovingGallery } from "@/components/site/moving-gallery";
+import { VideoTestimonials } from "@/components/site/video-testimonials";
+import { PillarsSection } from "@/components/site/pillars-section";
 import { AboutSection } from "@/components/site/about-section";
 import { TeamSection } from "@/components/site/team-section";
-import { ProductsTeaser } from "@/components/site/products-teaser";
-import { EventsSection } from "@/components/site/events-section";
-import { VideoTestimonials } from "@/components/site/video-testimonials";
+import { StoreTeaser } from "@/components/site/store-teaser";
 import { BookingSection } from "@/components/site/booking-section";
 import { CtaSection } from "@/components/site/cta-section";
 import { LocationSection } from "@/components/site/location-section";
-import { ContactSection } from "@/components/site/contact-section";
 
 export default function HomePage() {
   return (
@@ -19,15 +19,18 @@ export default function HomePage() {
       <Mission />
       <Recognition />
       <ServicesSection />
+      {/* Loud, self-moving imagery: events, clinic, treatments, patients */}
+      <MovingGallery />
+      <VideoTestimonials />
+      {/* Second half opens with the five sub-brands */}
+      <PillarsSection />
       <AboutSection />
       <TeamSection />
-      <ProductsTeaser />
-      <EventsSection />
-      <VideoTestimonials />
+      <StoreTeaser />
       <BookingSection />
       <CtaSection />
+      {/* Contact lives at /contact now — no longer a homepage anchor. */}
       <LocationSection />
-      <ContactSection />
     </>
   );
 }

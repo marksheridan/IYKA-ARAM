@@ -1,0 +1,87 @@
+{
+  "runId": "iyka-ds-2026-07-26",
+  "fileKey": "cmFt5G4SRLrDXGmHHSb0PS",
+  "fileUrl": "https://www.figma.com/design/cmFt5G4SRLrDXGmHHSb0PS",
+  "source": "C:/iyak-aram 2/IYKA-ARAM",
+  "phase": "phase3-BLOCKED",
+  "blocker": {
+    "reason": "Figma MCP monthly tool-call quota exhausted on Starter plan (6 calls/month for Starter; Professional = 200/day + 15/min).",
+    "affects": "ALL use_figma writes, get_screenshot, get_metadata. whoami and skill resources still work.",
+    "resolution": "Upgrade the Nawka team to Professional with a Full seat, OR wait for the monthly quota reset.",
+    "upgradeUrl": "https://www.figma.com/files/team/1099015445419907022/all-projects?upgrade=mcp_rate_limit_paywall"
+  },
+  "constraints": {
+    "figmaTier": "starter",
+    "modesPerCollection": 1,
+    "maxPages": 3,
+    "notes": "Cream/Dark encoded in token NAMES not modes. Page hierarchy uses Sections inside 3 pages."
+  },
+  "fonts": {
+    "display": "Cormorant Garamond (Light, Regular, Light Italic, Italic)",
+    "body": "DM Sans (Regular, Medium, SemiBold, Bold)",
+    "ui": "Inter (Regular, Medium, 'Semi Bold' WITH SPACE, Bold)",
+    "trap": "Inter uses 'Semi Bold'/'Extra Bold' WITH a space; Cormorant/DM Sans/Fraunces use 'SemiBold' without."
+  },
+  "entities": {
+    "pages": {
+      "01 · Cover & Foundations": "0:1",
+      "02 · Components": "7:4",
+      "03 · Screens": "7:5"
+    },
+    "collections": {
+      "Primitives": "VariableCollectionId:2:2",
+      "Brand": "VariableCollectionId:4:11",
+      "MIS & Admin": "VariableCollectionId:5:10",
+      "Spacing": "VariableCollectionId:5:44",
+      "Radius": "VariableCollectionId:5:58"
+    },
+    "builtNodes": {
+      "Source Assets section": "8:2",
+      "Cover": "8:3",
+      "Brand Identity": "10:2",
+      "Foundations root": "11:2",
+      "Semantic Brand block": "12:2",
+      "Semantic MIS&Admin block": "12:128",
+      "Typography block": "13:2",
+      "Spacing block": "13:167",
+      "Radius block": "13:222",
+      "Elevation block": "13:247"
+    },
+    "counts": {
+      "primitives": 56,
+      "brandSemantic": 23,
+      "misAdminSemantic": 33,
+      "spacing": 13,
+      "radius": 7,
+      "textStyles": 27,
+      "effectStyles": 6,
+      "uploadedAssets": 22
+    },
+    "components": {}
+  },
+  "completedSteps": [
+    "phase0", "P1.a", "P1.b", "P1.c", "P1.d", "P1.e",
+    "P2.a", "P2.b", "P2.c", "P2.d-colour", "P2.d-semantic", "P2.d-type-spacing-radius-elevation", "P2.e"
+  ],
+  "verifiedVisually": ["Cover (8:3)", "Brand Identity (10:2)"],
+  "builtButNotVisuallyVerified": [
+    "Foundations colour swatches", "Semantic token blocks",
+    "Typography specimens", "Spacing bars", "Radius samples", "Elevation cards"
+  ],
+  "remaining": {
+    "phase3_components": [
+      "Button (script written, ready to run — see dsb-resume.md)",
+      "Section Label", "Pillar Card", "Service Row", "Team Card", "Testimonial Card",
+      "Booking Card", "Site Nav", "Site Footer", "Form Field",
+      "Store Product Card", "Store Filter Chip", "Cart Line Item", "Qty Control",
+      "MIS KPI Card", "MIS Status Badge (13 statuses)", "MIS Data Table", "MIS Sidebar Item", "MIS Input",
+      "Admin Sidebar Item", "Admin Table Row"
+    ],
+    "phase4_screens": {
+      "marketing": ["Home", "About", "Services", "Gallery", "Blog", "Blog Post", "Booking (4 steps)", "Contact"],
+      "store": ["Listing", "Product Detail", "Cart", "Checkout", "Profile", "OTP Modal"],
+      "backoffice": ["Dashboard", "Products", "Orders", "Customers", "Blog List", "Post Editor"],
+      "mis": ["Dashboard", "Appointments", "Patients", "Billing", "Finance", "Yoga", "Messages"]
+    }
+  }
+}

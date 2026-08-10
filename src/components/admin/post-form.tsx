@@ -6,7 +6,7 @@ import type { BlogPost } from "@/generated/prisma/client";
 
 type ActionFn = (_: unknown, formData: FormData) => Promise<{ error: string } | void>;
 
-const CATEGORIES = ["Ayurveda", "Yoga & Breathwork", "Community", "Nutrition", "Wellness", "News"];
+const CATEGORIES = ["Functional Medicine", "Yoga & Breathwork", "Naturopathy", "Community", "Nutrition", "Wellness", "News"];
 
 export function PostForm({ post, action }: { post?: BlogPost | null; action: ActionFn }) {
   const [state, formAction, pending] = useActionState(action, null);
