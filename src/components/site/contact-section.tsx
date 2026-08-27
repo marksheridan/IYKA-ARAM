@@ -27,7 +27,7 @@ export function ContactSection() {
             <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginBottom: "1.5rem" }}>
               Your wellness journey
               <br />
-              <em style={{ color: "var(--gold)" }}>starts with a conversation.</em>
+              <em style={{ color: "var(--gold-deep)" }}>starts with a conversation.</em>
             </h2>
             <p style={{ color: "var(--dark-soft)", lineHeight: 1.8, marginBottom: "2.5rem" }}>
               Whether you&apos;re seeking answers to a chronic health issue, looking

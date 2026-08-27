@@ -13,7 +13,7 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-cream px-6">
       <div className="w-full max-w-sm rounded-2xl border border-sand bg-white p-8 shadow-sm">
         <div className="text-center font-display text-2xl text-forest">
-          IYKA<span className="text-gold">-</span>ARAM
+          IYKA<span className="text-gold-deep">-</span>ARAM
         </div>
         <p className="mt-1 text-center text-xs uppercase tracking-[0.25em] text-muted">
           Staff Login

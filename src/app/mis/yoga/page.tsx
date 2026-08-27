@@ -134,7 +134,7 @@ export default async function YogaPage({ searchParams }: { searchParams: SP }) {
                   <td className="whitespace-nowrap px-4 py-3 text-right">
                     <Link
                       href={`/mis/yoga/${o.id}`}
-                      className="text-xs text-gold hover:text-forest"
+                      className="text-xs text-gold-deep hover:text-forest"
                     >
                       Manage →
                     </Link>

@@ -15,7 +15,7 @@ export function AboutSection() {
           <Reveal className="v2-about-image-wrap">
             <div className="v2-about-image-frame">
               <Image
-                src="/dr-emidaka.jpg"
+                src="/dr-emidaka-bio.jpg"
                 alt="Dr. Emidaka, Founder of IYKA-ARAM"
                 fill
                 sizes="(max-width: 900px) 100vw, 40vw"
@@ -43,7 +43,7 @@ export function AboutSection() {
             <p
               style={{
                 fontFamily: "var(--font-body)",
-                color: "var(--gold)",
+                color: "var(--gold-deep)",
                 fontSize: "0.85rem",
                 letterSpacing: "0.1em",
                 textTransform: "uppercase",
@@ -55,7 +55,7 @@ export function AboutSection() {
 
             <blockquote
               style={{
-                borderLeft: "2px solid var(--gold)",
+                borderLeft: "2px solid var(--gold-deep)",
                 paddingLeft: "1.5rem",
                 marginBottom: "1.8rem",
               }}

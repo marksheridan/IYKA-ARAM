@@ -44,7 +44,7 @@ export default async function AppointmentDetail({
     return (
       <div>
         <h1 className="font-display text-2xl text-forest">Not found</h1>
-        <Link href="/mis/appointments" className="mt-4 inline-block text-gold">
+        <Link href="/mis/appointments" className="mt-4 inline-block text-gold-deep">
           ← Appointments
         </Link>
       </div>
@@ -59,7 +59,7 @@ export default async function AppointmentDetail({
         <p className="mt-2 text-sm text-muted">
           This appointment belongs to another practitioner.
         </p>
-        <Link href="/mis/appointments" className="mt-4 inline-block text-gold">
+        <Link href="/mis/appointments" className="mt-4 inline-block text-gold-deep">
           ← Appointments
         </Link>
       </div>

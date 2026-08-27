@@ -163,7 +163,7 @@ export default async function AppointmentsOverview() {
                       <td className="py-2.5 pr-4 text-muted">{a.provider?.name ?? "—"}</td>
                       <td className="py-2.5 pr-4"><StatusBadge status={a.status} /></td>
                       <td className="whitespace-nowrap py-2.5 text-right">
-                        <Link href={`/mis/appointments/${a.id}`} className="text-xs text-gold hover:text-forest">Manage →</Link>
+                        <Link href={`/mis/appointments/${a.id}`} className="text-xs text-gold-deep hover:text-forest">Manage →</Link>
                       </td>
                     </tr>
                   ))}
@@ -191,7 +191,7 @@ function Card({ title, href, linkLabel, className, children }: { title: string; 
     <section className={`rounded-2xl border border-sand bg-white p-5 shadow-sm ${className ?? ""}`}>
       <div className="flex items-center justify-between">
         <h2 className="font-display text-base text-forest">{title}</h2>
-        {href && linkLabel && <Link href={href} className="text-xs text-gold hover:text-forest">{linkLabel}</Link>}
+        {href && linkLabel && <Link href={href} className="text-xs text-gold-deep hover:text-forest">{linkLabel}</Link>}
       </div>
       {children}
     </section>

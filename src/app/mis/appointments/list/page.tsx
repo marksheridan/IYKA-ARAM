@@ -121,7 +121,7 @@ export default async function AppointmentsManage({ searchParams }: { searchParam
                   <td className="px-4 py-3 text-muted">{a.provider?.name ?? "—"}</td>
                   <td className="px-4 py-3"><StatusSelect id={a.id} status={a.status} /></td>
                   <td className="whitespace-nowrap px-4 py-3 text-right">
-                    <Link href={`/mis/appointments/${a.id}`} className="text-xs text-gold hover:text-forest">Manage →</Link>
+                    <Link href={`/mis/appointments/${a.id}`} className="text-xs text-gold-deep hover:text-forest">Manage →</Link>
                   </td>
                 </tr>
               ))}

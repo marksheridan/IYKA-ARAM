@@ -152,16 +152,16 @@ export function VideoTestimonials() {
   }
 
   return (
-    <section id="testimonials" style={{ background: "var(--dark)", padding: "clamp(4rem,10vw,8rem) 0" }}>
+    <section id="testimonials" style={{ background: "var(--cream-deep)", padding: "clamp(4rem,10vw,8rem) 0" }}>
       <div className="v2-container">
         {/* Shared header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
           <Reveal>
-            <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
+            <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Patient Stories
             </p>
-            <h2 style={{ fontSize: "clamp(2.2rem,5vw,3.6rem)", color: "var(--cream)", fontWeight: 700 }}>
-              Healing that speaks<br /><em style={{ color: "var(--gold)" }}>for itself.</em>
+            <h2 style={{ fontSize: "clamp(2.2rem,5vw,3.6rem)", color: "var(--dark)", fontWeight: 700 }}>
+              Healing that speaks<br /><em style={{ color: "var(--gold-deep)" }}>for itself.</em>
             </h2>
           </Reveal>
         </div>
@@ -176,16 +176,15 @@ export function VideoTestimonials() {
               <svg className="v2-testimonial-quote-mark" width="36" height="28" viewBox="0 0 36 28" fill="none" aria-hidden="true">
                 <path
                   d="M0 28V17.5C0 7.5 5.5 2 16.5 0L18 3C12.5 4.5 9.5 7.5 9 12H16V28H0ZM20 28V17.5C20 7.5 25.5 2 36.5 0L38 3C32.5 4.5 29.5 7.5 29 12H36V28H20Z"
-                  fill="var(--gold)"
+                  fill="var(--gold-deep)"
                   opacity="0.2"
                 />
               </svg>
-              <p className="v2-testimonial-text" style={{ color: "var(--cream)" }}>{t.quote}</p>
-              <div className="v2-testimonial-author" style={{ borderTopColor: "rgba(200,151,60,0.2)" }}>
-                <div className="v2-testimonial-avatar">{t.name.charAt(0)}</div>
+              <p className="v2-testimonial-text">{t.quote}</p>
+              <div className="v2-testimonial-author">
                 <div>
-                  <span className="v2-testimonial-name" style={{ color: "var(--cream)" }}>{t.name}</span>
-                  <span className="v2-testimonial-location" style={{ color: "var(--cream)", opacity: 0.5 }}>{t.location}</span>
+                  <span className="v2-testimonial-name">{t.name}</span>
+                  <span className="v2-testimonial-location">{t.location}</span>
                 </div>
               </div>
             </article>
@@ -196,9 +195,9 @@ export function VideoTestimonials() {
       <div className="v2-container">
         {/* Divider */}
         <div style={{ display: "flex", alignItems: "center", gap: "1.5rem", marginBottom: "3rem" }}>
-          <div style={{ flex: 1, height: "1px", background: "rgba(200,151,60,0.2)" }} />
-          <p className="v2-section-label" style={{ color: "var(--gold)", whiteSpace: "nowrap" }}>In Their Own Words</p>
-          <div style={{ flex: 1, height: "1px", background: "rgba(200,151,60,0.2)" }} />
+          <div style={{ flex: 1, height: "1px", background: "rgba(27,25,22,0.14)" }} />
+          <p className="v2-section-label" style={{ whiteSpace: "nowrap" }}>In Their Own Words</p>
+          <div style={{ flex: 1, height: "1px", background: "rgba(27,25,22,0.14)" }} />
         </div>
 
         {/* Video carousel — one story plays, then it hands over to the next */}
@@ -310,7 +309,7 @@ export function VideoTestimonials() {
             href="https://www.instagram.com/iyka_aram_wellness/"
             target="_blank"
             rel="noopener noreferrer"
-            className="v2-btn v2-btn-outline-cream"
+            className="v2-btn v2-btn-outline-dark"
           >
             <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
               <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />

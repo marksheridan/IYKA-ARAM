@@ -58,7 +58,7 @@ export default async function NewAppointment({ searchParams }: { searchParams: S
               <div className="text-sm font-medium text-ink">{patient.name}</div>
               <div className="text-xs text-muted">{patient.phone}{patient.email ? ` · ${patient.email}` : ""}</div>
             </div>
-            <Link href="/mis/appointments/new" className="text-xs text-gold hover:text-forest">Change</Link>
+            <Link href="/mis/appointments/new" className="text-xs text-gold-deep hover:text-forest">Change</Link>
           </div>
         ) : (
           <>

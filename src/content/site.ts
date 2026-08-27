@@ -40,7 +40,7 @@ export const business = {
 
 export const nav = [
   { href: "/#mission", label: "Mission" },
-  { href: "/#services", label: "Services" },
+  { href: "/services", label: "Services" },
   { href: "/#team", label: "Team" },
   { href: "/gallery", label: "Gallery" },
   { href: "/contact", label: "Contact" },

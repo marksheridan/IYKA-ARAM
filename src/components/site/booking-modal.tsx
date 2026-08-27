@@ -54,7 +54,7 @@ export function BookingModal({
       >
         <div className="flex items-start justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.25em] text-gold">
+            <p className="text-xs uppercase tracking-[0.25em] text-gold-deep">
               Wellness Starts Here
             </p>
             <h2 className="mt-1 font-display text-2xl text-forest">
@@ -147,7 +147,7 @@ function InterestSelect({ defaultValue }: { defaultValue: string }) {
           <svg
             width="16" height="16" viewBox="0 0 24 24" fill="none"
             stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"
-            className={`text-gold flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+            className={`text-gold-deep flex-shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
           >
             <path d="M6 9l6 6 6-6" />
           </svg>
@@ -176,7 +176,7 @@ function InterestSelect({ defaultValue }: { defaultValue: string }) {
                   {isActive && (
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none"
                       stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-                      className="text-gold flex-shrink-0">
+                      className="text-gold-deep flex-shrink-0">
                       <path d="M20 6L9 17l-5-5" />
                     </svg>
                   )}
@@ -207,7 +207,7 @@ function Field({
     <div>
       <label htmlFor={name} className="mb-1 block text-sm font-medium text-ink">
         {label}
-        {required && <span className="text-gold"> *</span>}
+        {required && <span className="text-gold-deep"> *</span>}
       </label>
       <input
         id={name}

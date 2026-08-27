@@ -22,22 +22,24 @@ export function StoreTeaser() {
       <div className="v2-container">
         <Reveal className="st-banner">
           <div className="st-copy">
-            <p className="st-badge">Coming Soon</p>
+            <p className="st-badge">Online Store &middot; Coming Soon</p>
             <h2 className="st-title">
-              IYKA Living —
+              Shop IYKA Living —
               <br />
               <em>wellness you can hold.</em>
             </h2>
             <p className="st-text">
-              Clean formulations and lifestyle essentials, developed by Dr. Emidaka
-              and the clinical team. Our store is being built — it opens here soon.
+              Herbal oils, skin and hair care, yoga essentials and gift boxes
+              — formulated by Dr. Emidaka and the clinical team. You&rsquo;ll be
+              able to browse and order everything right here when our online
+              store opens.
             </p>
           </div>
 
           <div className="st-visual">
             {STORE_BANNER_IMAGE ? (
               /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={STORE_BANNER_IMAGE} alt="IYKA Living store — opening soon" className="st-image" />
+              <img src={STORE_BANNER_IMAGE} alt="IYKA Living online store — opening soon" className="st-image" />
             ) : (
               <div className="st-placeholder" role="img" aria-label="Store banner artwork coming soon">
                 <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">

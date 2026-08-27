@@ -86,7 +86,7 @@ export default async function PatientsPage({
                   <td className="whitespace-nowrap px-4 py-3 text-right">
                     <Link
                       href={`/mis/patients/${p.id}`}
-                      className="text-xs text-gold hover:text-forest"
+                      className="text-xs text-gold-deep hover:text-forest"
                     >
                       View →
                     </Link>

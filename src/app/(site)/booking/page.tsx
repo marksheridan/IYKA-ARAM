@@ -12,7 +12,7 @@ export default async function BookingHome() {
 
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
-      <p className="text-xs uppercase tracking-[0.3em] text-gold">Booking</p>
+      <p className="text-xs uppercase tracking-[0.3em] text-gold-deep">Booking</p>
       <h1 className="mt-3 font-display text-3xl text-forest sm:text-4xl">
         Begin your wellness journey
       </h1>
@@ -44,7 +44,7 @@ export default async function BookingHome() {
                 <p className="mt-4 text-sm font-medium text-ink">
                   ₹{Number(s.price).toLocaleString("en-IN")} · {s.durationMin} min
                 </p>
-                <span className="mt-4 text-sm text-gold group-hover:text-forest">
+                <span className="mt-4 text-sm text-gold-deep group-hover:text-forest">
                   Book →
                 </span>
               </Link>

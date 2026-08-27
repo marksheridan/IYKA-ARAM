@@ -102,7 +102,7 @@ export function Mission() {
                   fontFamily: "var(--font-body)",
                   fontSize: "1.1rem",
                   fontStyle: "italic",
-                  color: "var(--gold)",
+                  color: "var(--gold-deep)",
                 }}
               >
                 Dr. Emidaka — Founder

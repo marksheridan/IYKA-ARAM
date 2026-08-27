@@ -1,9 +1,12 @@
 import { Reveal } from "./reveal";
 
 /* ────────────────────────────────────────────────────────────────
-   Two full-bleed rows of large imagery that scroll on their own in
-   opposite directions. Swap in new event/clinic photos by dropping
-   files into /public and editing the two arrays below.
+   Two rows of large imagery that scroll on their own in opposite
+   directions, held to the same container as every other section so
+   the row starts and ends on the page's gutters rather than running
+   to the screen edge. Each row duplicates its array and travels -50%,
+   so the loop stays seamless at any width. Swap in new event/clinic
+   photos by dropping files into /public and editing the arrays below.
    ──────────────────────────────────────────────────────────── */
 
 type Shot = { src: string; tag: string; caption: string; alt: string };
@@ -52,12 +55,12 @@ export function MovingGallery() {
     <section
       id="events"
       className="v2-landing scroll-mt-20"
-      style={{ background: "var(--green)", paddingBlock: "clamp(4rem, 9vw, 7rem)", overflow: "hidden" }}
+      style={{ background: "#fff", paddingBlock: "clamp(4rem, 9vw, 7rem)", overflow: "hidden" }}
     >
       <div className="v2-container">
         <div className="mg-head">
           <Reveal>
-            <p className="v2-section-label" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+            <p className="v2-section-label" style={{ color: "var(--gold-deep)", marginBottom: "1rem" }}>
               Inside IYKA-ARAM
             </p>
             <h2 className="mg-title">
@@ -67,16 +70,16 @@ export function MovingGallery() {
             </h2>
           </Reveal>
           <Reveal delay={0.2}>
-            <a href="/gallery" className="v2-btn v2-btn-outline-cream">
+            <a href="/gallery" className="v2-btn v2-btn-outline-dark">
               View Full Gallery
             </a>
           </Reveal>
         </div>
-      </div>
 
-      <div className="mg-rows">
-        <Row shots={rowTop} />
-        <Row shots={rowBottom} reverse />
+        <div className="mg-rows">
+          <Row shots={rowTop} />
+          <Row shots={rowBottom} reverse />
+        </div>
       </div>
     </section>
   );

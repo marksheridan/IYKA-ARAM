@@ -26,7 +26,7 @@ export function ProductsTeaser() {
             <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
               Wellness you can
               <br />
-              <em style={{ color: "var(--gold)" }}>hold in your hands.</em>
+              <em style={{ color: "var(--gold-deep)" }}>hold in your hands.</em>
             </h2>
           </Reveal>
           <Reveal delay={0.2}>

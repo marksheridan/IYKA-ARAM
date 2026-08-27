@@ -23,7 +23,7 @@ export function LocationSection() {
             >
               Rooted in Shillong,
               <br />
-              <em style={{ color: "var(--gold)" }}>healing beyond borders.</em>
+              <em style={{ color: "var(--gold-deep)" }}>healing beyond borders.</em>
             </h2>
             <p style={{ color: "var(--dark-soft)", lineHeight: 1.8, marginBottom: "2rem" }}>
               Our clinic is nestled in the scenic hills of Shillong, Meghalaya —
@@ -32,20 +32,20 @@ export function LocationSection() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: "0.8rem" }}>
               <div className="v2-location-detail">
-                <svg width="18" height="18" fill="none" stroke="var(--gold)" strokeWidth="1.5" viewBox="0 0 24 24">
+                <svg width="18" height="18" fill="none" stroke="var(--gold-deep)" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
                 </svg>
                 <span>{business.address}</span>
               </div>
               <div className="v2-location-detail">
-                <svg width="18" height="18" fill="none" stroke="var(--gold)" strokeWidth="1.5" viewBox="0 0 24 24">
+                <svg width="18" height="18" fill="none" stroke="var(--gold-deep)" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <span>Mon – Sat · 9:00 am – 6:00 pm IST</span>
               </div>
               <div className="v2-location-detail">
-                <svg width="18" height="18" fill="none" stroke="var(--gold)" strokeWidth="1.5" viewBox="0 0 24 24">
+                <svg width="18" height="18" fill="none" stroke="var(--gold-deep)" strokeWidth="1.5" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" />
                 </svg>
                 <span>Online consultations available worldwide</span>

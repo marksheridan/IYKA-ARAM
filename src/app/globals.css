@@ -13,9 +13,17 @@
   --gold:       #C8973C;
   --gold-light: #DEB86A;
   --gold-pale:  #F0DEB8;
-  --green:      #2C4028;
-  --green-mid:  #3A5234;
-  --green-pale: #E8EEE7;
+  /* --gold is AA on the dark sections (6.6:1) but only 2.4:1 on cream, so
+     cream sections use this deeper gold instead (>=4.65:1 on every cream). */
+  --gold-deep:  #866018;
+  /* Dominant colour moved off forest green to warm taupe #847858.
+     Original green kept here, commented out, for easy restoration. */
+  /* --green:      #2C4028; */
+  /* --green-mid:  #3A5234; */
+  /* --green-pale: #E8EEE7; */
+  --green:      #847858;
+  --green-mid:  #9F926F;
+  --green-pale: #F0EDE5;
 }
 
 /*
@@ -33,9 +41,16 @@
   --color-ink: #1c1b17;
   --color-muted: #6b6863;
   --color-gold: #c2a14d;
+  /* bg-gold keeps the bright tone (dark text on it is 7.1:1); text-gold on
+     the light booking/MIS surfaces was 2.3:1, so it uses gold-deep instead. */
+  --color-gold-deep: #866018;
   --color-gold-soft: #e7d8ae;
-  --color-forest: #2f4733;
-  --color-sage: #7c8b6f;
+  /* Forest/sage greens retired in favour of the #847858 taupe family;
+     originals commented out rather than deleted. */
+  /* --color-forest: #2f4733; */
+  /* --color-sage: #7c8b6f; */
+  --color-forest: #847858;
+  --color-sage: #B8AE94;
 
   /* Typography (fonts injected by next/font in layout.tsx) */
   --font-sans: var(--font-inter);
@@ -116,8 +131,13 @@ body {
   --gold:       #C8973C;
   --gold-light: #DEB86A;
   --gold-pale:  #F0DEB8;
-  --green:      #2C4028;
-  --green-mid:  #3A5234;
+  /* --gold is AA on the dark sections (6.6:1) but only 2.4:1 on cream, so
+     cream sections use this deeper gold instead (>=4.65:1 on every cream). */
+  --gold-deep:  #866018;
+  /* --green:      #2C4028; */
+  /* --green-mid:  #3A5234; */
+  --green:      #847858;
+  --green-mid:  #9F926F;
   /* --cream one step down in lightness, same hue. A neutral grey here
      fought the warm off-white of the section above; keeping the hue and
      only dropping lightness makes the two bands relate. */
@@ -158,7 +178,7 @@ h3 em {
   font-weight: 500;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--gold-deep);
 }
 
 /* ── Buttons ── */
@@ -744,6 +764,255 @@ h3 em {
   margin-bottom: 4rem;
 }
 
+/* ── Services: stepped horizontal rail ───────────────────────
+   A wheel over the cards row advances exactly one card and eases it into
+   place. The section never pins and the page never moves while the
+   pointer is on the row, so the rail costs the reader nothing until they
+   choose to use it — and at either end the gesture is handed straight
+   back to the page, so it can never trap them.
+   Card width is derived from the container (--sv-card, set from JS) so a
+   whole number of cards always fits: no card is ever half-visible, and
+   the row starts and ends on the same gutters as every other section.
+   Without JS, or on touch / reduced-motion / small screens, .is-live is
+   absent and this degrades to a native scroll-snap carousel. */
+.sv-rail {
+  --sv-gap: clamp(1rem, 1.6vw, 1.5rem);
+  /* Fallback width only. When JS is live it overwrites this with the
+     exact figure that makes N cards fill the container edge to edge. */
+  --sv-card: 17rem;
+
+  /* --sv-canopy-end is the colour the foliage band dissolves into, and so
+     also the colour the section must already be where the band stops — the
+     ground stays flat at it until 40% before it deepens, which puts the
+     join inside a single flat colour however tall the section grows. */
+  --sv-canopy-end: #0C1F0A;
+  --sv-ground: #070E06;
+  /* The Figma card's butter yellow. Note it lands a hair off --gold-pale
+     (#F0DEB8), which is warmer-dull; this is the brighter of the two. */
+  --sv-card-cream: #FFE9BA;
+  background:
+    linear-gradient(to bottom, var(--sv-canopy-end) 40%, var(--sv-ground) 88%)
+    var(--sv-ground);
+  /* The band is the section's own top edge; the usual top padding would
+     show as a dark strip above the leaves. .sv-canopy carries the space
+     beneath it instead. */
+  padding-top: 0;
+}
+
+/* ── Canopy: the foliage band that opens the section ──
+   In flow rather than a backdrop, so it sets the section's own top edge
+   and pushes the heading clear of the leaves without any padding
+   arithmetic. Its sky is already --cream-band, so it continues the light
+   section above it seamlessly and the fade is the only transition.
+   The gradient layer is sized to the box and the photo covers the box, so
+   the two stay registered: the fade always lands on the same leaves. That
+   holds as long as the box is never *wider* in aspect than the file
+   (1480×440) — hence aspect-ratio here, and a height-driven box below,
+   which crops the sides rather than the top. */
+.sv-canopy {
+  /* Width-driven, not aspect-driven. `aspect-ratio` plus `max-height` let
+     the browser satisfy the ratio by shrinking the *width* instead, so on a
+     wide viewport the band stopped short (1184px inside 1905px) and left a
+     hard vertical edge where the ground took over. Deriving the height from
+     the viewport keeps the box full-bleed: below the cap it follows the
+     file's 1480x440 ratio exactly, and above it the height holds while
+     `cover` crops sky off the top — which is what the cap always wanted. */
+  width: 100%;
+  height: min(22rem, calc(100vw * 440 / 1480));
+  /* Smootherstep (6t⁵−15t⁴+10t³) sampled every 2.5%. The curve matters more
+     than the stops: alpha has to leave 0 and arrive at 1 with zero slope,
+     or the kink where the ramp begins reads as a hard horizontal line
+     across the sky — a Mach band, which is what a plain two-stop fade
+     gives you here. Half-opaque at 75%, so the transition still sits where
+     the Figma put it. */
+  background-image:
+    linear-gradient(
+      to bottom,
+      rgba(12, 31, 10, 0) 50%,
+      rgba(12, 31, 10, 0.0012) 52.5%,
+      rgba(12, 31, 10, 0.0086) 55%,
+      rgba(12, 31, 10, 0.0266) 57.5%,
+      rgba(12, 31, 10, 0.0579) 60%,
+      rgba(12, 31, 10, 0.1035) 62.5%,
+      rgba(12, 31, 10, 0.1631) 65%,
+      rgba(12, 31, 10, 0.2352) 67.5%,
+      rgba(12, 31, 10, 0.3174) 70%,
+      rgba(12, 31, 10, 0.4069) 72.5%,
+      rgba(12, 31, 10, 0.5) 75%,
+      rgba(12, 31, 10, 0.5931) 77.5%,
+      rgba(12, 31, 10, 0.6826) 80%,
+      rgba(12, 31, 10, 0.7648) 82.5%,
+      rgba(12, 31, 10, 0.8369) 85%,
+      rgba(12, 31, 10, 0.8965) 87.5%,
+      rgba(12, 31, 10, 0.9421) 90%,
+      rgba(12, 31, 10, 0.9734) 92.5%,
+      rgba(12, 31, 10, 0.9914) 95%,
+      rgba(12, 31, 10, 0.9988) 97.5%,
+      var(--sv-canopy-end) 100%
+    ),
+    url("/services-foliage.webp");
+  /* Anchored to the bottom so any crop takes sky off the top and never
+     clips the leaves — which is what lets the cap below work. */
+  background-position: center bottom;
+  background-size: 100% 100%, cover;
+  background-repeat: no-repeat;
+  /* The top half of the file is empty --cream-band sky, so on a wide
+     viewport the aspect-ratio scales that blank half up with the width and
+     it reads as dead space between this section and the one above (~280px
+     of nothing at 1900px). Capping the height crops the sky back; the
+     leaves keep their size because `cover` still scales to the width. */
+  margin-bottom: clamp(2.5rem, 6vw, 5rem);
+}
+/* Below this the natural band is a sliver, too thin to read as planting. */
+@media (max-width: 700px) {
+  .sv-canopy {
+    aspect-ratio: auto;
+    height: clamp(9rem, 34vw, 12rem);
+  }
+}
+
+.sv-title {
+  font-size: clamp(2.2rem, 5vw, 3.5rem);
+  color: var(--cream);
+  font-weight: 700;
+  max-width: 22rem;
+}
+
+.sv-viewport {
+  width: 100%;
+}
+.sv-rail.is-live .sv-viewport {
+  /* Clipped at the container, so the row never bleeds to the screen edge. */
+  overflow: hidden;
+}
+.sv-rail.is-live .sv-viewport:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 6px;
+}
+.sv-track {
+  display: flex;
+  gap: var(--sv-gap);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+/* 620ms here is the same figure as GLIDE_MS in services-section.tsx —
+   the lock that enforces one card per gesture is timed against it, so
+   the two have to be changed together. */
+.sv-rail.is-live .sv-track {
+  will-change: transform;
+  transition: transform 620ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ── Card: photograph behind, a cream veil swept across the lower left ──
+   The photo fills the whole card; #sv-veil-clip cuts the cream layer that
+   covers it from the bottom-left, and the text sits on that cream. Both
+   layers are out of flow, so the body is the only thing the card measures
+   and `margin-top: auto` is what puts it at the foot.
+   The 383 × 519 ratio is the Figma card's. It is a floor, not a lock:
+   .sv-track stretches its items, so a service whose name wraps to two
+   lines grows the whole row rather than overflowing on its own. The clip
+   is in objectBoundingBox units and simply stretches with it.
+   Corner rounding is the site-wide 21px, applied further down with every
+   other card — deliberately not the Figma's 28. */
+.sv-card {
+  position: relative;
+  flex: 0 0 var(--sv-card);
+  aspect-ratio: 383 / 519;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--sv-card-cream);
+}
+.sv-card-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s var(--ease-out-expo);
+}
+.sv-card:hover .sv-card-img {
+  transform: scale(1.05);
+}
+.sv-card-veil {
+  position: absolute;
+  inset: 0;
+  background: var(--sv-card-cream);
+  clip-path: url(#sv-veil-clip);
+  pointer-events: none;
+}
+.sv-card-body {
+  position: relative;
+  margin-top: auto;
+  padding: 0 1.5rem 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.sv-card-name {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--dark);
+  text-wrap: balance;
+}
+.sv-card-desc {
+  font-size: 0.82rem;
+  color: rgba(27, 25, 22, 0.72);
+  line-height: 1.55;
+}
+
+/* ── Position dots ──
+   One per resting position of the rail, not one per card: with four cards
+   in view there are nine places twelve of them can stop. Indicators only —
+   the rail is driven by the wheel and the arrow keys, so these are
+   aria-hidden and the component renders none at all when everything
+   already fits. */
+.sv-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 2.5rem;
+}
+.sv-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.28);
+  transition: background 380ms var(--ease-out-expo), transform 380ms var(--ease-out-expo);
+}
+.sv-dot.is-on {
+  background: #FFFFFF;
+  transform: scale(1.3);
+}
+
+/* Motion is the whole point of the glide, so when it is unwelcome the
+   rail drops to the native carousel below rather than snapping about. */
+@media (prefers-reduced-motion: reduce) {
+  .sv-rail.is-live .sv-track,
+  .sv-dot {
+    transition: none;
+  }
+}
+
+/* ── Fallback: native swipeable carousel ──
+   Applies on touch, reduced motion, small screens and with no JS.
+   Stays inside the same container as the live rail. */
+.sv-rail:not(.is-live) .sv-viewport {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 1rem;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 244, 238, 0.25) transparent;
+}
+.sv-rail:not(.is-live) .sv-card {
+  scroll-snap-align: start;
+  flex-basis: min(78vw, 17rem);
+}
+
 .v2-btn-outline-dark {
   background: transparent;
   color: var(--dark);
@@ -775,6 +1044,9 @@ h3 em {
   position: absolute;
   inset: -0.5rem;
   border: 1px solid var(--gold);
+  /* 21px card radius + the 0.5rem the outline sits outside the image, so
+     its corners stay concentric with the portrait's. */
+  border-radius: 29px;
   opacity: 0.25;
   z-index: 0;
   transform: translate(0.8rem, 0.8rem);
@@ -1079,9 +1351,10 @@ h3 em {
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--gold);
-  border: 1px solid var(--gold-pale);
-  padding: 0.2rem 0.6rem;
+  color: var(--gold-deep);
+  /* Borderless — the label reads as a kicker, so it sits flush with the
+     quote text below rather than inset inside a chip. */
+  padding: 0;
   width: fit-content;
 }
 .v2-testimonial-quote-mark {
@@ -1157,13 +1430,16 @@ h3 em {
 }
 
 /* ── Card corners ──────────────────────────────────────────────
-   4px on every card surface across the site and store. Targets what
+   21px on every card surface across the site and store. Targets what
    actually paints: .v2-team-card and .v2-product-card have no
    background or border of their own, so their inner image wrap is the
    visible block and carries the radius instead.
    .v2-service-card is excluded — it only draws border-bottom/right as
    part of a grid rule, and rounding a partial border looks broken.
+   Small chips keep their own tighter corners — 21px on a badge only a
+   couple of line-heights tall reads as a pill, not a rounded box.
    MIS and admin keep their own rounding, as with the buttons. */
+.sv-card,
 .v2-pillar-card,
 .v2-testimonial-card,
 .v2-book-card,
@@ -1173,16 +1449,21 @@ h3 em {
 .tm-card,
 .mg-card,
 .pl-card,
+.v2-about-image,
 .store-product-card,
 .store-related-card,
-.store-otp-card {
-  border-radius: 4px;
+.store-otp-card,
+.store-cart-items,
+.store-cart-summary,
+.store-checkout-section,
+.store-detail-image-main {
+  border-radius: 21px;
 }
 /* These images sit flush against the top edge of a bordered card whose
    parent has no overflow:hidden, so square corners would poke out. */
 .store-product-img-wrap,
 .store-related-img {
-  border-radius: 4px 4px 0 0;
+  border-radius: 21px 21px 0 0;
 }
 
 .v2-book-grid {
@@ -1231,7 +1512,7 @@ h3 em {
   width: 3rem;
   height: 3rem;
   background: var(--cream);
-  border-radius: 4px;
+  border-radius: 21px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1575,7 +1856,7 @@ h3 em {
 .vtc-track { display: flex; gap: 12px; transition: transform 0.6s var(--ease-out-expo); }
 .vtc-slide { flex: 0 0 calc((100% - 24px) / 3); }
 .vtc-card {
-  position: relative; aspect-ratio: 9/16; background: var(--dark-soft);
+  position: relative; aspect-ratio: 9/16; background: var(--cream);
   overflow: hidden; opacity: 0.45; transform: scale(0.92); cursor: pointer;
   transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.5s ease;
 }
@@ -1583,7 +1864,7 @@ h3 em {
 .vtc-card.vtc-center { cursor: default; }
 .vtc-card.vtc-center {
   opacity: 1; transform: scale(1);
-  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 24px 70px rgba(27, 25, 22, 0.20);
 }
 .vtc-video { width: 100%; height: 100%; object-fit: cover; display: block; }
 /* Sound toggle — videos autoplay muted, this is the only control needed. */
@@ -1621,7 +1902,7 @@ h3 em {
 .vtc-progress-bar { height: 100%; width: 0%; background: var(--gold); transition: width 0.25s linear; }
 .vtc-arrow {
   flex-shrink: 0; width: 2.8rem; height: 2.8rem; background: rgba(200,151,60,0.1);
-  border: 1.5px solid var(--gold); color: var(--gold);
+  border: 1.5px solid var(--gold-deep); color: var(--gold-deep);
   display: flex; align-items: center; justify-content: center;
   cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
 }
@@ -1629,11 +1910,11 @@ h3 em {
 .vtc-arrow:disabled { opacity: 0.25; cursor: not-allowed; }
 .vtc-dots { display: flex; gap: 0.45rem; justify-content: center; margin-top: 1.5rem; }
 .vtc-dot {
-  width: 0.45rem; height: 0.45rem; border-radius: 50%; background: rgba(248,244,238,0.2);
+  width: 0.45rem; height: 0.45rem; border-radius: 50%; background: rgba(27,25,22,0.18);
   border: none; cursor: pointer; transition: background 0.25s, transform 0.25s; padding: 0;
 }
-.vtc-dot.active { background: var(--gold); transform: scale(1.3); }
-.vtc-counter { text-align: center; margin-top: 0.9rem; font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(248,244,238,0.3); }
+.vtc-dot.active { background: var(--gold-deep); transform: scale(1.3); }
+.vtc-counter { text-align: center; margin-top: 0.9rem; font-size: 0.72rem; letter-spacing: 0.12em; color: rgba(27,25,22,0.65); }
 @media (max-width: 900px) {
   .vtc-window { width: 92vw; }
   .vtc-slide { flex: 0 0 calc((100% - 12px) / 2); }
@@ -1672,8 +1953,8 @@ h3 em {
   flex-direction: column;
   gap: 1.2rem;
   padding: 2.2rem;
-  background: rgba(248, 244, 238, 0.035);
-  border: 1px solid rgba(200, 151, 60, 0.16);
+  background: var(--cream);
+  border: 1px solid rgba(27, 25, 22, 0.10);
 }
 
 /* ════════════════════════════════════════════════════════════════
@@ -1689,12 +1970,12 @@ h3 em {
 }
 .mg-title {
   font-size: clamp(2.2rem, 5.5vw, 4rem);
-  color: var(--cream);
+  color: var(--dark);
   font-weight: 700;
   line-height: 1.02;
   letter-spacing: -0.02em;
 }
-.mg-title em { font-style: normal; color: var(--gold-light); }
+.mg-title em { font-style: normal; color: var(--gold-deep); }
 
 .mg-rows { display: flex; flex-direction: column; gap: 1.1rem; }
 .mg-row { overflow: hidden; width: 100%; }
@@ -1723,7 +2004,9 @@ h3 em {
   height: clamp(230px, 26vw, 400px);
   margin: 0;
   overflow: hidden;
-  background: var(--green-mid);
+  /* Shows only until the photo decodes, so it tracks the section, not the
+     old taupe band this row used to sit on. */
+  background: var(--cream-deep);
 }
 .mg-img {
   width: 100%;
@@ -1775,7 +2058,7 @@ h3 em {
   line-height: 1.02;
   letter-spacing: -0.02em;
 }
-.pl-title em { font-style: normal; color: var(--gold); }
+.pl-title em { font-style: normal; color: var(--gold-deep); }
 .pl-intro {
   color: var(--dark-soft);
   line-height: 1.8;
@@ -1785,9 +2068,7 @@ h3 em {
 .pl-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 1px;
-  background: rgba(27, 25, 22, 0.12);
-  border-block: 1px solid rgba(27, 25, 22, 0.12);
+  gap: clamp(1rem, 1.6vw, 1.5rem);
 }
 .pl-card {
   display: flex;
@@ -1795,6 +2076,9 @@ h3 em {
   gap: 0.9rem;
   padding: 2.5rem 1.75rem 3rem;
   background: var(--cream);
+  /* Same hairline the other card decks use — the tiles carry their own
+     edge now that the grid no longer paints a divider runner behind them. */
+  border: 1px solid rgba(27, 25, 22, 0.10);
   transition: background 0.4s var(--ease-out-expo);
 }
 .pl-card:hover { background: var(--cream-deep); }
@@ -1803,7 +2087,7 @@ h3 em {
   font-size: 2.6rem;
   font-weight: 700;
   line-height: 1;
-  color: var(--gold);
+  color: var(--gold-deep);
   opacity: 0.45;
   transition: opacity 0.4s ease;
 }
@@ -1861,7 +2145,7 @@ h3 em {
   color: var(--dark);
   margin-bottom: 1.2rem;
 }
-.st-title em { font-style: normal; color: var(--gold); }
+.st-title em { font-style: normal; color: var(--gold-deep); }
 .st-text {
   color: var(--dark-soft);
   line-height: 1.8;
@@ -1913,7 +2197,7 @@ h3 em {
 }
 .store-logo { display: flex; flex-direction: column; line-height: 1; flex-shrink: 0; text-decoration: none; }
 .store-logo-brand { font-family: var(--font-display); font-size: 1.35rem; font-weight: 700; letter-spacing: 0.06em; color: var(--dark); }
-.store-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold); }
+.store-logo-sub { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--gold-deep); }
 .store-nav-links { display: flex; list-style: none; gap: 1.8rem; margin-left: auto; align-items: center; padding: 0; }
 .store-nav-link { font-size: 0.82rem; font-weight: 500; letter-spacing: 0.05em; color: var(--dark-soft); transition: color 0.2s; text-decoration: none; }
 .store-nav-link:hover { color: var(--gold); }
@@ -1960,7 +2244,7 @@ h3 em {
 .store-container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
 .store-breadcrumb { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: rgba(27,25,22,0.45); padding: 1.2rem 0; }
 .store-breadcrumb a { text-decoration: none; transition: color 0.2s; }
-.store-breadcrumb a:hover { color: var(--gold); }
+.store-breadcrumb a:hover { color: var(--gold-deep); }
 .store-breadcrumb-sep { opacity: 0.4; }
 
 /* Pill corners across the storefront, matching .v2-btn on the marketing
@@ -1995,11 +2279,11 @@ h3 em {
 .btn-store-outline:hover { background: var(--dark); color: #fff; }
 .btn-store-gold {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-  background: var(--gold); color: #fff; border: none; padding: 0.9rem 2rem;
+  background: var(--gold-deep); color: #fff; border: none; padding: 0.9rem 2rem;
   font-family: var(--font-body); font-size: 0.85rem; font-weight: 500; letter-spacing: 0.06em;
   text-transform: uppercase; cursor: pointer; transition: background 0.25s; width: 100%;
 }
-.btn-store-gold:hover { background: #b8852f; }
+.btn-store-gold:hover { background: #6E4E13; }
 
 /* Store listing */
 .store-filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
@@ -2015,17 +2299,17 @@ h3 em {
 .store-product-img-wrap { position: relative; overflow: hidden; aspect-ratio: 1; display: block; background: var(--cream); text-decoration: none; }
 .store-product-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
 .store-product-card:hover .store-product-img-wrap img { transform: scale(1.04); }
-.store-product-badge { position: absolute; top: 0.75rem; left: 0.75rem; background: var(--gold); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; }
+.store-product-badge { position: absolute; top: 0.75rem; left: 0.75rem; background: var(--gold-deep); color: #fff; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; }
 .store-product-discount { position: absolute; top: 0.75rem; right: 0.75rem; background: var(--green); color: #fff; font-size: 0.65rem; font-weight: 700; padding: 0.25rem 0.5rem; }
 .store-product-info { padding: 1.25rem; display: flex; flex-direction: column; gap: 0.4rem; flex: 1; }
-.store-product-cat { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.store-product-cat { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-deep); }
 .store-product-name { font-family: var(--font-display); font-size: 1.15rem; font-weight: 400; color: var(--dark); line-height: 1.3; text-decoration: none; }
 .store-product-tagline { font-size: 0.78rem; color: rgba(27,25,22,0.55); line-height: 1.5; flex: 1; }
 .store-product-price-row { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 0.4rem; }
 .store-price-current { font-size: 1.15rem; font-weight: 600; color: var(--dark); }
 .store-price-mrp { font-size: 0.82rem; color: rgba(27,25,22,0.4); text-decoration: line-through; }
 .store-product-rating { display: flex; align-items: center; gap: 0.4rem; }
-.store-stars { font-size: 0.75rem; color: var(--gold); letter-spacing: 1px; }
+.store-stars { font-size: 0.75rem; color: var(--gold-deep); letter-spacing: 1px; }
 .store-rating-count { font-size: 0.72rem; color: rgba(27,25,22,0.45); }
 .store-add-to-cart-btn { margin-top: 0.75rem; padding: 0.75rem; background: var(--dark); color: #fff; border: none; font-family: var(--font-body); font-size: 0.78rem; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; }
 .store-add-to-cart-btn:hover, .store-add-to-cart-btn.added { background: var(--green); }
@@ -2037,9 +2321,9 @@ h3 em {
 @media (max-width: 768px) { .store-detail-grid { grid-template-columns: 1fr; gap: 2rem; } }
 .store-detail-image-main { position: relative; background: var(--cream); aspect-ratio: 1; overflow: hidden; }
 .store-detail-image-main img { width: 100%; height: 100%; object-fit: cover; }
-.store-detail-badge { position: absolute; top: 1rem; left: 1rem; background: var(--gold); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
+.store-detail-badge { position: absolute; top: 1rem; left: 1rem; background: var(--gold-deep); color: #fff; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
 .store-detail-saving { margin-top: 0.75rem; background: #f0faf0; border: 1px solid #c6e6c6; color: #2a6a2a; font-size: 0.8rem; font-weight: 500; padding: 0.6rem 1rem; text-align: center; }
-.store-detail-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); }
+.store-detail-cat { font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-deep); }
 .store-detail-name { font-family: var(--font-display); font-size: clamp(1.8rem,3vw,2.5rem); font-weight: 700; color: var(--dark); margin: 0.5rem 0 0.4rem; line-height: 1.15; }
 .store-detail-tagline { font-size: 0.9rem; color: rgba(27,25,22,0.55); line-height: 1.6; margin-bottom: 1rem; }
 .store-detail-rating { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.2rem; }
@@ -2075,7 +2359,7 @@ h3 em {
 /* Cart */
 .store-cart-grid { display: grid; grid-template-columns: 1fr 340px; gap: 3rem; align-items: start; }
 @media (max-width: 860px) { .store-cart-grid { grid-template-columns: 1fr; } }
-.store-cart-items { display: flex; flex-direction: column; border: 1px solid var(--cream-deep); }
+.store-cart-items { display: flex; flex-direction: column; border: 1px solid var(--cream-deep); overflow: hidden; }
 .store-cart-item { display: grid; grid-template-columns: 90px 1fr auto; gap: 1.2rem; align-items: center; padding: 1.2rem; border-bottom: 1px solid var(--cream-deep); background: #fff; }
 .store-cart-item:last-child { border-bottom: none; }
 .store-cart-item-img { width: 90px; height: 90px; object-fit: cover; background: var(--cream); }
@@ -2175,4 +2459,179 @@ h3 em {
 .mis-input:focus {
   border-color: var(--color-mis-blue);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-mis-blue) 15%, transparent);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   SERVICES DETAIL PAGE (/services)
+   The hero is white, and the same foliage band that opens the landing
+   rail (.sv-canopy) runs across the top of the body below it — so the
+   page reads as one continuous planting rather than two treatments.
+   .svd-body therefore plays the role .sv-rail plays on the landing:
+   it owns the canopy variables, the ground gradient, and the zero top
+   padding the band needs to sit flush against the section edge.
+   ════════════════════════════════════════════════════════════════ */
+.svd-hero {
+  background: #fff;
+  padding: 10rem 0 4.5rem;
+}
+.svd-hero-title {
+  font-size: clamp(2.6rem, 6.5vw, 4.5rem);
+  color: var(--dark);
+  font-weight: 700;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+}
+.svd-hero-title em {
+  font-style: normal;
+  color: var(--gold-deep);
+}
+.svd-hero-lede {
+  margin-top: 1.5rem;
+  max-width: 34rem;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--dark-soft);
+}
+
+.svd-body {
+  /* Same values as .sv-rail — the band has to dissolve into the exact
+     colour the section already is where it stops. */
+  --sv-canopy-end: #0C1F0A;
+  --sv-ground: #070E06;
+  background:
+    linear-gradient(to bottom, var(--sv-canopy-end) 40%, var(--sv-ground) 88%)
+    var(--sv-ground);
+  padding-top: 0;
+  padding-bottom: clamp(3rem, 7vw, 6rem);
+}
+
+/* One service per row, image and copy side by side, alternating sides so
+   the eye zig-zags down the page instead of running a single column. */
+.svd-row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  align-items: center;
+  padding-block: clamp(2.75rem, 5.5vw, 4.5rem);
+  border-top: 1px solid rgba(248, 244, 238, 0.10);
+}
+.svd-row:first-child {
+  border-top: none;
+}
+.svd-row:nth-child(even) .svd-media {
+  order: 2;
+}
+.svd-media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 21px;
+  background: rgba(248, 244, 238, 0.06);
+}
+.svd-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.svd-num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  margin-bottom: 0.6rem;
+}
+.svd-name {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+  font-weight: 700;
+  color: var(--cream);
+  line-height: 1.15;
+}
+.svd-summary {
+  margin-top: 0.6rem;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(248, 244, 238, 0.68);
+  max-width: 34rem;
+}
+/* The two detail blocks sit side by side where there is room, and stack
+   below it — at which point the row is already a single column anyway. */
+.svd-detail {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1.25rem, 2.5vw, 2.25rem);
+  margin-top: 1.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(248, 244, 238, 0.10);
+}
+.svd-sub {
+  font-family: var(--font-body);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 0.85rem;
+}
+.svd-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: svd-step;
+}
+.svd-list li {
+  position: relative;
+  padding-left: 1.5rem;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: rgba(248, 244, 238, 0.72);
+}
+/* Steps are numbered because their order is the point; benefits are not. */
+.svd-list-num li {
+  counter-increment: svd-step;
+}
+.svd-list-num li::before {
+  content: counter(svd-step);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  color: var(--gold);
+  opacity: 0.85;
+}
+.svd-list-dot li::before {
+  content: "";
+  position: absolute;
+  left: 0.15rem;
+  top: 0.6rem;
+  width: 0.3rem;
+  height: 0.3rem;
+  border-radius: 50%;
+  background: var(--gold);
+  opacity: 0.7;
+}
+
+@media (max-width: 900px) {
+  .svd-row {
+    grid-template-columns: 1fr;
+  }
+  /* Image always leads on a single column — the alternation only makes
+     sense when the two sit next to each other. */
+  .svd-row:nth-child(even) .svd-media {
+    order: 0;
+  }
+}
+@media (max-width: 580px) {
+  .svd-detail {
+    grid-template-columns: 1fr;
+  }
+  .svd-hero {
+    padding: 8rem 0 3rem;
+  }
 }

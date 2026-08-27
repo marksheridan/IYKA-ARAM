@@ -40,7 +40,7 @@ export function Testimonials() {
             <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
               Healing that speaks
               <br />
-              <em style={{ color: "var(--gold)" }}>for itself.</em>
+              <em style={{ color: "var(--gold-deep)" }}>for itself.</em>
             </h2>
           </Reveal>
         </div>
@@ -52,7 +52,7 @@ export function Testimonials() {
               <svg className="v2-testimonial-quote-mark" width="36" height="28" viewBox="0 0 36 28" fill="none">
                 <path
                   d="M0 28V17.5C0 7.5 5.5 2 16.5 0L18 3C12.5 4.5 9.5 7.5 9 12H16V28H0ZM20 28V17.5C20 7.5 25.5 2 36.5 0L38 3C32.5 4.5 29.5 7.5 29 12H36V28H20Z"
-                  fill="var(--gold)"
+                  fill="var(--gold-deep)"
                   opacity="0.2"
                 />
               </svg>

@@ -31,7 +31,7 @@ export default async function PatientDetail({
     return (
       <div>
         <h1 className="font-display text-2xl text-forest">Patient not found</h1>
-        <Link href="/mis/patients" className="mt-4 inline-block text-gold">
+        <Link href="/mis/patients" className="mt-4 inline-block text-gold-deep">
           ← Patients
         </Link>
       </div>
@@ -84,7 +84,7 @@ export default async function PatientDetail({
                   <StatusBadge status={a.status} />
                   <Link
                     href={`/mis/appointments/${a.id}`}
-                    className="text-xs text-gold hover:text-forest"
+                    className="text-xs text-gold-deep hover:text-forest"
                   >
                     Open
                   </Link>

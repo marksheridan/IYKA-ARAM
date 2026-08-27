@@ -33,7 +33,7 @@ export default async function AppointmentPage({
     return (
       <section className="mx-auto max-w-3xl px-6 py-20">
         <h1 className="font-display text-2xl text-forest">Service not found</h1>
-        <Link href="/booking" className="mt-4 inline-block text-gold">
+        <Link href="/booking" className="mt-4 inline-block text-gold-deep">
           ← Back to booking
         </Link>
       </section>
@@ -197,7 +197,7 @@ function Input({
     <div>
       <label htmlFor={name} className="mb-1 block text-sm font-medium text-ink">
         {label}
-        {required && <span className="text-gold"> *</span>}
+        {required && <span className="text-gold-deep"> *</span>}
       </label>
       <input
         id={name}

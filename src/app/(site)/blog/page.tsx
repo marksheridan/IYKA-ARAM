@@ -38,7 +38,8 @@ export default async function BlogPage() {
         />
         <div
           className="pointer-events-none absolute inset-0"
-          style={{ background: "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)" }}
+          // style={{ background: "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)" }}
+          style={{ background: "linear-gradient(to right, #847858 38%, rgba(132,120,88,0.82) 60%, rgba(132,120,88,0) 82%)" }}
         />
         <div
           className="pointer-events-none absolute inset-0"
@@ -78,7 +79,7 @@ export default async function BlogPage() {
                   </div>
                 </Link>
                 <div className="pt-3 flex flex-col flex-1">
-                  <span className="text-[10px] font-medium tracking-widest uppercase mb-2" style={{ color: "var(--gold)" }}>
+                  <span className="text-[10px] font-medium tracking-widest uppercase mb-2" style={{ color: "var(--gold-deep)" }}>
                     {post.category}
                   </span>
                   <h2 className="font-display text-lg text-forest leading-snug">

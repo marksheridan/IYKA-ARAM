@@ -261,7 +261,7 @@ export default function CheckoutPage() {
             <div className="store-payment-options">
               {(["upi", "bank", "cod"] as PayMethod[]).map((m) => (
                 <label key={m} className={`store-payment-opt${payment === m ? " checked" : ""}`}>
-                  <input type="radio" name="payment" value={m} checked={payment === m} onChange={() => setPayment(m)} style={{ accentColor: "var(--gold)" }} />
+                  <input type="radio" name="payment" value={m} checked={payment === m} onChange={() => setPayment(m)} style={{ accentColor: "var(--gold-deep)" }} />
                   <div className="store-payment-opt-content">
                     <span className="store-payment-icon">{m === "upi" ? "📱" : m === "bank" ? "🏦" : "💵"}</span>
                     <div>
@@ -404,7 +404,7 @@ export default function CheckoutPage() {
                   {otpLoading ? "Verifying…" : "Verify & Place Order"}
                 </button>
                 <button className="store-otp-cancel-btn" onClick={() => setOtpStep(1)}>
-                  Didn&rsquo;t receive it? <span style={{ color: "var(--gold)", textDecoration: "underline" }}>Resend</span>
+                  Didn&rsquo;t receive it? <span style={{ color: "var(--gold-deep)", textDecoration: "underline" }}>Resend</span>
                 </button>
               </>
             )}

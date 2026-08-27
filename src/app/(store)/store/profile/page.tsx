@@ -54,7 +54,7 @@ export default function ProfilePage() {
         {/* Header */}
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "2.5rem" }}>
           <div>
-            <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.4rem" }}>
+            <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold-deep)", marginBottom: "0.4rem" }}>
               My Account
             </p>
             <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem,4vw,2.6rem)", fontWeight: 700, color: "var(--dark)" }}>
@@ -88,7 +88,7 @@ export default function ProfilePage() {
             {user.phone.slice(-4)}
           </div>
           <div>
-            <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.2rem" }}>Phone</p>
+            <p style={{ fontSize: "0.72rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--gold-deep)", marginBottom: "0.2rem" }}>Phone</p>
             <p style={{ fontSize: "1rem", color: "var(--dark)", fontWeight: 400 }}>{masked}</p>
           </div>
         </div>
@@ -144,7 +144,7 @@ export default function ProfilePage() {
                     <p style={{ fontSize: "0.9rem", fontWeight: 500, color: "var(--dark)", marginBottom: "0.2rem" }}>₹{o.total.toLocaleString("en-IN")}</p>
                     <span style={{
                       fontSize: "0.65rem", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
-                      color: "var(--gold)", border: "1px solid var(--gold-pale)", padding: "0.1rem 0.5rem",
+                      color: "var(--gold-deep)", border: "1px solid var(--gold-pale)", padding: "0.1rem 0.5rem",
                     }}>
                       {o.status}
                     </span>

@@ -31,7 +31,7 @@ export default async function InvoiceDetail({
     return (
       <div>
         <h1 className="font-display text-2xl text-forest">Invoice not found</h1>
-        <Link href="/mis/billing" className="mt-4 inline-block text-gold">
+        <Link href="/mis/billing" className="mt-4 inline-block text-gold-deep">
           ← Billing
         </Link>
       </div>

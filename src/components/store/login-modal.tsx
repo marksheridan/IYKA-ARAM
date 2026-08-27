@@ -96,7 +96,7 @@ export function LoginModal({ open, onClose, onLogin }: Props) {
         ) : (
           <>
             <div style={{ marginBottom: "1.5rem" }}>
-              <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold)", marginBottom: "0.4rem" }}>
+              <p style={{ fontSize: "0.65rem", fontWeight: 700, letterSpacing: "0.2em", textTransform: "uppercase", color: "var(--gold-deep)", marginBottom: "0.4rem" }}>
                 IYKA Living
               </p>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, color: "var(--dark)" }}>

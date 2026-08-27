@@ -46,7 +46,7 @@ export default async function OccurrenceDetail({
     return (
       <div>
         <h1 className="font-display text-2xl text-forest">Session not found</h1>
-        <Link href="/mis/yoga" className="mt-4 inline-block text-gold">
+        <Link href="/mis/yoga" className="mt-4 inline-block text-gold-deep">
           ← Yoga sessions
         </Link>
       </div>

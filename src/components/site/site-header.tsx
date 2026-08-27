@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BookButton } from "./book-button";
 import { nav } from "@/content/site";
@@ -9,6 +10,15 @@ import { nav } from "@/content/site";
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+
+  /* Only the landing page puts a dark, full-bleed hero behind the bar, which
+     is what the transparent state is for. Every other route starts against
+     its own background — and several of those are light (/services opens
+     white, /gallery and /about on cream) — where the cream nav links would
+     be invisible until the first scroll. So inner pages get the solid bar
+     from the top. */
+  const solid = scrolled || pathname !== "/";
 
   // Solid dark bar after scrolling past the hero fold (matches Astro nav).
   useEffect(() => {
@@ -19,7 +29,7 @@ export function SiteHeader() {
   }, []);
 
   return (
-    <header className={`v2-landing v2-nav ${scrolled ? "scrolled" : ""}`}>
+    <header className={`v2-landing v2-nav ${solid ? "scrolled" : ""}`}>
       <div className="v2-nav-inner">
         <Link href="/" aria-label="IYKA-ARAM home" onClick={() => setMenuOpen(false)}>
           <Image

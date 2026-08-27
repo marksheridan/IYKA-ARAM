@@ -84,8 +84,10 @@ export function GalleryClient() {
         <div
           className="pointer-events-none absolute inset-0"
           style={{
+            // background:
+            //   "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)",
             background:
-              "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)",
+              "linear-gradient(to right, #847858 38%, rgba(132,120,88,0.82) 60%, rgba(132,120,88,0) 82%)",
           }}
         />
 

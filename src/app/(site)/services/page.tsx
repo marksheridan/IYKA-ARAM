@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { BookButton } from "@/components/site/book-button";
 import { Reveal } from "@/components/site/reveal";
+import { services } from "@/content/services";
 
 export const metadata = {
   title: "Services",
@@ -8,80 +9,69 @@ export const metadata = {
     "Acupuncture, naturopathy, yoga therapy, ozone therapy, functional medicine and nutrition, gut health resets, energy medicine, longevity, biohacking, massage and physiotherapy at IYKA-ARAM, Shillong.",
 };
 
-/* Mirrors the landing page list — keep the two in sync. */
-const services = [
-  { num: "01", name: "Acupuncture", desc: "Precision needling to regulate pain, nerve function and energy flow." },
-  { num: "02", name: "Naturopathy", desc: "Drug-free healing using natural methods and elements." },
-  { num: "03", name: "Yoga Therapy", desc: "Therapeutic yoga for chronic conditions and mental wellness, in-clinic or live online." },
-  { num: "04", name: "Ozone Therapy", desc: "Oxygen-based therapy for inflammation, immunity and recovery." },
-  { num: "05", name: "Functional Medicine Consultation", desc: "Root-cause analysis to understand what actually drives your symptoms." },
-  { num: "06", name: "Functional Nutrition Consultation", desc: "Food as medicine — personalised therapeutic diet plans." },
-  { num: "07", name: "Gut Health Reset Programs", desc: "Structured protocols to rebuild digestion and the microbiome." },
-  { num: "08", name: "Energy Medicine", desc: "Restoring the body's energetic balance to support deep healing." },
-  { num: "09", name: "Longevity", desc: "Preventive, science-led care designed for a longer, fuller life." },
-  { num: "10", name: "Biohacking", desc: "Data-driven optimisation of sleep, energy, metabolism and focus." },
-  { num: "11", name: "Massage", desc: "Therapeutic bodywork for tension, circulation and recovery." },
-  { num: "12", name: "Physiotherapy", desc: "Movement-based rehabilitation and chronic pain management." },
-];
-
 export default function ServicesPage() {
   return (
     <div className="v2-landing">
-      {/* Hero */}
-      <section
-        className="scroll-mt-20"
-        style={{ background: "var(--green)", padding: "10rem 0 4.5rem" }}
-      >
+      {/* Hero — white, so the foliage band below reads as the page opening
+          onto the planting rather than as a second decorative strip. */}
+      <section className="svd-hero scroll-mt-20">
         <div className="v2-container">
-          <p className="v2-section-label v2-reveal" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+          <p className="v2-section-label v2-reveal" style={{ marginBottom: "1rem" }}>
             What We Offer
           </p>
-          <h1
-            className="v2-reveal v2-reveal-1"
-            style={{
-              fontSize: "clamp(2.6rem, 6.5vw, 4.5rem)",
-              color: "var(--cream)",
-              fontWeight: 700,
-              lineHeight: 1.03,
-              letterSpacing: "-0.02em",
-            }}
-          >
+          <h1 className="svd-hero-title v2-reveal v2-reveal-1">
             Twelve ways to
             <br />
-            <em style={{ fontStyle: "normal", color: "var(--gold-light)" }}>heal at the root.</em>
+            <em>heal at the root.</em>
           </h1>
-          <p
-            className="v2-reveal v2-reveal-2"
-            style={{
-              marginTop: "1.5rem",
-              maxWidth: "34rem",
-              fontSize: "1.05rem",
-              lineHeight: 1.7,
-              fontWeight: 700,
-              color: "rgba(248,244,238,0.7)",
-            }}
-          >
+          <p className="svd-hero-lede v2-reveal v2-reveal-2">
             IYKA-ARAM is an integrative healthcare clinic — naturopathy and yoga,
             functional medicine, and evidence-based drugless therapies, delivered
-            in Shillong and online.
+            in Shillong and online. Each service below sets out what a course of
+            treatment involves and what it is meant to leave you with.
           </p>
         </div>
       </section>
 
-      {/* Service list */}
-      <section className="v2-section-py" style={{ background: "var(--dark)" }}>
+      {/* Service detail — the canopy is the section's own top edge, exactly
+          as on the landing rail, so .svd-body carries no top padding. */}
+      <section className="svd-body">
+        <div className="sv-canopy" aria-hidden="true" />
+
         <div className="v2-container">
-          <div className="v2-services-grid">
-            {services.map((s, i) => (
-              <Reveal key={s.num} className="v2-service-card" delay={(i % 6) * 0.08}>
-                <span className="v2-service-num">{s.num}</span>
-                <div>
-                  <h3 className="v2-service-name">{s.name}</h3>
-                  <p className="v2-service-desc">{s.desc}</p>
+          {services.map((s) => (
+            <article className="svd-row" key={s.num} id={s.slug}>
+              <div className="svd-media">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={s.imgWide} alt={s.alt} loading="lazy" decoding="async" />
+              </div>
+
+              <Reveal className="svd-content">
+                <span className="svd-num">{s.num}</span>
+                <h2 className="svd-name">{s.name}</h2>
+                <p className="svd-summary">{s.summary}</p>
+
+                <div className="svd-detail">
+                  <div>
+                    <p className="svd-sub">How it works</p>
+                    <ol className="svd-list svd-list-num">
+                      {s.how.map((step) => (
+                        <li key={step}>{step}</li>
+                      ))}
+                    </ol>
+                  </div>
+                  <div>
+                    <p className="svd-sub">Long-term benefits</p>
+                    <ul className="svd-list svd-list-dot">
+                      {s.benefits.map((b) => (
+                        <li key={b}>{b}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </Reveal>
-            ))}
-          </div>
+            </article>
+          ))}
         </div>
       </section>
 
