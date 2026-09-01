@@ -3,7 +3,15 @@ import { business } from "@/content/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = business.url;
-  const routes = ["", "/about", "/services", "/products", "/contact", "/booking"];
+  const routes = [
+    "",
+    "/about",
+    "/services",
+    "/products",
+    "/contact",
+    "/booking",
+    "/podcast",
+  ];
   return routes.map((path) => ({
     url: `${base}${path}`,
     changeFrequency: "monthly",

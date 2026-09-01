@@ -39,10 +39,12 @@ export const business = {
 };
 
 export const nav = [
+  { href: "/", label: "Home" },
   { href: "/#mission", label: "Mission" },
   { href: "/services", label: "Services" },
   { href: "/#team", label: "Team" },
   { href: "/gallery", label: "Gallery" },
+  { href: "/podcast", label: "Podcast" },
   { href: "/contact", label: "Contact" },
 ];
 

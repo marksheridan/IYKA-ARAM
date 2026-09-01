@@ -1446,6 +1446,8 @@ h3 em {
 .v2-team-photo,
 .v2-product-image-wrap,
 .vtc-card,
+.pod-card-media,
+.pod-player,
 .tm-card,
 .mg-card,
 .pl-card,
@@ -2633,5 +2635,615 @@ h3 em {
   }
   .svd-hero {
     padding: 8rem 0 3rem;
+  }
+}
+
+/* ── Podcast — The Wellness Dialogues ──────────────────────────────
+   Shared by the homepage row, the /podcast listing and the episode
+   page. The card is a 9:16 video with the copy sitting on top of it,
+   so it reads as a reel rather than a thumbnail with a caption. */
+
+/* Centred: the copy stacks over the row, and the one call to action sits
+   under the cards at the foot of the section. */
+.pod-head {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+.pod-head-text {
+  margin-top: 1.25rem;
+  margin-inline: auto;
+  /* Wider measure than the usual ~45ch reading column: the line is centred
+     and only a few lines long, so it holds together at this width. */
+  max-width: 66ch;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: rgba(248, 244, 238, 0.62);
+}
+
+/* ── Homepage band background ──
+   The studio frame sits behind the row, dimmed hard enough that the cards
+   stay the brightest thing in the band, and faded to solid at top and bottom
+   so the section still butts cleanly against its neighbours. */
+.pod-section-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 72% center;
+  opacity: 0.35;
+  pointer-events: none;
+}
+.pod-section-scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--dark) 0%,
+      rgba(27, 25, 22, 0.45) 28%,
+      rgba(27, 25, 22, 0.45) 72%,
+      var(--dark) 100%
+    ),
+    radial-gradient(ellipse 60% 70% at 50% 100%, rgba(200, 151, 60, 0.08), transparent);
+}
+
+/* Four across on desktop; a snapping side-scroller once that gets tight,
+   which is the shape people already expect from vertical video. */
+.pod-row {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1.25rem;
+  /* The row is capped well inside the container and centred, so the four
+     cards read as a block on the page instead of running to both edges.
+     Widen this number to make the cards bigger, narrow it to pull them in. */
+  max-width: 64rem;
+  margin-inline: auto;
+}
+/* Homepage cards centre their copy. */
+.pod-row .pod-card-body {
+  text-align: center;
+}
+.pod-row .pod-card-meta {
+  justify-content: center;
+  gap: 0.8rem;
+}
+.pod-row-cta {
+  margin-top: clamp(2rem, 4vw, 3rem);
+  text-align: center;
+}
+
+.pod-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 1.25rem;
+}
+.pod-count {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(27, 25, 22, 0.55);
+  margin-bottom: 1.25rem;
+}
+
+/* ── The teaser card ── */
+.pod-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.pod-card:focus-visible {
+  outline: 2px solid var(--gold);
+  outline-offset: 4px;
+  border-radius: 21px;
+}
+.pod-card-media {
+  position: relative;
+  aspect-ratio: 9 / 16;
+  overflow: hidden;
+  background: var(--dark-soft);
+  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+}
+.pod-card:hover .pod-card-media,
+.pod-card:focus-visible .pod-card-media {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(27, 25, 22, 0.35);
+}
+/* Cards on a cream ground need the lift drawn for them — on the dark
+   homepage band the video edge is contrast enough. */
+.pod-grid--light .pod-card-media {
+  box-shadow: 0 10px 30px rgba(27, 25, 22, 0.12);
+}
+.pod-card-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.pod-card-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(150deg, #2A2520 0%, #1B1916 60%, #3A2F1A 100%);
+  font-family: var(--font-display);
+  font-size: 4rem;
+  font-weight: 700;
+  color: rgba(222, 184, 106, 0.28);
+}
+/* Keeps the copy legible whatever frame the clip happens to be on. */
+.pod-card-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(27, 25, 22, 0.92) 0%,
+    rgba(27, 25, 22, 0.72) 32%,
+    rgba(27, 25, 22, 0.12) 62%,
+    rgba(27, 25, 22, 0.3) 100%
+  );
+}
+.pod-card-ep {
+  position: absolute;
+  top: 0.85rem;
+  left: 0.85rem;
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--dark);
+  background: var(--gold);
+  padding: 0.3rem 0.6rem;
+  border-radius: 9999px;
+}
+/* Centred white play button, revealed on hover. The triangle is nudged
+   right so it sits optically centred in the circle rather than measured
+   centred, which always reads as slightly left. */
+.pod-card-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 3px;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--dark);
+  box-shadow: 0 8px 28px rgba(15, 14, 12, 0.35);
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.86);
+  transition: opacity 0.25s var(--ease-out-expo), transform 0.25s var(--ease-out-expo);
+}
+.pod-card:hover .pod-card-play,
+.pod-card:focus-visible .pod-card-play {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+/* Nothing hovers on a touch screen, so there the button simply stays. */
+@media (hover: none) {
+  .pod-card-play {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+.pod-card-body {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 1.1rem 1.05rem 1.25rem;
+  font-family: var(--font-body);
+}
+.pod-card-guest {
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+  margin-bottom: 0.45rem;
+}
+.pod-card-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--cream);
+}
+.pod-card-blurb {
+  margin-top: 0.4rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgba(248, 244, 238, 0.72);
+}
+.pod-card-meta {
+  margin-top: 0.9rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid rgba(248, 244, 238, 0.18);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: rgba(248, 244, 238, 0.62);
+}
+.pod-card-cue {
+  color: var(--gold-light);
+  font-weight: 500;
+  transition: transform 0.25s var(--ease-out-expo);
+}
+.pod-card:hover .pod-card-cue {
+  transform: translateX(3px);
+}
+
+/* ── Episode page ── */
+.pod-episode-top {
+  padding-block: clamp(7rem, 14vw, 10rem) clamp(3rem, 7vw, 5rem);
+}
+.pod-back {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.6);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.pod-back:hover {
+  color: var(--gold-light);
+}
+.pod-episode-kicker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 2rem;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--gold-light);
+}
+.pod-episode-title {
+  margin-top: 0.9rem;
+  font-size: clamp(2.1rem, 5vw, 3.6rem);
+  font-weight: 700;
+  color: var(--cream);
+  max-width: 20ch;
+}
+.pod-episode-guest {
+  margin-top: 0.9rem;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: rgba(248, 244, 238, 0.85);
+}
+.pod-episode-role {
+  color: rgba(248, 244, 238, 0.55);
+}
+
+.pod-player-wrap {
+  margin-top: 2.5rem;
+  max-width: 62rem;
+}
+.pod-player {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--dark-soft);
+  border: 1px solid rgba(200, 151, 60, 0.22);
+  display: block;
+  padding: 0;
+}
+.pod-player-frame {
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+.pod-player--facade {
+  cursor: pointer;
+}
+.pod-player-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s var(--ease-out-expo), opacity 0.3s;
+}
+.pod-player--facade:hover .pod-player-thumb {
+  transform: scale(1.03);
+  opacity: 0.85;
+}
+.pod-player-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 4.2rem;
+  height: 4.2rem;
+  border-radius: 50%;
+  background: rgba(200, 151, 60, 0.92);
+  color: var(--dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s var(--ease-out-expo), background 0.25s;
+}
+.pod-player--facade:hover .pod-player-icon {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: var(--gold);
+}
+/* Written up, not uploaded yet — see youtubeId in content/podcasts.ts. */
+.pod-player--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.1rem;
+  background: linear-gradient(150deg, #2A2520 0%, #1B1916 65%, #3A2F1A 100%);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.6);
+}
+.pod-player--empty .pod-player-icon {
+  position: static;
+  transform: none;
+  background: rgba(200, 151, 60, 0.35);
+  color: var(--cream);
+}
+
+.pod-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  font-family: var(--font-body);
+}
+.pod-links-label {
+  font-size: 0.66rem;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(248, 244, 238, 0.5);
+}
+.pod-link {
+  font-size: 0.78rem;
+  color: var(--gold-light);
+  text-decoration: none;
+  border: 1px solid rgba(200, 151, 60, 0.4);
+  border-radius: 9999px;
+  padding: 0.4rem 0.95rem;
+  transition: background 0.2s, color 0.2s;
+}
+.pod-link:hover {
+  background: var(--gold);
+  color: var(--dark);
+}
+
+/* ── The writing under the player ── */
+.pod-article {
+  max-width: 44rem;
+  font-family: var(--font-body);
+  text-align: center;
+}
+.pod-summary {
+  position: relative;
+  font-size: clamp(1.05rem, 2vw, 1.3rem);
+  line-height: 1.65;
+  color: var(--dark);
+  padding-top: 1.5rem;
+}
+.pod-summary::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 2px;
+  background: var(--gold);
+}
+.pod-paragraph {
+  margin-top: 1.5rem;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--dark-soft);
+}
+
+/* ── Episode page: the whole column is centred in the container rather than
+   hugging the left edge of a 90rem shell. ── */
+.pod-episode-top .v2-container {
+  text-align: center;
+}
+.pod-episode-kicker,
+.pod-links {
+  justify-content: center;
+}
+.pod-episode-title,
+.pod-player-wrap,
+.pod-article {
+  margin-inline: auto;
+}
+
+@media (max-width: 1000px) {
+  /* Side-scroller: the row keeps its rhythm instead of collapsing into
+     two very tall cards. */
+  .pod-row {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    /* Room for the hover lift and the card shadow, and pulled out to the
+       container edges so the row bleeds off-screen the way a reel should. */
+    padding: 0.5rem 1.5rem 1.5rem;
+    margin-inline: -1.5rem;
+    scrollbar-width: none;
+  }
+  .pod-row::-webkit-scrollbar {
+    display: none;
+  }
+  .pod-row > * {
+    flex: 0 0 min(17rem, 62vw);
+    scroll-snap-align: center;
+  }
+}
+
+@media (max-width: 560px) {
+  .pod-grid {
+    grid-template-columns: repeat(auto-fill, minmax(13rem, 1fr));
+  }
+}
+
+/* The teaser clips are decoration; motion-sensitive visitors get the poster
+   frame and no transforms. */
+@media (prefers-reduced-motion: reduce) {
+  .pod-card-media,
+  .pod-card-cue,
+  .pod-player-thumb,
+  .pod-player-icon {
+    transition: none;
+  }
+  .pod-card:hover .pod-card-media,
+  .pod-card:focus-visible .pod-card-media {
+    transform: none;
+  }
+  /* No fade-in — the button is simply there. */
+  .pod-card-play {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+    transition: none;
+  }
+}
+
+/* ── Podcast episode overlay ───────────────────────────────────────
+   Episodes have no page of their own: the card opens the full YouTube
+   conversation over the listing, with the write-up underneath. */
+
+.pod-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: clamp(1rem, 4vw, 3rem) clamp(1rem, 4vw, 2rem);
+  background: rgba(15, 14, 12, 0.82);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  overflow-y: auto;
+  animation: pod-overlay-in 0.25s var(--ease-out-expo);
+}
+@keyframes pod-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.pod-overlay-panel {
+  position: relative;
+  width: min(56rem, 100%);
+  background: var(--cream);
+  border-radius: 21px;
+  overflow: hidden;
+  /* The panel scrolls with the backdrop rather than trapping a second
+     scrollbar inside itself — long write-ups stay easy to read. No auto
+     margins: on a panel taller than the viewport they push the top edge
+     out of reach, since overflow above a flex item cannot be scrolled to. */
+  animation: pod-panel-in 0.35s var(--ease-out-expo);
+}
+.pod-overlay-panel:focus {
+  outline: none;
+}
+@keyframes pod-panel-in {
+  from { opacity: 0; transform: translateY(14px) scale(0.985); }
+  to   { opacity: 1; transform: none; }
+}
+.pod-overlay-close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  z-index: 2;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(27, 25, 22, 0.62);
+  border: 1px solid rgba(200, 151, 60, 0.45);
+  color: var(--cream);
+  cursor: pointer;
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.pod-overlay-close:hover {
+  background: var(--gold);
+  color: var(--dark);
+  transform: scale(1.06);
+}
+.pod-overlay-player {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--dark);
+}
+.pod-overlay-player .pod-player {
+  height: 100%;
+  border: 0;
+  border-radius: 0;
+}
+.pod-overlay-body {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  font-family: var(--font-body);
+}
+.pod-overlay-body .pod-episode-kicker {
+  margin-top: 0;
+  color: var(--gold-deep);
+}
+.pod-overlay-title {
+  margin-top: 0.6rem;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 700;
+  color: var(--dark);
+}
+.pod-overlay-guest {
+  margin-top: 0.5rem;
+  font-size: 0.95rem;
+  color: var(--dark-soft);
+}
+.pod-overlay-guest .pod-episode-role {
+  color: rgba(27, 25, 22, 0.55);
+}
+
+/* The card is a <button> on the listing page and a link on the homepage;
+   the button needs its UA styling stripped to match. */
+button.pod-card {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pod-overlay,
+  .pod-overlay-panel {
+    animation: none;
   }
 }

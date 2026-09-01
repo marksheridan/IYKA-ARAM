@@ -15,20 +15,21 @@ type Shot = { src: string; tag: string; caption: string; alt: string };
    The old /events/event-*.jpg files were generic stock that did not match
    their captions, so they are left out — drop the client's real event
    photos into /public/events and add them to these arrays. */
+/* Each row is duplicated and travels -50%, so one set has to be at least as
+   wide as the viewport or a gap opens mid-scroll. At the 560px card cap that
+   means four cards minimum per row — keep both arrays at four or more. */
 const rowTop: Shot[] = [
-  { src: "/gallery/img1.jpg", tag: "The Clinic", caption: "IYKA-ARAM, Shillong", alt: "Exterior of the IYKA-ARAM clinic in Shillong at sunset" },
   { src: "/gallery/img11.jpg", tag: "Yoga Therapy", caption: "Joy in every session", alt: "Adults and a child laughing with arms raised during a group yoga session" },
   { src: "/gallery/img17.jpg", tag: "Community", caption: "Community health screening", alt: "Practitioners running a health screening station at a community wellness camp" },
   { src: "/gallery/img20.jpg", tag: "Yoga Therapy", caption: "Group therapeutic yoga", alt: "Participants seated in meditation on yoga mats in a bright hall" },
-  { src: "/gallery/img8.jpg", tag: "Every Age", caption: "Wellness for all ages", alt: "A young girl on a colourful yoga mat during a wellness session" },
+  { src: "/gallery/img27.jpg", tag: "IYKA Learn", caption: "Breathwork & energetic anatomy", alt: "A YONA wellness event display board showing an energetic anatomy infographic and the five benefits of breathwork" },
 ];
 
 const rowBottom: Shot[] = [
-  { src: "/gallery/img5.jpg", tag: "Our Patients", caption: "Healing, together", alt: "Patients and staff together on the steps of the IYKA-ARAM clinic" },
-  { src: "/gallery/img4.jpg", tag: "The Team", caption: "The practitioners behind IYKA", alt: "Members of the IYKA-ARAM team at the clinic entrance in traditional Meghalayan shawls" },
   { src: "/gallery/img9.jpg", tag: "IYKA Circle", caption: "Certificate ceremony", alt: "A participant receiving a certificate at an IYKA community event" },
   { src: "/gallery/img23.jpg", tag: "Movement", caption: "Mindful movement", alt: "A smiling participant holding a mudra during a yoga session" },
-  { src: "/gallery/img2.jpg", tag: "The Clinic", caption: "The view from our veranda", alt: "View over Shillong from the IYKA-ARAM clinic veranda at dusk" },
+  { src: "/gallery/img8.jpg", tag: "Every Age", caption: "Wellness for all ages", alt: "A young girl on a colourful yoga mat during a wellness session" },
+  { src: "/dr-emidaka-bio.jpg", tag: "The Founder", caption: "Dr. Emidaka", alt: "Dr. Emidaka, founder of IYKA-ARAM, seated on the steps of the clinic veranda" },
 ];
 
 function Row({ shots, reverse }: { shots: Shot[]; reverse?: boolean }) {

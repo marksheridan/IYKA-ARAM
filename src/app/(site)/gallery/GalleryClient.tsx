@@ -2,13 +2,10 @@
 
 import { useState, useEffect, useCallback } from "react";
 
-const CATEGORIES = ["All", "Clinic", "Yoga & Wellness", "Events", "Team"] as const;
+const CATEGORIES = ["All", "Yoga & Wellness", "Events", "Products", "Team"] as const;
 
 const PHOTOS = [
-  { src: "/gallery/img1.jpg",  caption: "Iyka-Aram Clinic, Shillong",           alt: "Exterior of the Iyka-Aram clinic at sunset — a traditional colonial-style two-storey building with cream and dark-brown timber frame in Shillong, Meghalaya", category: "Clinic",          size: "wide" },
-  { src: "/gallery/img2.jpg",  caption: "View from the Clinic Veranda",          alt: "View through the Iyka-Aram clinic veranda over the Shillong cityscape at dusk, framed by dark wooden beams and potted plants on either side",                category: "Clinic",          size: "tall" },
-  { src: "/gallery/img4.jpg",  caption: "The Iyka-Aram Team",                    alt: "Three members of the Iyka-Aram team standing at the clinic entrance wearing traditional Meghalayan shawls",                                                       category: "Team",            size: "wide" },
-  { src: "/gallery/img5.jpg",  caption: "Patients at Iyka-Aram Clinic",          alt: "Group of patients and staff posing together on the front steps of the Iyka-Aram Clinic with the clinic signboard visible above",                                  category: "Team",            size: "wide" },
+  { src: "/dr-emidaka-bio.jpg", caption: "Dr. Emidaka, Founder",            alt: "Dr. Emidaka, founder of Iyka-Aram, seated on the red steps of the clinic veranda in a navy blazer and white shirt, smiling towards the camera", category: "Team",            size: "tall" },
   { src: "/gallery/img8.jpg",  caption: "YONA Yoga for All Ages",                alt: "A young girl in a pink YONA sweatshirt sitting cross-legged on a colourful yoga mat making a peace sign during a YONA wellness session",                         category: "Yoga & Wellness", size: "wide" },
   { src: "/gallery/img9.jpg",  caption: "YONA Certificate Ceremony",             alt: "A participant receiving a YONA Certificate of Participation from a female instructor in front of a projected YONA logo at a wellness event",                       category: "Events",          size: "wide" },
   { src: "/gallery/img11.jpg", caption: "Joy in Every Session",                  alt: "A child and adult participants laughing with arms raised joyfully during a group yoga session at a YONA wellness event",                                           category: "Yoga & Wellness", size: "wide" },
@@ -17,6 +14,16 @@ const PHOTOS = [
   { src: "/gallery/img20.jpg", caption: "Group Yoga Session",                    alt: "Participants seated in a meditative posture on colourful yoga mats during a large group yoga session in a bright hall with floor-to-ceiling windows",              category: "Yoga & Wellness", size: "wide" },
   { src: "/gallery/img23.jpg", caption: "Mindful Movement",                      alt: "A smiling woman in a mustard-yellow YONA sweatshirt holding a mudra gesture mid-movement during a yoga wellness session",                                          category: "Yoga & Wellness", size: "tall" },
   { src: "/gallery/img27.jpg", caption: "Energetic Anatomy & Breathwork",        alt: "YONA wellness event roll-up display board showing an Energetic Anatomy in Yoga infographic, five benefits of breathwork, and the Wheel of Wellness diagram",     category: "Yoga & Wellness", size: "tall" },
+  { src: "/gallery/elixir-range-flatlay.jpg", caption: "The ELIXIR Oils",     alt: "Four ELIXIR bottles laid out on a dark wood table — Vital Gastro Roll-On, Hair Oil, Muscle Oil and Stress Relief Roll-On — beside a woven bamboo mat and tropical leaves", category: "Products",        size: "wide" },
+  { src: "/gallery/muscle-oil-stone.jpg", caption: "ELIXIR Muscle Oil",         alt: "A 15 ml bottle of ELIXIR Muscle Oil with a gold-collared dropper cap resting on a smooth river stone, lit warmly against a dark wooden table", category: "Products",        size: "tall" },
+  { src: "/gallery/elixir-box-manual.jpg", caption: "The ELIXIR Gift Set",      alt: "An open crimson-lined Iyka-Aram gift box holding four ELIXIR bottles, photographed from above on woven jute beside the printed Elixir Instructional Manual", category: "Products",        size: "wide" },
+  { src: "/gallery/rollon-rattan.jpg", caption: "Bottled in Shillong",          alt: "A single ELIXIR roll-on bottle with a gold cap standing on the arm of a woven rattan chair, framed by soft green foliage", category: "Products",        size: "tall" },
+  { src: "/gallery/aloe-vera-gel-jars.jpg", caption: "ELIXIR Aloe Vera Gel",    alt: "Three gold-lidded jars of ELIXIR Aloe Vera Gel stacked on a stone ledge in front of an Iyka-Aram gift bag, with garden foliage behind", category: "Products",        size: "wide" },
+  { src: "/gallery/herbal-soaps.jpg", caption: "Handmade Herbal Soaps",         alt: "Two Iyka-Aram soap bars — one pale yellow, one rose-flecked pink — each embossed with the brand name, standing beside a stamped kraft carton on a stone ledge", category: "Products",        size: "wide" },
+  { src: "/gallery/cork-mat-logo.jpg", caption: "Organic Cork Yoga Mat",        alt: "Close-up of an unrolled natural cork yoga mat printed with the Iyka-Aram logo and the words Wellness Starts Here", category: "Products",        size: "wide" },
+  { src: "/gallery/cork-mat-rack.jpg", caption: "Mats Ready for Practice",      alt: "A wooden rack holding rolled cork yoga mats beside a potted plant, with one Iyka-Aram mat unrolled across the wooden floor", category: "Products",        size: "tall" },
+  { src: "/products/aura-cleanser.jpg", caption: "Aura Cleansing Bath Salt",  alt: "A gold-lidded ELIXIR Aura Cleansing Bath Salt jar standing on cream linen scattered with pink rose petals, photographed against a wooden screen", category: "Products",        size: "tall" },
+  { src: "/products/gift-box.jpg", caption: "Luxury Wellness Essentials",    alt: "An open crimson velvet Iyka-Aram gift box holding four ELIXIR roll-ons, two gold-lidded jars and a printed Luxury Wellness Essentials card, set outdoors against flowering shrubs", category: "Products",        size: "tall" },
 ] as const;
 
 const ASPECT: Record<string, string> = {
@@ -73,7 +80,7 @@ export function GalleryClient() {
         {/* Background photo */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src="/gallery/img3.jpg"
+          src="/gallery/elixir-range-flatlay.jpg"
           alt=""
           aria-hidden="true"
           className="pointer-events-none absolute top-0 right-0 h-full object-cover"

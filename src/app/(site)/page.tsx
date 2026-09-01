@@ -8,6 +8,7 @@ import { PillarsSection } from "@/components/site/pillars-section";
 import { AboutSection } from "@/components/site/about-section";
 import { TeamSection } from "@/components/site/team-section";
 import { StoreTeaser } from "@/components/site/store-teaser";
+import { PodcastSection } from "@/components/site/podcast-section";
 import { BookingSection } from "@/components/site/booking-section";
 import { CtaSection } from "@/components/site/cta-section";
 import { LocationSection } from "@/components/site/location-section";
@@ -17,15 +18,17 @@ export default function HomePage() {
     <>
       <Hero />
       <Mission />
+      {/* The five sub-brands follow the mission statement directly */}
+      <PillarsSection />
       <Recognition />
       <ServicesSection />
       {/* Loud, self-moving imagery: events, clinic, treatments, patients */}
       <MovingGallery />
       <VideoTestimonials />
-      {/* Second half opens with the five sub-brands */}
-      <PillarsSection />
       <AboutSection />
       <TeamSection />
+      {/* The Wellness Dialogues — vertical teasers into /podcast */}
+      <PodcastSection />
       <StoreTeaser />
       <BookingSection />
       <CtaSection />

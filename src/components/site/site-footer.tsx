@@ -10,6 +10,7 @@ const platform = [
   { href: "/#about", label: "About Dr. Emidaka" },
   { href: "/gallery", label: "Gallery" },
   { href: "/blog", label: "Wellness Blog" },
+  { href: "/podcast", label: "The Podcast" },
 ];
 
 const brands = ["IYKA Learn", "IYKA Circle", "IYKA Therapies", "IYKA Living", "IYKA Roots Foundation"];
