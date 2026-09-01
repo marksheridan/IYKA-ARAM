@@ -2672,7 +2672,10 @@ h3 em {
   height: 100%;
   object-fit: cover;
   object-position: 72% center;
-  opacity: 0.35;
+  /* The studio shot is mostly white, so it needs holding well back — at any
+     higher opacity it washes out the heading and the cards stop being the
+     brightest thing in the band. */
+  opacity: 0.18;
   pointer-events: none;
 }
 .pod-section-scrim {
@@ -2683,8 +2686,8 @@ h3 em {
     linear-gradient(
       to bottom,
       var(--dark) 0%,
-      rgba(27, 25, 22, 0.45) 28%,
-      rgba(27, 25, 22, 0.45) 72%,
+      rgba(27, 25, 22, 0.72) 24%,
+      rgba(27, 25, 22, 0.72) 76%,
       var(--dark) 100%
     ),
     radial-gradient(ellipse 60% 70% at 50% 100%, rgba(200, 151, 60, 0.08), transparent);
