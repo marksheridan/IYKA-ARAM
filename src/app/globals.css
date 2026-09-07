@@ -2209,6 +2209,20 @@ h3 em {
   width: max-content;
 }
 .tm-card { scroll-snap-align: start }
+
+/* Control row for the quote rail. Carries the 4.5rem the rail used to hold
+   inline, so the gap below the carousel is unchanged. */
+.tm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  margin-bottom: 4.5rem;
+}
+/* .vtc-dots carries its own top margin for the video reel; here .tm-nav
+   owns the vertical rhythm instead. */
+.tm-dots { margin-top: 0; }
 .tm-card {
   position: relative;
   flex: 0 0 min(26rem, 82vw);

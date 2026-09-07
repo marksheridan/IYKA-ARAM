@@ -65,6 +65,49 @@ export function VideoTestimonials() {
   const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
   const barRefs = useRef<(HTMLDivElement | null)[]>([]);
 
+  /* The quote rail is a native scroll container, so its dots track real
+     scroll position rather than a second source of truth. Step is measured
+     off the first card, so it stays right at every breakpoint. */
+  const railRef = useRef<HTMLDivElement>(null);
+  const [railIndex, setRailIndex] = useState(0);
+  const [railPages, setRailPages] = useState(1);
+
+  const railStep = () => {
+    const rail = railRef.current;
+    const card = rail?.querySelector<HTMLElement>(".tm-card");
+    if (!rail || !card || !card.parentElement) return null;
+    const gap = parseFloat(getComputedStyle(card.parentElement).columnGap) || 0;
+    return { rail, step: card.offsetWidth + gap };
+  };
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+    const measure = () => {
+      const m = railStep();
+      if (!m || m.step <= 0) return;
+      const max = Math.max(0, rail.scrollWidth - rail.clientWidth);
+      const last = Math.floor(max / m.step);
+      setRailPages(last + 1);
+      setRailIndex(Math.min(Math.round(rail.scrollLeft / m.step), last));
+    };
+    /* rAF rather than a direct call: setState in an effect body is a
+       cascading render, and the lint rule rightly rejects it. */
+    const raf = requestAnimationFrame(measure);
+    rail.addEventListener("scroll", measure, { passive: true });
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelAnimationFrame(raf);
+      rail.removeEventListener("scroll", measure);
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  const scrollRailTo = (i: number) => {
+    const m = railStep();
+    if (m) m.rail.scrollTo({ left: i * m.step, behavior: "smooth" });
+  };
+
   // Scroll the track so the active card sits in the middle of the window.
   // How many cards are visible is measured, not assumed, so this stays
   // correct at the 2-up and 1-up breakpoints.
@@ -168,7 +211,7 @@ export function VideoTestimonials() {
       </div>
 
       {/* Patient quotes — a still rail the visitor swipes. */}
-      <div className="tm-marquee v2-rail-scroll" style={{ marginBottom: "4.5rem" }}>
+      <div className="tm-marquee v2-rail-scroll" ref={railRef}>
         <div className="tm-track">
           {textTestimonials.map((t, i) => (
             <article className="tm-card" key={`${t.name}-${i}`}>
@@ -190,12 +233,47 @@ export function VideoTestimonials() {
             </article>
           ))}
         </div>
-      <p className="v2-rail-cue v2-container" style={{ marginTop: "-3.5rem", marginBottom: "3rem" }}>
-        <svg width="22" height="8" viewBox="0 0 22 8" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
-          <path d="M0 4h20M17 1l3 3-3 3" strokeLinecap="round" />
-        </svg>
-        Swipe for more
-      </p>
+      </div>
+
+      {/* Same dot and arrow components as the video reel below, so the two
+          carousels read as one pattern. Arrows are desktop-only (.vtc-arrow
+          hides at 600px), the dots always show — so the rail never looks
+          static. This replaces a "Swipe for more" cue that sat inside the
+          scroll container and therefore scrolled out of view with the cards. */}
+      <div className="tm-nav">
+        <button
+          className="vtc-arrow"
+          onClick={() => scrollRailTo(railIndex - 1)}
+          disabled={railIndex === 0}
+          aria-label="Previous patient stories"
+        >
+          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+          </svg>
+        </button>
+
+        <div className="vtc-dots tm-dots">
+          {Array.from({ length: railPages }, (_, i) => (
+            <button
+              key={i}
+              className={`vtc-dot${i === railIndex ? " active" : ""}`}
+              aria-label={`Go to patient story ${i + 1} of ${railPages}`}
+              aria-current={i === railIndex}
+              onClick={() => scrollRailTo(i)}
+            />
+          ))}
+        </div>
+
+        <button
+          className="vtc-arrow"
+          onClick={() => scrollRailTo(railIndex + 1)}
+          disabled={railIndex >= railPages - 1}
+          aria-label="Next patient stories"
+        >
+          <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
+          </svg>
+        </button>
       </div>
 
       <div className="v2-container">
