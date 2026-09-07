@@ -2716,10 +2716,11 @@ h3 em {
    padding the band needs to sit flush against the section edge.
    ════════════════════════════════════════════════════════════════ */
 .svd-hero {
-  /* Ends on --cream-band, which is the canopy's sky, so the hero and the
-     foliage band meet inside one flat colour instead of on a hard line.
-     Was #fff, which put a white-to-cream step across the full width. */
-  background: linear-gradient(to bottom, var(--cream) 0%, var(--cream-band) 100%);
+  /* The same beige as the foliage band's sky (--cream-band, sampled from
+     public/services-foliage.webp). Flat rather than a ramp, so the hero and
+     the band are one continuous colour and the leaves are the only edge.
+     Was #fff, which put a white-to-beige step across the full width. */
+  background: var(--cream-band);
   padding: 10rem 0 4.5rem;
 }
 /* Takes --fs-page-title from .v2-page-hero-title so every inner-page h1 is
