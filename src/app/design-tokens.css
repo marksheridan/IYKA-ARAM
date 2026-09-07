@@ -11,6 +11,7 @@
 :root {
   /* Brand primitives */
   --iyka-ivory-50: #fbf8f1;
+  --iyka-ivory-75: #f7f2e8;
   --iyka-ivory-100: #f3eddf;
   --iyka-sand-200: #e5d8c5;
   --iyka-white: #fffdf8;
@@ -122,6 +123,11 @@
   --text-muted: #687168;
   --cream: var(--iyka-ivory-50);
   --cream-deep: var(--iyka-ivory-100);
+  /* Was referenced by the blog cover placeholder and the store trust bar
+     but never defined, so both rendered transparent. It wants a step
+     between --cream and --cream-deep: aliasing it to --cream-deep would
+     have made the trust bar's own 1px --cream-deep border disappear. */
+  --cream-mid: var(--iyka-ivory-75);
   /* Sampled from public/services-foliage.webp, whose sky is #ece8e3. The
      canopy dissolves into this value, so any drift here reappears as a
      seam where the band meets the section above it. */

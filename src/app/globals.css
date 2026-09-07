@@ -1,3 +1,14 @@
+/* ORDER MATTERS — do not swap these two lines.
+ *
+ * design-tokens.css redefines variable names Tailwind's own theme owns:
+ * --radius-* (5 of Tailwind's 8), --shadow-* (3 of 8), --font-* (4 of 3)
+ * and --text-* (1 of 13). Because it is imported second, our values win,
+ * which is what utilities like rounded-xl and shadow-lg resolve against.
+ *
+ * Swap the order and every one of those silently reverts to Tailwind's
+ * default — e.g. --radius-xl goes 1.25rem -> 0.75rem, shrinking every
+ * panel on the site — with no error and nothing failing to build.
+ */
 @import "tailwindcss";
 @import "./design-tokens.css";
 
@@ -54,6 +65,10 @@
      text colour, because its raw brand gold was illegible at small sizes.
      --ops-warning is already the legible deep tone, so both map to it. */
   --color-mis-warning-deep: var(--ops-warning);
+  /* The inactive/neutral badge state. Every other badge pair is a token;
+     these two were the last raw hex in the family. */
+  --color-mis-neutral: var(--ops-text-muted);
+  --color-mis-neutral-bg: var(--ops-surface-subtle);
   --color-mis-info: var(--ops-info);
   --color-mis-info-bg: var(--ops-info-bg);
   --color-mis-purple: var(--ops-purple);
@@ -250,7 +265,7 @@ h3 em {
   cursor: pointer;
   transition: var(--transition-base);
   border: 1px solid transparent;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 .v2-btn-gold {
   background: var(--gold);
@@ -1353,7 +1368,7 @@ h3 em {
   border: 1px solid var(--gold);
   /* 21px card radius + the 0.5rem the outline sits outside the image, so
      its corners stay concentric with the portrait's. */
-  border-radius: 29px;
+  border-radius: calc(var(--radius-xl) + 8px);
   opacity: 0.25;
   z-index: 0;
   transform: translate(0.8rem, 0.8rem);
@@ -1756,13 +1771,13 @@ h3 em {
 .store-cart-summary,
 .store-checkout-section,
 .store-detail-image-main {
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
 }
 /* These images sit flush against the top edge of a bordered card whose
    parent has no overflow:hidden, so square corners would poke out. */
 .store-product-img-wrap,
 .store-related-img {
-  border-radius: 21px 21px 0 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .v2-book-grid {
@@ -1811,7 +1826,7 @@ h3 em {
   width: 3rem;
   height: 3rem;
   background: var(--cream);
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2550,7 +2565,7 @@ h3 em {
 .store-add-to-cart-btn,
 .store-qty-btn,
 .store-qty-btn-small {
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 
 .btn-store-primary {
@@ -2579,6 +2594,7 @@ h3 em {
 
 /* Store listing */
 .store-filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+/* 2px, not --radius-sm: these chips read as near-square by design. */
 .store-filter-btn {
   padding: 0.5rem 1.2rem; background: transparent; border: 1.5px solid var(--cream-deep);
   font-family: var(--font-body); font-size: 0.8rem; font-weight: 500; color: var(--dark-soft);
@@ -2723,7 +2739,7 @@ h3 em {
 /* ── MIS card base ── */
 .mis-card {
   background: var(--color-mis-surface);
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
 }
 
 /* ── MIS nav active pill ── */
@@ -2739,7 +2755,7 @@ h3 em {
 
 /* ── MIS form input ── */
 .mis-input {
-  border-radius: 0.625rem;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-mis-border);
   background: var(--color-mis-bg);
   padding: 0.5rem 0.75rem;
@@ -2826,7 +2842,7 @@ h3 em {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   background: rgba(248, 244, 238, 0.06);
 }
 .svd-media img {
@@ -3035,7 +3051,7 @@ h3 em {
 .pod-card:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 4px;
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
 }
 .pod-card-media {
   position: relative;
@@ -3098,7 +3114,7 @@ h3 em {
   color: var(--dark);
   background: var(--gold);
   padding: 0.3rem 0.6rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 /* Centred white play button, revealed on hover. The triangle is nudged
    right so it sits optically centred in the circle rather than measured
@@ -3317,7 +3333,7 @@ h3 em {
   color: var(--gold-light);
   text-decoration: none;
   border: 1px solid rgba(200, 151, 60, 0.4);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   padding: 0.4rem 0.95rem;
   transition: background 0.2s, color 0.2s;
 }
@@ -3447,7 +3463,7 @@ h3 em {
   position: relative;
   width: min(56rem, 100%);
   background: var(--cream);
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   /* The panel scrolls with the backdrop rather than trapping a second
      scrollbar inside itself — long write-ups stay easy to read. No auto

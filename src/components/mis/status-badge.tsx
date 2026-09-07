@@ -10,7 +10,7 @@ const STYLES: Record<string, BadgeStyle> = {
   NO_SHOW:         { bg: "var(--color-mis-danger-bg)",     color: "var(--color-mis-danger)" },
   RESCHEDULED:     { bg: "var(--color-mis-warning-bg)",    color: "var(--color-mis-warning)" },
   /* invoice */
-  DRAFT:           { bg: "#f3f4f6",                        color: "#6b7280" },
+  DRAFT:           { bg: "var(--color-mis-neutral-bg)",                        color: "var(--color-mis-neutral)" },
   ISSUED:          { bg: "var(--color-mis-warning-bg)",    color: "var(--color-mis-warning)" },
   PAID:            { bg: "var(--color-mis-success-bg)",    color: "var(--color-mis-success)" },
   PARTIALLY_PAID:  { bg: "var(--color-mis-warning-bg)",    color: "var(--color-mis-warning)" },
@@ -20,7 +20,7 @@ const STYLES: Record<string, BadgeStyle> = {
   ATTENDED:        { bg: "var(--color-mis-success-bg)",    color: "var(--color-mis-success)" },
   PENDING:         { bg: "var(--color-mis-warning-bg)",    color: "var(--color-mis-warning)" },
   /* message delivery */
-  QUEUED:          { bg: "#f3f4f6",                        color: "#6b7280" },
+  QUEUED:          { bg: "var(--color-mis-neutral-bg)",                        color: "var(--color-mis-neutral)" },
   SENT:            { bg: "var(--color-mis-blue-subtle)",   color: "var(--color-mis-blue)" },
   DELIVERED:       { bg: "var(--color-mis-info-bg)",       color: "var(--color-mis-info)" },
   READ:            { bg: "var(--color-mis-success-bg)",    color: "var(--color-mis-success)" },
@@ -29,7 +29,7 @@ const STYLES: Record<string, BadgeStyle> = {
   UPLOADED:        { bg: "var(--color-mis-purple-bg)",     color: "var(--color-mis-purple)" },
 };
 
-const FALLBACK: BadgeStyle = { bg: "#f3f4f6", color: "#6b7280" };
+const FALLBACK: BadgeStyle = { bg: "var(--color-mis-neutral-bg)", color: "var(--color-mis-neutral)" };
 
 export function StatusBadge({ status }: { status: string }) {
   const s = STYLES[status] ?? FALLBACK;
