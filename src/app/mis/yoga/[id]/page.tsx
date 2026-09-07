@@ -81,7 +81,7 @@ export default async function OccurrenceDetail({
       </p>
 
       {error && ERRORS[error] && (
-        <p className="mt-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+        <p className="mt-4 rounded-lg border border-mis-danger/25 bg-mis-danger-bg px-4 py-3 text-sm text-mis-danger">
           {ERRORS[error]}
         </p>
       )}
@@ -112,7 +112,7 @@ export default async function OccurrenceDetail({
         {!cancelled && (
           <form action={cancelOccurrence}>
             <input type="hidden" name="occurrenceId" value={occ.id} />
-            <button className="rounded-lg border border-red-200 bg-white px-4 py-2 text-sm text-red-700 hover:bg-red-50">
+            <button className="rounded-lg border border-mis-danger/25 bg-white px-4 py-2 text-sm text-mis-danger hover:bg-mis-danger-bg">
               Cancel session
             </button>
           </form>
@@ -161,7 +161,7 @@ export default async function OccurrenceDetail({
                   <form action={removeAttendee}>
                     <input type="hidden" name="enrollmentId" value={e.id} />
                     <input type="hidden" name="occurrenceId" value={occ.id} />
-                    <button className="rounded-full border border-red-200 px-3 py-1 text-xs text-red-700 hover:bg-red-50">
+                    <button className="rounded-full border border-mis-danger/25 px-3 py-1 text-xs text-mis-danger hover:bg-mis-danger-bg">
                       Remove
                     </button>
                   </form>

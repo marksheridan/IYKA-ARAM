@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { PageHero } from "@/components/site/page-hero";
 
 const CATEGORIES = ["All", "Yoga & Wellness", "Events", "Products", "Team"] as const;
 
@@ -33,7 +34,8 @@ const ASPECT: Record<string, string> = {
 };
 
 /* Matches legacy --container: min(90rem, 100% - 3rem) */
-const cx = "w-[min(90rem,100%-3rem)] mx-auto";
+/* Was a hand-rolled copy of .v2-container's min(90rem, 100% - 3rem). */
+const cx = "v2-container";
 
 export function GalleryClient() {
   const [active, setActive] = useState<string>("All");
@@ -72,63 +74,15 @@ export function GalleryClient() {
   return (
     <div className="v2-landing">
 
-      {/* ── Hero ── */}
-      <section
-        className="relative flex min-h-[42vh] items-end overflow-hidden"
-        style={{ background: "var(--green)" }}
-      >
-        {/* Background photo */}
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/gallery/elixir-range-flatlay.jpg"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute top-0 right-0 h-full object-cover"
-          style={{ width: "62%", objectPosition: "center center", opacity: 0.55 }}
-        />
-
-        {/* Left-to-right: solid green → transparent (image shows on right) */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            // background:
-            //   "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)",
-            background:
-              "linear-gradient(to right, #847858 38%, rgba(132,120,88,0.82) 60%, rgba(132,120,88,0) 82%)",
-          }}
-        />
-
-        {/* Radial gold accents */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{
-            background:
-              "radial-gradient(ellipse 80% 60% at 60% 100%, rgba(200,151,60,0.08), transparent)," +
-              "radial-gradient(ellipse 50% 80% at 0% 0%, rgba(200,151,60,0.06), transparent)",
-          }}
-        />
-
-        {/* Bottom vignette for text legibility */}
-        <div
-          className="absolute inset-0"
-          style={{ background: "linear-gradient(to top, rgba(27,25,22,0.4) 0%, transparent 60%)" }}
-        />
-        <div className={`${cx} relative pb-16 pt-40`}>
-          <p className="v2-section-label v2-reveal mb-4" style={{ color: "var(--gold-light)" }}>
-            Iyka-Aram Wellness
-          </p>
-          <h1 className="v2-reveal v2-reveal-1" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", color: "var(--cream)", fontWeight: 700, lineHeight: 1.05 }}>
-            Our Gallery
-          </h1>
-          <p
-            className="v2-reveal v2-reveal-2 mt-4 max-w-[32rem] font-light leading-[1.7]"
-            style={{ fontSize: "1.05rem", color: "rgba(248,244,238,0.65)" }}
-          >
-            A visual journey through our clinic, sessions, events, and the community
-            we&rsquo;re building in Northeast India.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Iyka-Aram Wellness"
+        title="Our Gallery"
+        lead={<>A visual journey through our clinic, sessions, events, and the community we&rsquo;re building in Northeast India.</>}
+        image="/gallery/img11.jpg"
+        tint="dark"
+        vignette
+        reveal
+      />
 
       {/* ── Filter Bar ── */}
       <div
@@ -148,9 +102,9 @@ export function GalleryClient() {
                   borderBottom: `2px solid ${active === cat ? "var(--gold)" : "transparent"}`,
                   padding: "1rem 1.5rem",
                   fontFamily: "var(--font-body)",
-                  fontSize: "0.75rem",
+                  fontSize: "var(--fs-xs)",
                   fontWeight: 500,
-                  letterSpacing: "0.1em",
+                  letterSpacing: "var(--ls-caps)",
                   textTransform: "uppercase",
                   color: active === cat ? "var(--gold)" : "rgba(248,244,238,0.45)",
                   cursor: "pointer",
@@ -208,14 +162,7 @@ export function GalleryClient() {
                       className="absolute inset-0 flex flex-col justify-end p-5 opacity-0 transition-opacity duration-300 group-hover:opacity-100"
                       style={{ background: "linear-gradient(to top, rgba(27,25,22,0.75) 0%, transparent 50%)" }}
                     >
-                      <span
-                        className="mb-1"
-                        style={{
-                          fontSize: "0.62rem", fontWeight: 600,
-                          letterSpacing: "0.14em", textTransform: "uppercase",
-                          color: "var(--gold)",
-                        }}
-                      >
+                      <span className="v2-meta-label mb-1" style={{ color: "var(--gold)" }}>
                         {photo.category}
                       </span>
                       <p
@@ -255,17 +202,14 @@ export function GalleryClient() {
       {/* ── CTA ── */}
       <section style={{ padding: "clamp(4rem,10vw,8rem) 0", background: "var(--green)", textAlign: "center" }}>
         <div className={cx}>
-          <p className="v2-section-label mb-4" style={{ color: "var(--gold-light)" }}>
+          <p className="v2-section-label v2-section-label-light mb-4">
             Experience It In Person
           </p>
-          <h2
-            className="font-light"
-            style={{ fontSize: "clamp(2rem,4vw,3rem)", color: "var(--cream)", marginBottom: "1.5rem" }}
-          >
+          <h2 className="v2-section-title" style={{ color: "var(--cream)", marginBottom: "1.5rem" }}>
             Ready to begin your healing journey?
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/booking" className="v2-btn v2-btn-gold">Book a Consultation</a>
+            <a href="/booking" className="v2-btn v2-btn-gold">Book a consultation</a>
             <a href="/" className="v2-btn v2-btn-outline-cream">Back to Home</a>
           </div>
         </div>

@@ -28,17 +28,12 @@ export function PodcastSection() {
       <div className="v2-container" style={{ position: "relative" }}>
         <div className="pod-head">
           <Reveal>
-            <p className="v2-section-label" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+            <p className="v2-section-label v2-section-label-light" style={{ marginBottom: "1rem" }}>
               {podcastMeta.showName}
             </p>
             <h2
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
-                color: "var(--cream)",
-                fontWeight: 700,
-                maxWidth: "20ch",
-                marginInline: "auto",
-              }}
+              className="v2-section-title"
+              style={{ color: "var(--cream)", maxWidth: "20ch", marginInline: "auto" }}
             >
               Conversations on
               <br />

@@ -6,21 +6,36 @@ const stats = [
   { num: "2025", sup: "", label: "Founded in Shillong" },
 ];
 
+/* Stroke icons at the same 1.5 weight as the booking cards, so the three
+   read as one set. Leaf, balance, and a continuous loop for longevity. */
 const pillars = [
   {
-    icon: "🌿",
     title: "Drugless",
     desc: "We address the root cause — not the symptom. No unnecessary prescriptions, just your body healing itself.",
+    icon: (
+      <path d="M4 20c0-8 5-13 16-14 1 11-4 16-12 16H4zm4-2c2-4 5-6 9-7" />
+    ),
   },
   {
-    icon: "⚕️",
     title: "Integrative",
     desc: "Twelve healing disciplines working in harmony: Naturopathy, Yoga Therapy, Functional Medicine, Nutrition, and more.",
+    icon: (
+      <>
+        <path d="M12 3v18M5 7h14" />
+        <path d="M5 7l-2 6a3.2 3.2 0 006.4 0L7 7M19 7l-2 6a3.2 3.2 0 006.4 0L21 7" transform="translate(-1 0)" />
+        <path d="M8 21h8" />
+      </>
+    ),
   },
   {
-    icon: "∞",
     title: "Longevity",
     desc: "Building health that lasts — through lifestyle, nutrition, and daily practices tailored to you.",
+    icon: (
+      <>
+        <circle cx="12" cy="12" r="8.5" />
+        <path d="M12 7.5V12l3 2" />
+      </>
+    ),
   },
 ];
 
@@ -32,81 +47,45 @@ export function Mission() {
       style={{ background: "var(--cream)" }}
     >
       <div className="v2-container">
+        {/* Headline left, copy right; the stats rail sits under both. */}
         <div className="v2-mission-grid">
-          {/* Left: stat blocks */}
-          <Reveal className="v2-mission-stats">
-            {stats.map((s, i) => (
-              <div key={s.label}>
-                <div className="v2-stat-block">
-                  <span className="v2-stat-num">
-                    {s.num}
-                    {s.sup && <sup>{s.sup}</sup>}
-                  </span>
-                  <span className="v2-stat-label">{s.label}</span>
-                </div>
-                {i < stats.length - 1 && <div className="v2-stat-divider" />}
-              </div>
-            ))}
-          </Reveal>
-
-          {/* Right: mission text */}
-          <Reveal delay={0.2}>
+          <Reveal className="v2-mission-head">
             <p className="v2-section-label" style={{ marginBottom: "1.2rem" }}>
               Our Mission
             </p>
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
-                color: "var(--dark)",
-                marginBottom: "1.5rem",
-                fontWeight: 700,
-              }}
-            >
+            <h2 className="v2-section-title" style={{ color: "var(--dark)" }}>
               Making healthcare <em>understandable</em> and simple for all.
             </h2>
-            <p
-              style={{
-                color: "var(--dark-soft)",
-                lineHeight: 1.8,
-                marginBottom: "1rem",
-                fontSize: "1.05rem",
-              }}
-            >
+
+            {/* A compact row under the headline — it fills this column and
+                keeps the page from running three card grids in a row. */}
+            <div className="v2-mission-stats">
+              {stats.map((st) => (
+                <div className="v2-stat-block" key={st.label}>
+                  <span className="v2-stat-num">
+                    {st.num}
+                    {st.sup && <sup>{st.sup}</sup>}
+                  </span>
+                  <span className="v2-stat-label">{st.label}</span>
+                </div>
+              ))}
+            </div>
+          </Reveal>
+
+          <Reveal delay={0.15}>
+            <p className="v2-mission-copy">
               We believe your body has an innate ability to heal — when given the
               right conditions. At IYKA-ARAM, we combine the precision of
               functional medicine with naturopathy, yoga therapy and clinical
               nutrition to address the root cause of illness, not just its symptoms.
             </p>
-            <p
-              style={{
-                color: "var(--dark-soft)",
-                lineHeight: 1.8,
-                fontSize: "1.05rem",
-              }}
-            >
+            <p className="v2-mission-copy">
               Based in the misty hills of Shillong, Meghalaya, we serve Northeast
               India and beyond — in-person and online.
             </p>
-            <div
-              style={{
-                marginTop: "2rem",
-                display: "flex",
-                alignItems: "center",
-                gap: "1rem",
-              }}
-            >
+            <div className="v2-mission-sign">
               <span className="v2-gold-line" />
-              <span
-                style={{
-                  /* Body face: the italic is real there, Bricolage has none. */
-                  fontFamily: "var(--font-body)",
-                  fontSize: "1.1rem",
-                  fontStyle: "italic",
-                  color: "var(--gold-deep)",
-                }}
-              >
-                Dr. Emidaka — Founder
-              </span>
+              <span>Dr. Emidaka — Founder</span>
             </div>
           </Reveal>
         </div>
@@ -116,8 +95,23 @@ export function Mission() {
           {pillars.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.1}>
               <div className="v2-pillar-card">
-                <span className="v2-pillar-icon">{p.icon}</span>
-                <h3 className="v2-pillar-title">{p.title}</h3>
+                <div className="v2-pillar-head">
+                  <svg
+                    className="v2-pillar-icon"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    {p.icon}
+                  </svg>
+                  <h3 className="v2-card-title-lg v2-pillar-title">{p.title}</h3>
+                </div>
                 <p className="v2-pillar-desc">{p.desc}</p>
               </div>
             </Reveal>

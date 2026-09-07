@@ -13,8 +13,8 @@ export default async function EditBlogPostPage({ params }: { params: Promise<{ i
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Edit Post</h1>
-        <p className="mt-1 text-sm text-neutral-500">{post.title}</p>
+        <h1 className="text-2xl font-bold text-mis-text">Edit Post</h1>
+        <p className="mt-1 text-sm text-mis-text-muted">{post.title}</p>
       </div>
       <PostForm post={post} action={updatePost} />
     </div>

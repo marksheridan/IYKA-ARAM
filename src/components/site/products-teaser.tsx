@@ -23,7 +23,7 @@ export function ProductsTeaser() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               IYKA Living
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
+            <h2 className="v2-section-title">
               Wellness you can
               <br />
               <em style={{ color: "var(--gold-deep)" }}>hold in your hands.</em>
@@ -59,7 +59,7 @@ export function ProductsTeaser() {
               </div>
               <div className="v2-product-info">
                 <span className="v2-product-category">{p.category}</span>
-                <h3 className="v2-product-name">{p.name}</h3>
+                <h3 className="v2-card-title v2-product-name">{p.name}</h3>
                 <span className="v2-product-price">{p.price}</span>
               </div>
             </Reveal>

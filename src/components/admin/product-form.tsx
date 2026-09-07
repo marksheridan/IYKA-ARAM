@@ -21,7 +21,7 @@ export function ProductForm({
       {product && <input type="hidden" name="id" value={product.id} />}
 
       {state?.error && (
-        <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">{state.error}</div>
+        <div className="rounded-lg bg-mis-danger-bg px-4 py-3 text-sm text-mis-danger">{state.error}</div>
       )}
 
       {/* Basic info */}
@@ -53,8 +53,8 @@ export function ProductForm({
       <Section title="Product Details">
         <div className="grid gap-4 sm:grid-cols-3">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Category</label>
-            <select name="category" defaultValue={product?.category ?? ""} className="w-full rounded-lg border border-neutral-300 px-3 py-2.5 text-sm focus:border-neutral-500 focus:outline-none">
+            <label className="mb-1.5 block text-sm font-medium text-mis-text">Category</label>
+            <select name="category" defaultValue={product?.category ?? ""} className="w-full rounded-lg border border-mis-border px-3 py-2.5 text-sm focus:border-mis-blue focus:outline-none">
               <option value="">— Select —</option>
               {CATEGORIES.map((c) => <option key={c} value={c}>{c}</option>)}
             </select>
@@ -96,11 +96,11 @@ export function ProductForm({
         <button
           type="submit"
           disabled={pending}
-          className="rounded-lg bg-neutral-900 px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-50"
+          className="rounded-lg bg-mis-blue px-6 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-50"
         >
           {pending ? "Saving…" : product ? "Save Changes" : "Create Product"}
         </button>
-        <a href="/admin/products" className="rounded-lg border border-neutral-300 px-6 py-2.5 text-sm font-medium text-neutral-600 hover:bg-neutral-50">
+        <a href="/admin/products" className="rounded-lg border border-mis-border px-6 py-2.5 text-sm font-medium text-mis-text-muted hover:bg-mis-bg">
           Cancel
         </a>
       </div>
@@ -110,8 +110,8 @@ export function ProductForm({
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="rounded-xl border border-neutral-200 bg-white p-6">
-      <h2 className="mb-4 text-sm font-semibold text-neutral-800">{title}</h2>
+    <div className="rounded-xl border border-mis-border bg-white p-6">
+      <h2 className="mb-4 text-sm font-semibold text-mis-text">{title}</h2>
       <div className="space-y-4">{children}</div>
     </div>
   );
@@ -125,7 +125,7 @@ function Field({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="mb-1.5 block text-sm font-medium text-mis-text">{label}</label>
       <input
         name={name}
         type={type}
@@ -134,9 +134,9 @@ function Field({
         step={step}
         min={min}
         max={max}
-        className="w-full rounded-lg border border-neutral-300 px-3.5 py-2.5 text-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+        className="w-full rounded-lg border border-mis-border px-3.5 py-2.5 text-sm focus:border-mis-blue focus:outline-none focus:ring-1 focus:ring-mis-blue"
       />
-      {hint && <p className="mt-1 text-xs text-neutral-400">{hint}</p>}
+      {hint && <p className="mt-1 text-xs text-mis-text-soft">{hint}</p>}
     </div>
   );
 }
@@ -148,14 +148,14 @@ function Textarea({
 }) {
   return (
     <div>
-      <label className="mb-1.5 block text-sm font-medium text-neutral-700">{label}</label>
+      <label className="mb-1.5 block text-sm font-medium text-mis-text">{label}</label>
       <textarea
         name={name}
         defaultValue={defaultValue}
         rows={rows}
-        className="w-full rounded-lg border border-neutral-300 px-3.5 py-2.5 text-sm focus:border-neutral-500 focus:outline-none focus:ring-1 focus:ring-neutral-500"
+        className="w-full rounded-lg border border-mis-border px-3.5 py-2.5 text-sm focus:border-mis-blue focus:outline-none focus:ring-1 focus:ring-mis-blue"
       />
-      {hint && <p className="mt-1 text-xs text-neutral-400">{hint}</p>}
+      {hint && <p className="mt-1 text-xs text-mis-text-soft">{hint}</p>}
     </div>
   );
 }
@@ -164,8 +164,8 @@ function Toggle({ name, label, defaultChecked }: { name: string; label: string; 
   return (
     <label className="flex cursor-pointer items-center gap-2.5">
       <input type="hidden" name={name} value="false" />
-      <input type="checkbox" name={name} value="true" defaultChecked={defaultChecked} className="h-4 w-4 rounded border-neutral-300 accent-neutral-900" />
-      <span className="text-sm text-neutral-700">{label}</span>
+      <input type="checkbox" name={name} value="true" defaultChecked={defaultChecked} className="h-4 w-4 rounded border-mis-border accent-neutral-900" />
+      <span className="text-sm text-mis-text">{label}</span>
     </label>
   );
 }

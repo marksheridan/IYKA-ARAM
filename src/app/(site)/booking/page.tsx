@@ -13,7 +13,7 @@ export default async function BookingHome() {
   return (
     <section className="mx-auto max-w-5xl px-6 py-20">
       <p className="text-xs uppercase tracking-[0.3em] text-gold-deep">Booking</p>
-      <h1 className="mt-3 font-display text-3xl text-forest sm:text-4xl">
+      <h1 className="mt-3 v2-page-title-compact text-forest">
         Begin your wellness journey
       </h1>
       <p className="mt-3 text-muted">Choose a service to get started.</p>
@@ -35,7 +35,7 @@ export default async function BookingHome() {
                 href={href}
                 className="group flex flex-col rounded-2xl border border-sand bg-cream p-7 transition-colors hover:border-gold"
               >
-                <h2 className="font-display text-xl text-forest">{s.name}</h2>
+                <h2 className="v2-card-title text-forest">{s.name}</h2>
                 {s.description && (
                   <p className="mt-2 flex-1 text-sm text-muted">
                     {s.description}

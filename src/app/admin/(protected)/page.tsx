@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { prisma } from "@/lib/db";
+import { StatusBadge } from "@/components/admin/status-badge";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Dashboard · IYKA Admin" };
@@ -8,13 +9,7 @@ function fmt(n: number) {
   return "₹" + n.toLocaleString("en-IN");
 }
 
-const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
-  PLACED:     { bg: "#eff6ff", text: "#2563eb" },
-  CONFIRMED:  { bg: "#f0fdf4", text: "#16a34a" },
-  DISPATCHED: { bg: "#fefce8", text: "#ca8a04" },
-  DELIVERED:  { bg: "#f0fdf4", text: "#15803d" },
-  CANCELLED:  { bg: "#fef2f2", text: "#dc2626" },
-};
+const LOW_STOCK_CEILING = 10;
 
 export default async function AdminDashboard() {
   const now = new Date();
@@ -36,110 +31,136 @@ export default async function AdminDashboard() {
         include: { items: true },
       }),
       prisma.product.findMany({
-        where: { isPublished: true, inStock: true, stock: { lte: 10 } },
+        where: { isPublished: true, inStock: true, stock: { lte: LOW_STOCK_CEILING } },
         orderBy: { stock: "asc" },
         take: 5,
       }),
     ]);
 
   const totalRevenue = Number(revenueAgg._sum.total ?? 0);
+  const today = now.toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
 
   const kpis = [
-    { label: "Total Orders", value: totalOrders, sub: `${monthOrders} this month`, href: "/admin/orders" },
+    { label: "Orders", value: totalOrders, sub: `${monthOrders} this month`, href: "/admin/orders" },
     { label: "Revenue", value: fmt(totalRevenue), sub: "all time, excl. cancelled", href: "/admin/orders" },
-    { label: "Products Live", value: productCount, sub: "published on store", href: "/admin/products" },
-    { label: "Blog Posts", value: blogCount, sub: "published", href: "/admin/blog" },
+    { label: "Products live", value: productCount, sub: "published on store", href: "/admin/products" },
+    { label: "Blog posts", value: blogCount, sub: "published", href: "/admin/blog" },
   ];
 
   return (
     <div className="space-y-8">
-      <div>
-        <h1 className="text-2xl font-bold text-neutral-900">Dashboard</h1>
-        <p className="mt-1 text-sm text-neutral-500">Store overview</p>
+      {/* Header */}
+      <div className="animate-fade-in-up flex items-end justify-between">
+        <div>
+          <p className="admin-eyebrow">Store overview</p>
+          <h1 className="admin-display mt-1 text-4xl text-mis-text">Dashboard</h1>
+        </div>
+        <div className="text-right">
+          <p className="text-xs text-mis-text-soft">{today}</p>
+          <Link href="/store" target="_blank" className="mt-1 inline-block text-xs font-medium text-mis-blue transition-colors hover:text-gold">
+            View store ↗
+          </Link>
+        </div>
       </div>
 
-      {/* KPIs */}
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {kpis.map((k) => (
-          <Link key={k.label} href={k.href} className="group rounded-xl border border-neutral-200 bg-white p-5 transition-shadow hover:shadow-md">
-            <p className="text-xs font-medium uppercase tracking-wider text-neutral-400">{k.label}</p>
-            <p className="mt-2 text-3xl font-bold tabular-nums text-neutral-900">{k.value}</p>
-            <p className="mt-1 text-xs text-neutral-400">{k.sub}</p>
+      {/* Stats band — the landing page's stat block, working for a living */}
+      <div className="animate-fade-in-up grid grid-cols-2 rounded-xl border border-mis-border bg-white lg:grid-cols-4" style={{ animationDelay: "0.08s" }}>
+        {kpis.map((k, i) => (
+          <Link
+            key={k.label}
+            href={k.href}
+            className={`group p-6 ${i > 0 ? "border-l border-mis-border-soft" : ""} ${i >= 2 ? "max-lg:border-t" : ""}`}
+          >
+            <p className="text-[11px] font-semibold uppercase tracking-[0.14em] text-mis-text-soft">{k.label}</p>
+            <span className="mt-2 block h-px w-6 bg-gold transition-all duration-300 group-hover:w-10" />
+            <p className="admin-display mt-2 text-4xl tabular-nums text-mis-text transition-colors group-hover:text-mis-blue">
+              {k.value}
+            </p>
+            <p className="mt-1.5 text-xs text-mis-text-muted">{k.sub}</p>
           </Link>
         ))}
       </div>
 
       <div className="grid gap-6 lg:grid-cols-3">
         {/* Recent orders */}
-        <div className="lg:col-span-2">
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-neutral-700">Recent Orders</h2>
-            <Link href="/admin/orders" className="text-xs text-neutral-500 hover:text-neutral-900">See all →</Link>
+        <div className="animate-fade-in-up lg:col-span-2" style={{ animationDelay: "0.16s" }}>
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-semibold text-mis-text">Recent orders</h2>
+            <Link href="/admin/orders" className="text-xs font-medium text-mis-text-muted transition-colors hover:text-gold">
+              See all →
+            </Link>
           </div>
-          <div className="mt-3 overflow-hidden rounded-xl border border-neutral-200 bg-white">
+          <div className="mt-3 overflow-hidden rounded-xl border border-mis-border bg-white">
             {recentOrders.length === 0 ? (
-              <p className="p-6 text-sm text-neutral-400">No orders yet.</p>
+              <p className="p-6 text-sm text-mis-text-muted">
+                No orders yet. New orders appear here the moment a customer checks out.
+              </p>
             ) : (
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="border-b border-neutral-100 bg-neutral-50">
+                  <tr className="border-b border-mis-border-soft bg-mis-bg">
                     {["Order", "Customer", "Items", "Total", "Status"].map((h) => (
-                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{h}</th>
+                      <th key={h} className="px-4 py-3 text-left text-[11px] font-semibold uppercase tracking-wider text-mis-text-soft">{h}</th>
                     ))}
                   </tr>
                 </thead>
-                <tbody>
-                  {recentOrders.map((o, i) => {
-                    const sc = STATUS_COLORS[o.status] ?? { bg: "#f9fafb", text: "#6b7280" };
-                    return (
-                      <tr key={o.id} style={{ borderTop: i === 0 ? undefined : "1px solid #f3f4f6" }}>
-                        <td className="px-4 py-3">
-                          <Link href={`/admin/orders/${o.id}`} className="font-mono text-xs font-semibold text-neutral-700 hover:underline">
-                            {o.orderNumber}
-                          </Link>
-                        </td>
-                        <td className="px-4 py-3 text-neutral-600">{o.customerName}</td>
-                        <td className="px-4 py-3 tabular-nums text-neutral-500">{o.items.length}</td>
-                        <td className="px-4 py-3 font-semibold tabular-nums text-neutral-900">{fmt(Number(o.total))}</td>
-                        <td className="px-4 py-3">
-                          <span className="rounded-full px-2.5 py-0.5 text-[11px] font-semibold capitalize" style={{ background: sc.bg, color: sc.text }}>
-                            {o.status.toLowerCase()}
-                          </span>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                <tbody className="divide-y divide-mis-border-soft">
+                  {recentOrders.map((o) => (
+                    <tr key={o.id} className="transition-colors hover:bg-mis-bg/60">
+                      <td className="px-4 py-3">
+                        <Link href={`/admin/orders/${o.id}`} className="font-mono text-xs font-semibold text-mis-text hover:text-mis-blue hover:underline">
+                          {o.orderNumber}
+                        </Link>
+                      </td>
+                      <td className="px-4 py-3 text-mis-text-muted">{o.customerName}</td>
+                      <td className="px-4 py-3 tabular-nums text-mis-text-muted">{o.items.length}</td>
+                      <td className="px-4 py-3 font-semibold tabular-nums text-mis-text">{fmt(Number(o.total))}</td>
+                      <td className="px-4 py-3"><StatusBadge status={o.status} /></td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             )}
           </div>
         </div>
 
-        {/* Low stock */}
-        <div>
-          <div className="flex items-center justify-between">
-            <h2 className="text-sm font-semibold text-neutral-700">Low Stock</h2>
-            <Link href="/admin/products" className="text-xs text-neutral-500 hover:text-neutral-900">Manage →</Link>
+        {/* Needs attention */}
+        <div className="animate-fade-in-up" style={{ animationDelay: "0.24s" }}>
+          <div className="flex items-baseline justify-between">
+            <h2 className="text-sm font-semibold text-mis-text">Needs attention</h2>
+            <Link href="/admin/products" className="text-xs font-medium text-mis-text-muted transition-colors hover:text-gold">
+              Manage →
+            </Link>
           </div>
-          <div className="mt-3 rounded-xl border border-neutral-200 bg-white">
+          <div className="mt-3 rounded-xl border border-mis-border bg-white">
             {lowStock.length === 0 ? (
-              <p className="p-5 text-sm text-neutral-400">All products well-stocked.</p>
+              <p className="flex items-center gap-2 p-5 text-sm text-mis-text-muted">
+                <span className="h-1.5 w-1.5 rounded-full bg-mis-success" />
+                All products well-stocked.
+              </p>
             ) : (
-              <ul className="divide-y divide-neutral-100">
-                {lowStock.map((p) => (
-                  <li key={p.id} className="flex items-center justify-between px-4 py-3">
-                    <div>
-                      <p className="text-sm font-medium text-neutral-800">{p.name}</p>
-                      <p className="text-xs text-neutral-400">{p.category}</p>
-                    </div>
-                    <span
-                      className="rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums"
-                      style={p.stock === 0 ? { background: "#fef2f2", color: "#dc2626" } : { background: "#fefce8", color: "#ca8a04" }}
-                    >
-                      {p.stock ?? 0} left
-                    </span>
-                  </li>
-                ))}
+              <ul className="divide-y divide-mis-border-soft">
+                {lowStock.map((p) => {
+                  const stock = p.stock ?? 0;
+                  const out = stock === 0;
+                  return (
+                    <li key={p.id} className="px-4 py-3">
+                      <div className="flex items-center justify-between gap-3">
+                        <p className="truncate text-sm font-medium text-mis-text">{p.name}</p>
+                        <span className={`shrink-0 text-xs font-semibold tabular-nums ${out ? "text-mis-danger" : "text-mis-warning-deep"}`}>
+                          {out ? "Out of stock" : `${stock} left`}
+                        </span>
+                      </div>
+                      <div className="mt-2 h-1 overflow-hidden rounded-full bg-mis-border-soft">
+                        <div
+                          className={`h-full rounded-full ${out ? "bg-mis-danger" : "bg-mis-warning"}`}
+                          style={{ width: `${Math.max((stock / LOW_STOCK_CEILING) * 100, 4)}%` }}
+                        />
+                      </div>
+                      <p className="mt-1.5 text-xs text-mis-text-soft">{p.category}</p>
+                    </li>
+                  );
+                })}
               </ul>
             )}
           </div>

@@ -24,8 +24,8 @@ export function SiteFooter() {
           <div>
             <Image src="/logo.png" alt="IYKA-ARAM" width={180} height={170} className="v2-footer-logo" />
             <p className="v2-footer-blurb">
-              Northeast India&apos;s first functional medicine startup. Clinical
-              wellness. The drugless healthcare.
+              Clinical wellness, rooted in nature. Drugless, integrative care
+              in Shillong and online.
             </p>
           </div>
 
