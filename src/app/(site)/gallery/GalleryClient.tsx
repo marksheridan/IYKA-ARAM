@@ -79,7 +79,7 @@ export function GalleryClient() {
         title="Our Gallery"
         lead={<>A visual journey through our clinic, sessions, events, and the community we&rsquo;re building in Northeast India.</>}
         image="/gallery/img11.jpg"
-        tint="earth"
+        tint="dark"
         vignette
         reveal
       />

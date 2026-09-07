@@ -764,7 +764,7 @@ h3 em {
   width: 62%;
   object-fit: cover;
   object-position: 72% center;
-  opacity: 0.8;
+  opacity: 1;
   pointer-events: none;
 }
 .v2-page-hero-scrim,
@@ -775,11 +775,11 @@ h3 em {
   pointer-events: none;
 }
 .v2-page-hero-dark .v2-page-hero-scrim {
-  /* Solid to 38% is deliberate: the photo starts at 38% (see
-     .v2-page-hero-img width), so the copy never sits over it and the fade
-     can be lightened without touching text contrast. Mid stop was 0.82,
-     which buried the photograph. */
-  background: linear-gradient(to right, #0F2118 38%, rgba(15, 33, 24, 0.55) 58%, rgba(15, 33, 24, 0) 76%);
+  /* Light: this layer now only has to seat the photo in the band, not carry
+     text legibility. The title runs to roughly 70% of the width, so it *does*
+     cross the photo — .v2-page-hero-body::before is what keeps it readable,
+     which is why this can fall away by 70%. */
+  background: linear-gradient(to right, #0F2118 34%, rgba(15, 33, 24, 0.30) 52%, rgba(15, 33, 24, 0) 70%);
 }
 /* The warm-earth editorial tint is retained for the journal and gallery —
    a deliberate warm counterpoint to the cool forest bands. Its deeper value
@@ -787,9 +787,37 @@ h3 em {
    7.17:1 and the lead (ivory at 75%) at 4.89:1.
    Named "earth", not "taupe" — taupe no longer names a palette colour now
    that the brand family is forest. */
+/* Legibility for the copy, decoupled from the band's overall darkness.
+   Confined to the rows the copy occupies, so the photograph stays bright
+   above and below it — that is the point: the global scrim can be light
+   because this carries contrast only where it is needed.
+   Measured worst case for the title, across the full run of the fade, on
+   each page's own photograph: /podcast 4.16:1, /gallery 5.88:1, /blog
+   4.64:1 — against the 3:1 large text requires.
+   The mask fades only inside the bleed, so the text rows get the alpha
+   above rather than a soft edge eating into the copy. */
+.v2-page-hero-body { position: relative; }
+/* Positioned so they paint above the ::before, which is absolute and would
+   otherwise cover them. */
+.v2-page-hero-body > * { position: relative; }
+.v2-page-hero-body::before {
+  content: "";
+  position: absolute;
+  inset: -2.5rem -1rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(15, 33, 24, 0.85) 0%,
+    rgba(15, 33, 24, 0.72) 55%,
+    rgba(15, 33, 24, 0.35) 95%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+}
+
 .v2-page-hero-earth .v2-page-hero-scrim {
   /* Matches the dark tint's stops; see the note there. */
-  background: linear-gradient(to right, #5C533D 38%, rgba(92, 83, 61, 0.55) 58%, rgba(92, 83, 61, 0) 76%);
+  background: linear-gradient(to right, #5C533D 34%, rgba(92, 83, 61, 0.30) 52%, rgba(92, 83, 61, 0) 70%);
 }
 .v2-page-hero-glow {
   background:
@@ -797,7 +825,7 @@ h3 em {
     radial-gradient(ellipse 50% 80% at 0% 0%, rgba(202, 156, 61, 0.08), transparent);
 }
 .v2-page-hero-vignette {
-  background: linear-gradient(to top, rgba(15, 33, 24, 0.45) 0%, transparent 60%);
+  background: linear-gradient(to top, rgba(15, 33, 24, 0.25) 0%, transparent 60%);
 }
 .v2-page-hero-body {
   position: relative;
