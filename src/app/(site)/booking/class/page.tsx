@@ -35,8 +35,8 @@ export default async function ClassPage({
       <Link href="/booking" className="text-sm text-muted hover:text-ink">
         ← All services
       </Link>
-      <h1 className="mt-3 font-display text-3xl text-forest">
-        Online Yoga Classes
+      <h1 className="mt-3 v2-page-title-compact text-forest">
+        Online yoga classes
       </h1>
       <p className="mt-1 text-muted">Reserve your seat in an upcoming class.</p>
 
@@ -62,7 +62,7 @@ export default async function ClassPage({
               >
                 <div className="flex flex-wrap items-start justify-between gap-2">
                   <div>
-                    <h2 className="font-display text-lg text-forest">
+                    <h2 className="v2-card-title text-forest">
                       {o.title}
                     </h2>
                     <p className="mt-1 text-sm text-muted">

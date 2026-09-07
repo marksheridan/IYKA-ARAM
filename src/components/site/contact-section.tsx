@@ -24,7 +24,7 @@ export function ContactSection() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Get In Touch
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginBottom: "1.5rem" }}>
+            <h2 className="v2-section-title" style={{ marginBottom: "1.5rem" }}>
               Your wellness journey
               <br />
               <em style={{ color: "var(--gold-deep)" }}>starts with a conversation.</em>
@@ -83,8 +83,8 @@ export function ContactSection() {
           <Reveal delay={0.2} className="v2-contact-form-wrap">
             <form action={formAction} className="v2-contact-form">
               <input type="hidden" name="interest" value="GENERAL" />
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "1.6rem", fontWeight: 700, marginBottom: "0.3rem" }}>
-                Send a Message
+              <h3 className="v2-card-title-lg" style={{ marginBottom: "0.3rem" }}>
+                Send a message
               </h3>
               <div className="v2-form-group">
                 <label htmlFor="contact-name">Your Name</label>

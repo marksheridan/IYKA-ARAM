@@ -66,7 +66,22 @@ src/
 prisma/
   schema.prisma        # full data model (see §5.3 of the work plan)
 docs/                   # work plan + original brief
+  design-system.html   # ← website design system (open in a browser)
 ```
+
+## Design system
+
+The website's design language — palette, type scale, spacing, shared
+components and the do/don't rules — is documented in
+**[`docs/design-system.html`](docs/design-system.html)**. Open it directly in a
+browser; no build step needed.
+
+`src/app/globals.css` is the source of truth for the tokens. If you change a
+value there, mirror it into the `:root` block at the top of the HTML so the two
+stay in step.
+
+> The older `design-system.html` in the repo root documents the **MIS
+> dashboard** and predates the current palette and fonts.
 
 ## Database
 

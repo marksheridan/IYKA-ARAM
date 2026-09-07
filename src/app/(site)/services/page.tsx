@@ -19,7 +19,7 @@ export default function ServicesPage() {
           <p className="v2-section-label v2-reveal" style={{ marginBottom: "1rem" }}>
             What We Offer
           </p>
-          <h1 className="svd-hero-title v2-reveal v2-reveal-1">
+          <h1 className="v2-page-hero-title svd-hero-title v2-reveal v2-reveal-1">
             Twelve ways to
             <br />
             <em>heal at the root.</em>
@@ -48,7 +48,7 @@ export default function ServicesPage() {
 
               <Reveal className="svd-content">
                 <span className="svd-num">{s.num}</span>
-                <h2 className="svd-name">{s.name}</h2>
+                <h2 className="v2-section-title-compact svd-name">{s.name}</h2>
                 <p className="svd-summary">{s.summary}</p>
 
                 <div className="svd-detail">
@@ -81,7 +81,7 @@ export default function ServicesPage() {
           <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
             Not sure where to start?
           </p>
-          <h2 style={{ fontSize: "clamp(1.9rem, 4vw, 2.9rem)", fontWeight: 700, marginBottom: "1.75rem" }}>
+          <h2 className="v2-section-title" style={{ marginBottom: "1.75rem" }}>
             Begin with a consultation.
           </h2>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
@@ -89,7 +89,7 @@ export default function ServicesPage() {
               interest="CONSULTATION"
               className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
             >
-              Book a Consultation
+              Book a consultation
             </BookButton>
             <Link href="/contact" className="v2-btn v2-btn-outline-dark">
               Talk to Us

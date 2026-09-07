@@ -15,20 +15,12 @@ export default function ContactPage() {
       <section style={{ background: "var(--green)", padding: "10rem 0 4rem" }}>
         <div className="v2-container">
           <p
-            className="v2-section-label v2-reveal"
-            style={{ color: "var(--gold-light)", marginBottom: "1rem" }}
+            className="v2-section-label v2-section-label-light v2-reveal"
+            style={{ marginBottom: "1rem" }}
           >
             Contact
           </p>
-          <h1
-            className="v2-reveal v2-reveal-1"
-            style={{
-              fontSize: "clamp(2.6rem, 6.5vw, 4.5rem)",
-              color: "var(--cream)",
-              fontWeight: 700,
-              lineHeight: 1.03,
-            }}
-          >
+          <h1 className="v2-page-hero-title v2-reveal v2-reveal-1">
             Let&apos;s talk.
           </h1>
         </div>

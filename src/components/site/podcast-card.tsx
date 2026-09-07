@@ -127,7 +127,7 @@ export function PodcastCard({
 
       <div className="pod-card-body">
         <p className="pod-card-guest">{podcast.guest}</p>
-        <h3 className="pod-card-title">{podcast.title}</h3>
+        <h3 className="v2-card-title pod-card-title">{podcast.title}</h3>
         <p className="pod-card-blurb">{podcast.blurb}</p>
         <p className="pod-card-meta">
           <span>{podcast.duration}</span>

@@ -58,8 +58,11 @@ export const hero = {
     "Functional Medicine, Yoga & Naturopathy",
     "Clinical Wellness in Northeast India",
   ],
+  // Measured wording: "the first ..." was an unverifiable primacy claim, and
+  // it appeared in three different forms across the site (first wellness
+  // centre / first start-up / first functional medicine startup).
   subcopy:
-    "The first wellness centre in the North East to go drugless in healthcare — premium, integrative, and rooted in nature.",
+    "Pioneering drugless healthcare in the North East — premium, integrative, and rooted in nature.",
   // Optional: drop a hero photo in /public and set its path here, e.g. "/brand/hero.jpg".
   backgroundImage: "" as string,
 };
@@ -73,7 +76,7 @@ export const mission = {
   kicker: "Our Mission",
   heading:
     "A new dimension of medicine — where healing is drugless, integrative, and deeply human.",
-  body: "IYKA-ARAM is the first start-up in the North East to highlight drugless healthcare. We blend functional medicine, yoga, and naturopathy into a premium standard of integrative care — set against the clean, living landscape of Meghalaya.",
+  body: "IYKA-ARAM is pioneering drugless healthcare in the North East. We blend functional medicine, yoga, and naturopathy into a premium standard of integrative care — set against the clean, living landscape of Meghalaya.",
   pillars: [
     { title: "Drugless", body: "Healing without dependence on medication." },
     { title: "Integrative", body: "Medicine, movement, and nutrition as one." },

@@ -54,7 +54,7 @@ export function SiteHeader() {
               this <li> with the /store button when the shop goes live. */}
           <li>
             <BookButton className="v2-btn v2-btn-gold v2-nav-cta bg-transparent text-[inherit]">
-              Book Now
+              Book a consultation
             </BookButton>
           </li>
         </ul>
@@ -84,7 +84,7 @@ export function SiteHeader() {
           ))}
           {/* Store link removed until launch — see store-teaser.tsx */}
           <BookButton className="v2-btn v2-btn-gold bg-transparent text-[inherit] mt-2 w-full justify-center">
-            Book Now
+            Book a consultation
           </BookButton>
         </nav>
       )}

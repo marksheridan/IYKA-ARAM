@@ -3,7 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, KeyboardEvent } from "react";
 import { Reveal } from "./reveal";
-import { services } from "@/content/services";
+import { getFeaturedServices } from "@/content/services";
+
+/* The homepage carries only the signature therapies; /services lists all 13. */
+const featuredServices = getFeaturedServices();
 
 
 /* The eased glide, and the quiet period that has to follow a wheel gesture
@@ -88,14 +91,14 @@ export function ServicesSection() {
          card should show it slightly narrowed instead of leaving a gap. */
       const per = Math.max(
         1,
-        Math.min(services.length, Math.round((width + gap) / (CARD_CEILING + gap))),
+        Math.min(featuredServices.length, Math.round((width + gap) / (CARD_CEILING + gap))),
       );
       /* Derived, not measured. The same arithmetic sets the card width and
          the travel per step, so the two cannot drift apart the way a
          measured value can while the layout it depends on is still moving. */
       const cardWidth = (width - (per - 1) * gap) / per;
 
-      maxRef.current = Math.max(0, services.length - per);
+      maxRef.current = Math.max(0, featuredServices.length - per);
       setCard(cardWidth);
       setStep(cardWidth + gap);
       setMaxIndex(maxRef.current);
@@ -218,7 +221,7 @@ export function ServicesSection() {
             <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
               What We Offer
             </p>
-            <h2 className="sv-title">Healing without the prescription pad.</h2>
+            <h2 className="v2-feature-title sv-title">Healing without the prescription pad.</h2>
           </Reveal>
           <Reveal delay={0.2}>
             <a href="/services" className="v2-btn v2-btn-outline-cream">
@@ -241,7 +244,7 @@ export function ServicesSection() {
             ref={trackRef}
             style={live ? { transform: `translate3d(${-index * step}px, 0, 0)` } : undefined}
           >
-            {services.map((s) => (
+            {featuredServices.map((s) => (
               <li className="sv-card" key={s.num}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
@@ -253,7 +256,7 @@ export function ServicesSection() {
                 />
                 <span className="sv-card-veil" />
                 <div className="sv-card-body">
-                  <h3 className="sv-card-name">{s.name}</h3>
+                  <h3 className="v2-card-title sv-card-name">{s.name}</h3>
                   <p className="sv-card-desc">{s.desc}</p>
                 </div>
               </li>

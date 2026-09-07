@@ -4,7 +4,7 @@ import { useBooking } from "./booking-provider";
 import { cn } from "@/lib/utils";
 
 export function BookButton({
-  children = "Book / Enquire",
+  children = "Book a consultation",
   interest,
   className,
 }: {

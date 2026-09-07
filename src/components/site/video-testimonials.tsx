@@ -17,14 +17,14 @@ const textTestimonials = [
   },
   {
     quote:
-      "The online yoga sessions fit perfectly into my schedule and my chronic back pain is finally under control. Life-changing.",
+      "The online yoga sessions fit perfectly into my schedule, and my back has felt better than it has in a long time.",
     name: "Rahul T.",
     location: "Delhi",
     tag: "Yoga Therapy",
   },
   {
     quote:
-      "I was sceptical about drugless healthcare, but the nutrition plan completely reversed my pre-diabetes in six months.",
+      "I was sceptical about drugless healthcare, but six months on the nutrition plan and my blood-sugar numbers are the best they have been in years.",
     name: "Meena W.",
     location: "Shillong",
     tag: "Functional Nutrition",
@@ -152,7 +152,7 @@ export function VideoTestimonials() {
   }
 
   return (
-    <section id="testimonials" style={{ background: "var(--cream-deep)", padding: "clamp(4rem,10vw,8rem) 0" }}>
+    <section id="testimonials" style={{ background: "var(--cream-deep)", paddingBlock: "var(--section-py)" }}>
       <div className="v2-container">
         {/* Shared header */}
         <div style={{ textAlign: "center", marginBottom: "3rem" }}>
@@ -160,18 +160,18 @@ export function VideoTestimonials() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Patient Stories
             </p>
-            <h2 style={{ fontSize: "clamp(2.2rem,5vw,3.6rem)", color: "var(--dark)", fontWeight: 700 }}>
+            <h2 className="v2-feature-title" style={{ color: "var(--dark)" }}>
               Healing that speaks<br /><em style={{ color: "var(--gold-deep)" }}>for itself.</em>
             </h2>
           </Reveal>
         </div>
       </div>
 
-      {/* Moving text testimonials — full-bleed, scrolls on its own */}
-      <div className="tm-marquee" style={{ marginBottom: "4.5rem" }}>
+      {/* Patient quotes — a still rail the visitor swipes. */}
+      <div className="tm-marquee v2-rail-scroll" style={{ marginBottom: "4.5rem" }}>
         <div className="tm-track">
-          {[...textTestimonials, ...textTestimonials].map((t, i) => (
-            <article className="tm-card" key={`${t.name}-${i}`} aria-hidden={i >= textTestimonials.length}>
+          {textTestimonials.map((t, i) => (
+            <article className="tm-card" key={`${t.name}-${i}`}>
               <div className="v2-testimonial-tag">{t.tag}</div>
               <svg className="v2-testimonial-quote-mark" width="36" height="28" viewBox="0 0 36 28" fill="none" aria-hidden="true">
                 <path
@@ -190,6 +190,12 @@ export function VideoTestimonials() {
             </article>
           ))}
         </div>
+      <p className="v2-rail-cue v2-container" style={{ marginTop: "-3.5rem", marginBottom: "3rem" }}>
+        <svg width="22" height="8" viewBox="0 0 22 8" fill="none" stroke="currentColor" strokeWidth="1.2" aria-hidden="true">
+          <path d="M0 4h20M17 1l3 3-3 3" strokeLinecap="round" />
+        </svg>
+        Swipe for more
+      </p>
       </div>
 
       <div className="v2-container">
@@ -317,6 +323,15 @@ export function VideoTestimonials() {
             More on Instagram
           </a>
         </div>
+
+        {/* Item 7 of the design review: patient stories need a consent
+            indicator and an outcome disclaimer to read as trustworthy. */}
+        <p className="v2-testimonial-note">
+          Shared with each patient&apos;s permission. These are personal
+          accounts, not clinical results — individual experiences differ, and
+          nothing here is a promise of outcome or a substitute for medical
+          advice.
+        </p>
       </div>
     </section>
   );

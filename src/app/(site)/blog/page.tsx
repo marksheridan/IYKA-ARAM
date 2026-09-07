@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { prisma } from "@/lib/db";
 import { CtaSection } from "@/components/site/cta-section";
+import { PageHero } from "@/components/site/page-hero";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Wellness Journal" };
@@ -23,42 +24,14 @@ export default async function BlogPage() {
 
   return (
     <>
-      {/* Hero */}
-      <section
-        className="relative flex min-h-[42vh] items-end overflow-hidden"
-        style={{ background: "var(--green)" }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/gallery/a7e6d026-c11d-42f0-b035-bcb80959fbed.jpg"
-          alt=""
-          aria-hidden="true"
-          className="pointer-events-none absolute top-0 right-0 h-full object-cover"
-          style={{ width: "62%", objectPosition: "center center", opacity: 0.55 }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          // style={{ background: "linear-gradient(to right, #2C4028 38%, rgba(44,64,40,0.82) 60%, rgba(44,64,40,0) 82%)" }}
-          style={{ background: "linear-gradient(to right, #847858 38%, rgba(132,120,88,0.82) 60%, rgba(132,120,88,0) 82%)" }}
-        />
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse 80% 60% at 60% 100%, rgba(200,151,60,0.08), transparent),radial-gradient(ellipse 50% 80% at 0% 0%, rgba(200,151,60,0.06), transparent)" }}
-        />
-        <div className="absolute inset-0" style={{ background: "linear-gradient(to top, rgba(27,25,22,0.4) 0%, transparent 60%)" }} />
-        <div className="relative max-w-6xl mx-auto w-full px-6 md:px-16 pb-16 pt-40">
-          <p className="text-xs font-medium tracking-widest uppercase mb-4" style={{ color: "var(--gold-light)" }}>
-            Iyka-Aram Wellness
-          </p>
-          <h1 className="font-display font-light leading-[1.05]" style={{ fontSize: "clamp(3rem,7vw,5.5rem)", color: "var(--cream)" }}>
-            Wellness Journal
-          </h1>
-          <p className="mt-4 max-w-[32rem] font-light leading-[1.7]" style={{ fontSize: "1.05rem", color: "rgba(248,244,238,0.65)" }}>
-            Insights on functional medicine, yoga, nutrition and holistic living
-            from the IYKA-ARAM team.
-          </p>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Iyka-Aram Wellness"
+        title="Wellness Journal"
+        lead="Insights on functional medicine, yoga, nutrition and holistic living from the IYKA-ARAM team."
+        image="/gallery/a7e6d026-c11d-42f0-b035-bcb80959fbed.jpg"
+        tint="earth"
+        vignette
+      />
 
       {/* Grid */}
       <section className="mx-auto max-w-6xl px-6 py-16 md:px-16">
@@ -79,10 +52,10 @@ export default async function BlogPage() {
                   </div>
                 </Link>
                 <div className="pt-3 flex flex-col flex-1">
-                  <span className="text-[10px] font-medium tracking-widest uppercase mb-2" style={{ color: "var(--gold-deep)" }}>
+                  <span className="v2-meta-label mb-2" style={{ color: "var(--gold-deep)" }}>
                     {post.category}
                   </span>
-                  <h2 className="font-display text-lg text-forest leading-snug">
+                  <h2 className="v2-card-title text-forest">
                     <Link href={`/blog/${post.slug}`} className="hover:opacity-70 transition-opacity">
                       {post.title}
                     </Link>

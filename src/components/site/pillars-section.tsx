@@ -35,16 +35,22 @@ export function PillarsSection() {
     <section
       id="pillars"
       className="v2-landing v2-section-py scroll-mt-20"
-      style={{ background: "var(--cream)" }}
+      style={{ /* Forest, not cream: this sat on the same --cream as the mission above
+             it, so the two ran together. Every warm light tint was a dead end
+             — clay-100 is within 0.001 luminance of the cream-band section
+             below, so it would read as one continuous band. Forest is the
+             brand anchor and the only ground that actually separates.
+             Title 11.37:1, eyebrow 6.34:1, intro 7.13:1. */
+          background: "var(--green)" }}
     >
       <div className="v2-container">
         <div className="pl-head">
           <Reveal>
-            <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
+            <p className="v2-section-label v2-section-label-light" style={{ marginBottom: "1rem" }}>
               One Vision, Five Directions
             </p>
-            <h2 className="pl-title">
-              The 5 Pillars of
+            <h2 className="v2-feature-title pl-title">
+              The 5 pillars of
               <br />
               <em>Iyka-Aram.</em>
             </h2>
@@ -61,7 +67,7 @@ export function PillarsSection() {
           {pillars.map((p, i) => (
             <Reveal key={p.num} className="pl-card" delay={i * 0.08}>
               <span className="pl-num">{p.num}</span>
-              <h3 className="pl-name">{p.name}</h3>
+              <h3 className="v2-card-title-lg pl-name">{p.name}</h3>
               <p className="pl-desc">{p.desc}</p>
             </Reveal>
           ))}
