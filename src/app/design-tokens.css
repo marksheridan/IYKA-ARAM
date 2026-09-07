@@ -20,6 +20,7 @@
   --iyka-forest-700: #2b5a40;
   --iyka-sage-500: #809a78;
   --iyka-sage-100: #e7eee3;
+  --iyka-sage-50: #f2f5f0;
   --iyka-gold-700: #785314;
   --iyka-gold-500: #ca9c3d;
   --iyka-gold-300: #ddb765;
@@ -151,10 +152,10 @@
   --ops-text: var(--iyka-neutral-950);
   --ops-text-muted: var(--iyka-neutral-500);
   --ops-text-soft: var(--iyka-neutral-400);
-  --ops-action: var(--iyka-blue-600);
-  --ops-action-hover: var(--iyka-blue-700);
-  --ops-action-subtle: var(--iyka-blue-50);
-  --ops-action-muted: var(--iyka-blue-100);
+  --ops-action: var(--iyka-forest-700);
+  --ops-action-hover: var(--iyka-forest-800);
+  --ops-action-subtle: var(--iyka-sage-50);
+  --ops-action-muted: var(--iyka-sage-100);
   --ops-success: var(--iyka-success-700);
   --ops-success-bg: var(--iyka-success-100);
   --ops-warning: var(--iyka-warning-700);
@@ -165,6 +166,6 @@
   --ops-danger-bg: var(--iyka-danger-100);
   --ops-purple: var(--iyka-purple-600);
   --ops-purple-bg: var(--iyka-purple-100);
-  --ops-focus-ring: var(--iyka-blue-600);
+  --ops-focus-ring: var(--iyka-forest-700);
   --ops-sidebar-w: 15rem;
 }
