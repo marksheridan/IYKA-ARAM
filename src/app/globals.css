@@ -764,7 +764,7 @@ h3 em {
   width: 62%;
   object-fit: cover;
   object-position: 72% center;
-  opacity: 0.6;
+  opacity: 0.8;
   pointer-events: none;
 }
 .v2-page-hero-scrim,
@@ -775,7 +775,11 @@ h3 em {
   pointer-events: none;
 }
 .v2-page-hero-dark .v2-page-hero-scrim {
-  background: linear-gradient(to right, #0F2118 38%, rgba(15, 33, 24, 0.82) 60%, rgba(15, 33, 24, 0) 82%);
+  /* Solid to 38% is deliberate: the photo starts at 38% (see
+     .v2-page-hero-img width), so the copy never sits over it and the fade
+     can be lightened without touching text contrast. Mid stop was 0.82,
+     which buried the photograph. */
+  background: linear-gradient(to right, #0F2118 38%, rgba(15, 33, 24, 0.55) 58%, rgba(15, 33, 24, 0) 76%);
 }
 /* The warm-earth editorial tint is retained for the journal and gallery —
    a deliberate warm counterpoint to the cool forest bands. Its deeper value
@@ -784,7 +788,8 @@ h3 em {
    Named "earth", not "taupe" — taupe no longer names a palette colour now
    that the brand family is forest. */
 .v2-page-hero-earth .v2-page-hero-scrim {
-  background: linear-gradient(to right, #5C533D 38%, rgba(92, 83, 61, 0.82) 60%, rgba(92, 83, 61, 0) 82%);
+  /* Matches the dark tint's stops; see the note there. */
+  background: linear-gradient(to right, #5C533D 38%, rgba(92, 83, 61, 0.55) 58%, rgba(92, 83, 61, 0) 76%);
 }
 .v2-page-hero-glow {
   background:

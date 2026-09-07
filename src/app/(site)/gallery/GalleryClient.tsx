@@ -78,7 +78,7 @@ export function GalleryClient() {
         eyebrow="Iyka-Aram Wellness"
         title="Our Gallery"
         lead={<>A visual journey through our clinic, sessions, events, and the community we&rsquo;re building in Northeast India.</>}
-        image="/gallery/elixir-range-flatlay.jpg"
+        image="/gallery/img11.jpg"
         tint="earth"
         vignette
         reveal
