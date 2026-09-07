@@ -123,13 +123,13 @@ export function LoginModal({ open, onClose, onLogin }: Props) {
                     required
                     autoFocus
                     style={{
-                      width: "100%", border: "1px solid #e2ddd6", borderRadius: "0.5rem",
+                      width: "100%", border: "1px solid var(--border)", borderRadius: "0.5rem",
                       padding: "0.65rem 0.9rem", fontSize: "0.9rem", outline: "none",
                       boxSizing: "border-box",
                     }}
                   />
                 </div>
-                {error && <p style={{ fontSize: "0.8rem", color: "#b91c1c" }}>{error}</p>}
+                {error && <p style={{ fontSize: "0.8rem", color: "var(--danger)" }}>{error}</p>}
                 <button
                   type="submit"
                   disabled={loading}
@@ -159,13 +159,13 @@ export function LoginModal({ open, onClose, onLogin }: Props) {
                     placeholder="••••••"
                     required
                     style={{
-                      width: "100%", border: "1px solid #e2ddd6", borderRadius: "0.5rem",
+                      width: "100%", border: "1px solid var(--border)", borderRadius: "0.5rem",
                       padding: "0.65rem 0.9rem", fontSize: "1.4rem", letterSpacing: "0.4em",
                       outline: "none", textAlign: "center", boxSizing: "border-box",
                     }}
                   />
                 </div>
-                {error && <p style={{ fontSize: "0.8rem", color: "#b91c1c" }}>{error}</p>}
+                {error && <p style={{ fontSize: "0.8rem", color: "var(--danger)" }}>{error}</p>}
                 <button
                   type="submit"
                   disabled={loading}

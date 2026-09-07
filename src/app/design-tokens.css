@@ -45,8 +45,11 @@
   --iyka-success-100: #d1fae5;
   --iyka-warning-700: #a15c00;
   --iyka-warning-100: #fef3c7;
+  --iyka-danger-900: #721c24;
   --iyka-danger-700: #b42318;
+  --iyka-danger-200: #f5c6cb;
   --iyka-danger-100: #fee2e2;
+  --iyka-danger-50: #fff0f0;
   --iyka-purple-600: #7c3aed;
   --iyka-purple-100: #ede9fe;
 
@@ -143,6 +146,18 @@
   --green-pale: var(--iyka-sage-100);
   --sage: var(--iyka-sage-500);
   --clay: var(--iyka-clay-500);
+
+  /* Store and site error states. The store had these as raw hex in two
+     places — an inline block in checkout and .store-otp-error — with
+     identical values, plus a third, different red for inline field
+     errors. --ops-danger* is the clinical palette and would be the wrong
+     semantic here, hence a site-side set.
+     --danger is for error text on a light surface, --danger-deep for text
+     on --danger-bg. Both measured: 6.57:1 and 9.95:1. */
+  --danger: var(--iyka-danger-700);
+  --danger-deep: var(--iyka-danger-900);
+  --danger-bg: var(--iyka-danger-50);
+  --danger-border: var(--iyka-danger-200);
   --clay-pale: var(--iyka-clay-100);
   --focus-ring: var(--iyka-forest-700);
   /* Half the gap between two adjacent sections, since both pad. At
