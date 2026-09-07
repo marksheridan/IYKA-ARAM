@@ -1,5 +1,10 @@
 import { ImageResponse } from "next/og";
 
+// Colours are literal hex on purpose: ImageResponse rasterises this at
+// build time with no document to resolve CSS custom properties against,
+// so var(--gold) would render as nothing. Keep these in step with
+// src/app/design-tokens.css by hand.
+
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 

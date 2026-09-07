@@ -25,7 +25,7 @@ export default async function MisLayout({
     .map(({ href, label, icon }) => ({ href, label, icon }));
 
   return (
-    <div className="flex min-h-screen bg-[#f6f4ef]">
+    <div className="flex min-h-screen bg-[var(--ops-background)]">
       <MisSidebar items={nav} user={{ name: user.name, role: user.role }} logout={logout} />
       <main className="flex-1 px-8 py-8">{children}</main>
     </div>

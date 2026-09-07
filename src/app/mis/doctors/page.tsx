@@ -48,7 +48,7 @@ export default async function DoctorsPage() {
             </thead>
             <tbody>
               {staff.map((s, idx) => {
-                const typeStyle = TYPE_COLORS[s.type] ?? { bg: "#f3f4f6", color: "#6b7280" };
+                const typeStyle = TYPE_COLORS[s.type] ?? { bg: "var(--color-mis-neutral-bg)", color: "var(--color-mis-neutral)" };
                 return (
                   <tr
                     key={s.id}
