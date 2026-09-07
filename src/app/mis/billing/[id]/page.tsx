@@ -83,7 +83,7 @@ export default async function InvoiceDetail({
                     <form action={removeLineItem}>
                       <input type="hidden" name="lineItemId" value={li.id} />
                       <input type="hidden" name="invoiceId" value={inv.id} />
-                      <button className="text-xs text-red-700 hover:underline">
+                      <button className="text-xs text-mis-danger hover:underline">
                         Remove
                       </button>
                     </form>
@@ -134,7 +134,7 @@ export default async function InvoiceDetail({
           )}
           <form action={cancelInvoice}>
             <input type="hidden" name="invoiceId" value={inv.id} />
-            <button className="rounded-full border border-red-200 bg-white px-5 py-2 text-sm text-red-700 hover:bg-red-50">
+            <button className="rounded-full border border-mis-danger/25 bg-white px-5 py-2 text-sm text-mis-danger hover:bg-mis-danger-bg">
               Cancel
             </button>
           </form>

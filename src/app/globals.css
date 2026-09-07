@@ -19,6 +19,7 @@
   --color-gold: var(--gold);
   --color-gold-deep: var(--gold-deep);
   --color-gold-soft: var(--gold-pale);
+  --color-gold-light: var(--gold-light);
   --color-forest: var(--green);
   --color-sage: var(--sage);
   --color-clay: var(--clay);
@@ -49,6 +50,10 @@
   --color-mis-success-bg: var(--ops-success-bg);
   --color-mis-warning: var(--ops-warning);
   --color-mis-warning-bg: var(--ops-warning-bg);
+  /* The admin retheme split warning into a light dot colour and a deeper
+     text colour, because its raw brand gold was illegible at small sizes.
+     --ops-warning is already the legible deep tone, so both map to it. */
+  --color-mis-warning-deep: var(--ops-warning);
   --color-mis-info: var(--ops-info);
   --color-mis-info-bg: var(--ops-info-bg);
   --color-mis-purple: var(--ops-purple);
