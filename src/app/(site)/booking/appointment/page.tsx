@@ -32,7 +32,7 @@ export default async function AppointmentPage({
   if (!service) {
     return (
       <section className="mx-auto max-w-3xl px-6 py-20">
-        <h1 className="font-display text-2xl text-forest">Service not found</h1>
+        <h1 className="v2-page-title-compact text-forest">Service not found</h1>
         <Link href="/booking" className="mt-4 inline-block text-gold-deep">
           ← Back to booking
         </Link>
@@ -60,7 +60,7 @@ export default async function AppointmentPage({
       <Link href="/booking" className="text-sm text-muted hover:text-ink">
         ← All services
       </Link>
-      <h1 className="mt-3 font-display text-3xl text-forest">{service.name}</h1>
+      <h1 className="mt-3 v2-page-title-compact text-forest">{service.name}</h1>
       <p className="mt-1 text-muted">
         ₹{Number(service.price).toLocaleString("en-IN")} · {service.durationMin}{" "}
         min
@@ -75,7 +75,7 @@ export default async function AppointmentPage({
       {/* Step 1 — provider */}
       {providers.length > 1 && (
         <div className="mt-8">
-          <h2 className="text-sm font-medium text-ink">1 · Choose a practitioner</h2>
+          <h2 className="v2-panel-title text-ink">1 · Choose a practitioner</h2>
           <div className="mt-3 flex flex-wrap gap-2">
             {providers.map((p) => (
               <Link
@@ -97,7 +97,7 @@ export default async function AppointmentPage({
       {/* Step 2 — date */}
       {providerId && (
         <div className="mt-8">
-          <h2 className="text-sm font-medium text-ink">
+          <h2 className="v2-panel-title text-ink">
             {providers.length > 1 ? "2" : "1"} · Choose a day
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -121,7 +121,7 @@ export default async function AppointmentPage({
       {/* Step 3 — slot + details */}
       {providerId && date && (
         <div className="mt-8">
-          <h2 className="text-sm font-medium text-ink">
+          <h2 className="v2-panel-title text-ink">
             {providers.length > 1 ? "3" : "2"} · Pick a time &amp; confirm
           </h2>
 

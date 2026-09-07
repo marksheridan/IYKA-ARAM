@@ -1,0 +1,170 @@
+/*
+ * IYKA-ARAM unified design tokens
+ *
+ * One foundation, two semantic themes:
+ *   - the public wellness website and store use the default aliases
+ *   - the clinical operations UI uses the --ops-* aliases
+ *
+ * Components should consume semantic tokens. Primitive values are only for
+ * defining a theme or documenting the palette.
+ */
+:root {
+  /* Brand primitives */
+  --iyka-ivory-50: #fbf8f1;
+  --iyka-ivory-100: #f3eddf;
+  --iyka-sand-200: #e5d8c5;
+  --iyka-white: #fffdf8;
+  --iyka-ink-950: #172019;
+  --iyka-forest-950: #0f2118;
+  --iyka-forest-800: #183d2b;
+  --iyka-forest-700: #2b5a40;
+  --iyka-sage-500: #809a78;
+  --iyka-sage-100: #e7eee3;
+  --iyka-gold-700: #785314;
+  --iyka-gold-500: #ca9c3d;
+  --iyka-gold-300: #ddb765;
+  --iyka-gold-100: #f3e2b8;
+  --iyka-clay-500: #a75f42;
+  --iyka-clay-100: #f3e1d7;
+
+  /* Neutral and status primitives for information-dense interfaces */
+  --iyka-neutral-950: #111827;
+  --iyka-neutral-600: #4b5563;
+  --iyka-neutral-500: #6b7280;
+  --iyka-neutral-400: #9ca3af;
+  --iyka-neutral-200: #e5e7eb;
+  --iyka-neutral-100: #f3f4f6;
+  --iyka-neutral-50: #f7f8f7;
+  --iyka-blue-700: #1d4ed8;
+  --iyka-blue-600: #2563eb;
+  --iyka-blue-100: #dbeafe;
+  --iyka-blue-50: #eff6ff;
+  --iyka-success-700: #047857;
+  --iyka-success-100: #d1fae5;
+  --iyka-warning-700: #a15c00;
+  --iyka-warning-100: #fef3c7;
+  --iyka-danger-700: #b42318;
+  --iyka-danger-100: #fee2e2;
+  --iyka-purple-600: #7c3aed;
+  --iyka-purple-100: #ede9fe;
+
+  /* Shared typography */
+  --font-display: var(--font-bricolage, "Bricolage Grotesque"), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-dmsans, "DM Sans"), system-ui, sans-serif;
+  --font-ui: var(--font-inter, "Inter"), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
+
+  --fs-display: clamp(2.6rem, 6.5vw, 5rem);
+  --fs-page-title: clamp(3rem, 7vw, 5.5rem);
+  --fs-feature: clamp(2.2rem, 5.5vw, 4rem);
+  --fs-h2: clamp(2rem, 4.5vw, 3.2rem);
+  --fs-h2-compact: clamp(1.8rem, 3.5vw, 2.6rem);
+  --fs-h3: clamp(1.35rem, 2.2vw, 1.75rem);
+  --fs-h4: 1.125rem;
+  --fs-lead: 1.05rem;
+  --fs-body: 1rem;
+  --fs-sm: 0.875rem;
+  --fs-xs: 0.75rem;
+  --fs-label: 0.7rem;
+
+  --lh-display: 0.98;
+  --lh-feature: 1.02;
+  --lh-tight: 1.1;
+  --lh-snug: 1.3;
+  --lh-normal: 1.5;
+  --lh-relaxed: 1.7;
+
+  --ls-display: -0.025em;
+  --ls-feature: -0.02em;
+  --ls-heading: -0.01em;
+  --ls-normal: 0;
+  --ls-wide: 0.08em;
+  --ls-caps: 0.12em;
+  --ls-label: 0.2em;
+
+  /* Shared 4px spacing, radius, elevation, and motion scales */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-20: 5rem;
+  --space-24: 6rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.625rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-pill: 9999px;
+
+  --shadow-sm: 0 1px 2px rgb(15 33 24 / 0.06);
+  --shadow-md: 0 10px 30px rgb(15 33 24 / 0.1);
+  --shadow-lg: 0 24px 60px rgb(15 33 24 / 0.14);
+
+  --duration-fast: 150ms;
+  --duration-base: 350ms;
+  --duration-slow: 700ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-base: var(--duration-base) var(--ease-out-expo);
+
+  /* Public website and store semantic theme */
+  --background: var(--iyka-ivory-50);
+  --foreground: var(--iyka-ink-950);
+  --surface: var(--iyka-white);
+  --surface-subtle: var(--iyka-ivory-100);
+  --border: #ded5c6;
+  --text-muted: #687168;
+  --cream: var(--iyka-ivory-50);
+  --cream-deep: var(--iyka-ivory-100);
+  --cream-band: #eae4d8;
+  --dark: var(--iyka-forest-950);
+  --dark-soft: #26352b;
+  --gold: var(--iyka-gold-500);
+  --gold-light: var(--iyka-gold-300);
+  --gold-pale: var(--iyka-gold-100);
+  --gold-deep: var(--iyka-gold-700);
+  --green: var(--iyka-forest-800);
+  --green-mid: var(--iyka-forest-700);
+  --green-pale: var(--iyka-sage-100);
+  --sage: var(--iyka-sage-500);
+  --clay: var(--iyka-clay-500);
+  --clay-pale: var(--iyka-clay-100);
+  --focus-ring: var(--iyka-forest-700);
+  /* Half the gap between two adjacent sections, since both pad. At
+     8rem two neighbours on the same ground left 256px of dead space. */
+  --section-py: clamp(3rem, 6vw, 5rem);
+  /* The only sanctioned exception: a thin band that is a strip rather than
+     a section — the recognition logos. Everything else uses --section-py. */
+  --section-py-compact: clamp(2rem, 4vw, 3.5rem);
+
+  /* Clinical operations semantic theme */
+  --ops-background: var(--iyka-neutral-50);
+  --ops-surface: #ffffff;
+  --ops-surface-subtle: var(--iyka-neutral-100);
+  --ops-border: var(--iyka-neutral-200);
+  --ops-border-soft: var(--iyka-neutral-100);
+  --ops-text: var(--iyka-neutral-950);
+  --ops-text-muted: var(--iyka-neutral-500);
+  --ops-text-soft: var(--iyka-neutral-400);
+  --ops-action: var(--iyka-blue-600);
+  --ops-action-hover: var(--iyka-blue-700);
+  --ops-action-subtle: var(--iyka-blue-50);
+  --ops-action-muted: var(--iyka-blue-100);
+  --ops-success: var(--iyka-success-700);
+  --ops-success-bg: var(--iyka-success-100);
+  --ops-warning: var(--iyka-warning-700);
+  --ops-warning-bg: var(--iyka-warning-100);
+  --ops-info: var(--iyka-blue-600);
+  --ops-info-bg: var(--iyka-blue-100);
+  --ops-danger: var(--iyka-danger-700);
+  --ops-danger-bg: var(--iyka-danger-100);
+  --ops-purple: var(--iyka-purple-600);
+  --ops-purple-bg: var(--iyka-purple-100);
+  --ops-focus-ring: var(--iyka-blue-600);
+  --ops-sidebar-w: 15rem;
+}

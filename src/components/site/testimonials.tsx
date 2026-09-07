@@ -10,14 +10,14 @@ const testimonials = [
   },
   {
     quote:
-      "The online yoga sessions fit perfectly into my schedule and my chronic back pain is finally under control. Life-changing.",
+      "The online yoga sessions fit perfectly into my schedule, and my back has felt better than it has in a long time.",
     name: "Rahul T.",
     location: "Delhi",
     tag: "Yoga Therapy",
   },
   {
     quote:
-      "I was sceptical about drugless healthcare, but the nutrition plan completely reversed my pre-diabetes in six months.",
+      "I was sceptical about drugless healthcare, but six months on the nutrition plan and my blood-sugar numbers are the best they have been in years.",
     name: "Meena W.",
     location: "Shillong",
     tag: "Clinical Nutrition",
@@ -37,7 +37,7 @@ export function Testimonials() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Patient Stories
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", fontWeight: 700 }}>
+            <h2 className="v2-feature-title">
               Healing that speaks
               <br />
               <em style={{ color: "var(--gold-deep)" }}>for itself.</em>

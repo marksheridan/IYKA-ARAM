@@ -13,16 +13,12 @@ export function EventsSection() {
       <div className="v2-container">
         <div style={{ marginBottom: "3.5rem" }}>
           <Reveal>
-            <p className="v2-section-label" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+            <p className="v2-section-label v2-section-label-light" style={{ marginBottom: "1rem" }}>
               Community &amp; Events
             </p>
             <h2
-              style={{
-                fontSize: "clamp(2rem, 4.5vw, 3.2rem)",
-                color: "var(--cream)",
-                fontWeight: 700,
-                maxWidth: "26rem",
-              }}
+              className="v2-section-title"
+              style={{ color: "var(--cream)", maxWidth: "20ch" }}
             >
               Wellness beyond the clinic walls.
             </h2>

@@ -60,7 +60,7 @@ export default async function ConfirmedPage({
       <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gold-soft font-display text-3xl text-forest">
         ✓
       </div>
-      <h1 className="mt-6 font-display text-3xl text-forest">
+      <h1 className="mt-6 v2-page-title-compact text-forest">
         You&apos;re booked{patient ? `, ${patient.split(" ")[0]}` : ""}!
       </h1>
 

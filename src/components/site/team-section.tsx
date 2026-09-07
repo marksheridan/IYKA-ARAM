@@ -79,7 +79,7 @@ export function TeamSection() {
             <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
               The Practitioners
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 700 }}>
+            <h2 className="v2-section-title" style={{ color: "var(--cream)" }}>
               Guided by specialists,
               <br />
               <em style={{ color: "var(--gold-light)" }}>not generalists.</em>
@@ -103,7 +103,7 @@ export function TeamSection() {
                 )}
               </div>
               <div className="v2-team-info">
-                <h3 className="v2-team-name">{member.name}</h3>
+                <h3 className="v2-card-title-lg v2-team-name">{member.name}</h3>
                 <p className="v2-team-role">{member.role}</p>
                 {/* Not everyone has a second line yet; an empty <p> would still
                     take its margin and push the card taller than its row-mates. */}

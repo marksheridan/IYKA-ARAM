@@ -17,13 +17,13 @@ export function StoreTeaser() {
     <section
       id="store"
       className="v2-landing scroll-mt-20"
-      style={{ background: "var(--cream-deep)", paddingBlock: "clamp(3.5rem, 8vw, 6rem)" }}
+      style={{ background: "var(--cream-deep)", paddingBlock: "var(--section-py)" }}
     >
       <div className="v2-container">
         <Reveal className="st-banner">
           <div className="st-copy">
             <p className="st-badge">Online Store &middot; Coming Soon</p>
-            <h2 className="st-title">
+            <h2 className="v2-section-title-compact st-title">
               Shop IYKA Living —
               <br />
               <em>wellness you can hold.</em>

@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IYKA-ARAM — Unified Design System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,500;12..96,700&amp;family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+<style>
+@import "../src/app/design-tokens.css";
+
+:root{
+  --ds-rule:rgba(23,32,25,.14);
+  --ds-muted:var(--text-muted);
+}
+
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--dark);font-family:var(--font-body);
+  font-size:var(--fs-body);line-height:var(--lh-normal);-webkit-font-smoothing:antialiased}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.82em}
+a{color:var(--gold-deep)}
+
+/* ── Shell ── */
+.wrap{display:grid;grid-template-columns:16rem minmax(0,1fr);gap:0;max-width:96rem;margin-inline:auto}
+.side{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;color:var(--cream);
+  padding:2.5rem 1.5rem;border-right:1px solid rgba(221,183,101,.18);background:var(--dark)}
+.side h1{font-family:var(--font-display);font-size:1.05rem;font-weight:700;
+  line-height:var(--lh-snug);letter-spacing:var(--ls-heading);margin:0 0 .25rem}
+.side .ver{font-size:var(--fs-xs);color:rgba(251,248,241,.58);margin-bottom:2rem}
+.side nav a{display:block;padding:.34rem 0;font-size:var(--fs-sm);color:rgba(251,248,241,.72);
+  text-decoration:none;border-bottom:1px solid transparent;transition:var(--transition-base)}
+.side nav a:hover{color:var(--gold-light)}
+.side nav .grp{margin-top:1.4rem;font-size:var(--fs-label);font-weight:500;
+  letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--gold-light)}
+main{padding:3.5rem clamp(1.5rem,4vw,4rem) 8rem;min-width:0}
+
+/* ── Section furniture ── */
+section{margin-bottom:5rem;scroll-margin-top:2rem}
+.eyebrow{font-size:var(--fs-label);font-weight:500;letter-spacing:var(--ls-label);
+  text-transform:uppercase;color:var(--gold-deep);margin:0 0 .6rem}
+h2.sec{font-family:var(--font-display);font-size:clamp(1.7rem,3vw,2.3rem);font-weight:700;
+  line-height:var(--lh-tight);letter-spacing:var(--ls-heading);margin:0 0 .6rem}
+.note{max-width:46rem;color:var(--dark-soft);line-height:var(--lh-relaxed);margin:0 0 1.6rem}
+.rule{height:1px;background:var(--ds-rule);border:0;margin:0 0 2rem}
+
+/* ── Specimen + table ── */
+.spec{border:1px solid var(--ds-rule);border-radius:.6rem;overflow:hidden;margin-bottom:1.25rem;background:var(--surface)}
+.spec .demo{padding:2rem 1.75rem}
+.spec .demo.on-dark{background:var(--dark)}
+.spec .meta{display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;padding:.7rem 1.75rem;
+  border-top:1px solid var(--ds-rule);background:var(--cream-band);font-size:var(--fs-xs);color:var(--ds-muted)}
+.spec .meta b{color:var(--dark);font-weight:500}
+
+table{width:100%;border-collapse:collapse;font-size:var(--fs-sm);margin-bottom:1.5rem}
+th,td{text-align:left;padding:.6rem .8rem;border-bottom:1px solid var(--ds-rule);vertical-align:top}
+th{font-size:var(--fs-label);letter-spacing:var(--ls-caps);text-transform:uppercase;
+  color:var(--ds-muted);font-weight:500}
+td code{background:var(--cream-deep);padding:.12rem .34rem;border-radius:.25rem}
+.scroll{overflow-x:auto}
+
+/* ── Swatches ── */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:1rem;margin-bottom:1.5rem}
+.sw{border:1px solid var(--ds-rule);border-radius:.5rem;overflow:hidden;background:var(--surface)}
+.sw .chip{height:4.5rem}
+.sw .info{padding:.6rem .7rem;font-size:var(--fs-xs);line-height:1.5}
+.sw .info b{display:block;font-weight:500;font-size:var(--fs-sm)}
+.sw .info span{display:block;color:var(--ds-muted);font-family:ui-monospace,monospace}
+
+/* ── Palette in context ── */
+.palette-preview{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(16rem,.8fr);
+  min-height:30rem;overflow:hidden;border-radius:1rem;border:1px solid var(--ds-rule);
+  background:var(--surface);margin:0 0 2rem}
+.palette-preview-copy{position:relative;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:clamp(2rem,5vw,4rem);color:var(--cream);background:
+  radial-gradient(circle at 82% 18%,rgba(221,183,101,.16),transparent 30%),
+  linear-gradient(145deg,var(--green),var(--dark) 72%)}
+.palette-preview-copy::after{content:"";position:absolute;right:-4rem;bottom:-7rem;width:19rem;
+  height:19rem;border:1px solid rgba(221,183,101,.18);border-radius:50%;box-shadow:
+  0 0 0 2.4rem rgba(221,183,101,.035),0 0 0 5rem rgba(221,183,101,.025)}
+.palette-preview-copy>*{position:relative;z-index:1}
+.palette-preview-kicker{margin:0 0 1rem;font-size:var(--fs-label);font-weight:500;
+  letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--gold-light)}
+.palette-preview-title{max-width:35rem;margin:0;font-family:var(--font-display);
+  font-size:clamp(2.6rem,5vw,4.8rem);font-weight:700;line-height:.98;letter-spacing:-.025em}
+.palette-preview-title em{display:block;font-style:normal;color:var(--gold-light)}
+.palette-preview-lead{max-width:29rem;margin:1.4rem 0 2rem;color:rgba(251,248,241,.76);
+  font-size:1.05rem;line-height:1.65}
+.palette-preview-actions{display:flex;flex-wrap:wrap;gap:.75rem}
+.palette-preview-side{display:grid;grid-template-rows:1fr 1fr;background:var(--cream)}
+.palette-card{display:flex;flex-direction:column;justify-content:space-between;padding:2rem;
+  border-bottom:1px solid var(--border)}
+.palette-card:last-child{border-bottom:0;background:var(--green-pale)}
+.palette-card-icon{display:grid;place-items:center;width:2.6rem;height:2.6rem;border-radius:50%;
+  color:var(--cream);background:var(--green);font-size:1.1rem}
+.palette-card h3{margin:2rem 0 .45rem;font-family:var(--font-display);font-size:1.45rem;line-height:1.1}
+.palette-card p{margin:0;color:var(--text-muted);font-size:.88rem;line-height:1.6}
+.palette-card .meta-label{margin-top:1rem;color:var(--gold-deep)}
+
+/* ── Badges ── */
+.tag{display:inline-block;padding:.1rem .45rem;border-radius:.25rem;font-size:.68rem;
+  font-weight:600;letter-spacing:var(--ls-caps);text-transform:uppercase}
+.tag.pass{background:#DCEEDC;color:#245C24}
+.tag.large{background:#FBEBD0;color:#7A5310}
+.tag.fail{background:#F6DADA;color:#8A2020}
+
+/* ── Do / Don't ── */
+.dd{display:grid;grid-template-columns:repeat(auto-fit,minmax(19rem,1fr));gap:1rem;margin-bottom:1.5rem}
+.dd>div{border:1px solid var(--ds-rule);border-left-width:3px;border-radius:.5rem;padding:1rem 1.1rem;background:var(--surface)}
+.dd .do{border-left-color:#3F7A3F}
+.dd .dont{border-left-color:#B14A4A}
+.dd h4{margin:0 0 .5rem;font-size:var(--fs-sm);font-weight:600;letter-spacing:var(--ls-caps);text-transform:uppercase}
+.dd .do h4{color:#2F6B2F} .dd .dont h4{color:#993A3A}
+.dd pre{margin:.4rem 0 0;font-size:.76rem;white-space:pre-wrap;color:var(--dark-soft)}
+
+/* ── Live component demos ── */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;font-family:var(--font-body);
+  font-size:var(--fs-sm);font-weight:500;letter-spacing:var(--ls-wide);text-transform:uppercase;
+  cursor:pointer;transition:var(--transition-base);border:1px solid transparent;border-radius:9999px}
+.btn:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px;box-shadow:0 0 0 1px var(--cream)}
+.btn-gold{background:var(--gold);color:var(--dark);border-color:var(--gold)}
+.btn-gold:hover{background:var(--gold-light);border-color:var(--gold-light)}
+.btn-outline-cream{background:transparent;color:var(--cream);border-color:rgba(248,244,238,.4)}
+.btn-outline-cream:hover{background:rgba(248,244,238,.08);border-color:var(--cream)}
+.btn-outline-dark{background:transparent;color:var(--dark);border-color:rgba(27,25,22,.25)}
+.btn-outline-dark:hover{border-color:var(--dark)}
+
+.t-display{font-family:var(--font-display);font-size:var(--fs-display);font-weight:700;
+  line-height:var(--lh-display);letter-spacing:var(--ls-display);color:var(--cream);margin:0}
+.t-page{font-family:var(--font-display);font-size:var(--fs-page-title);font-weight:300;
+  line-height:1.05;color:var(--cream);margin:0}
+.t-feature{font-family:var(--font-display);font-size:var(--fs-feature);font-weight:700;
+  line-height:var(--lh-feature);letter-spacing:var(--ls-feature);margin:0}
+.t-h2{font-family:var(--font-display);font-size:var(--fs-h2);font-weight:700;
+  line-height:var(--lh-tight);letter-spacing:var(--ls-heading);margin:0}
+.t-h2c{font-family:var(--font-display);font-size:var(--fs-h2-compact);font-weight:700;
+  line-height:var(--lh-tight);letter-spacing:var(--ls-heading);margin:0}
+.t-h3{font-family:var(--font-display);font-size:var(--fs-h3);font-weight:700;
+  line-height:var(--lh-snug);letter-spacing:var(--ls-heading);margin:0}
+.t-lead{font-family:var(--font-body);font-size:var(--fs-lead);line-height:var(--lh-relaxed);
+  font-weight:400;margin:0;max-width:34rem}
+em.gold{font-style:normal;color:var(--gold-deep)}
+.on-dark em.gold{color:var(--gold-light)}
+.label{font-family:var(--font-body);font-size:var(--fs-label);font-weight:500;
+  letter-spacing:var(--ls-label);text-transform:uppercase;color:var(--gold-deep)}
+.label-light{color:var(--gold-light)}
+.meta-label{font-family:var(--font-body);font-size:.625rem;font-weight:600;
+  letter-spacing:var(--ls-caps);text-transform:uppercase}
+
+.hero-demo{position:relative;min-height:16rem;display:flex;align-items:flex-end;
+  overflow:hidden;border-radius:.4rem;background:var(--dark)}
+.hero-demo .scrim{position:absolute;inset:0}
+.hero-demo.dark .scrim{background:linear-gradient(to right,#0F2118 38%,rgba(15,33,24,.82) 60%,rgba(15,33,24,0) 82%)}
+.hero-demo.earth .scrim{background:linear-gradient(to right,#5C533D 38%,rgba(92,83,61,.82) 60%,rgba(92,83,61,0) 82%)}
+.hero-demo .glow{position:absolute;inset:0;background:
+  radial-gradient(ellipse 80% 60% at 60% 100%,rgba(202,156,61,.12),transparent),
+  radial-gradient(ellipse 50% 80% at 0% 0%,rgba(202,156,61,.08),transparent)}
+.hero-demo .body{position:relative;padding:2rem 1.75rem}
+.hero-demo .lead{margin:.7rem 0 0;font-size:var(--fs-lead);font-weight:300;
+  line-height:var(--lh-relaxed);color:rgba(248,244,238,.75);max-width:26rem}
+
+/* ── Unified system + operations specimens ── */
+.system-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-bottom:1.5rem}
+.system-card{min-height:14rem;padding:1.5rem;border:1px solid var(--ds-rule);border-radius:var(--radius-lg);
+  background:var(--surface);display:flex;flex-direction:column;justify-content:space-between}
+.system-card.site{color:var(--cream);border-color:transparent;background:var(--green)}
+.system-card.ops{font-family:var(--font-ui);background:var(--ops-background);color:var(--ops-text)}
+.system-card .system-kicker{font-size:var(--fs-label);font-weight:600;letter-spacing:var(--ls-caps);text-transform:uppercase;opacity:.7}
+.system-card h3{margin:.8rem 0 .45rem;font-family:var(--font-display);font-size:1.75rem;line-height:1.05}
+.system-card.ops h3{font-family:var(--font-ui);font-size:1.35rem;letter-spacing:-.02em}
+.system-card p{margin:0;max-width:31rem;font-size:.9rem;line-height:1.65;opacity:.78}
+.layer-flow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.75rem;margin-bottom:1.5rem}
+.layer{position:relative;padding:1rem;border:1px solid var(--ds-rule);border-radius:var(--radius-md);background:var(--surface)}
+.layer:not(:last-child)::after{content:"→";position:absolute;right:-.62rem;top:50%;z-index:1;transform:translateY(-50%);
+  width:1.25rem;height:1.25rem;border-radius:50%;display:grid;place-items:center;background:var(--gold-pale);color:var(--gold-deep);font-weight:700}
+.layer b{display:block;margin-bottom:.35rem;font-size:.78rem;letter-spacing:var(--ls-caps);text-transform:uppercase}
+.layer span{font-size:.83rem;line-height:1.5;color:var(--text-muted)}
+
+.ops-preview{padding:1.5rem;border-radius:var(--radius-lg);background:var(--ops-background);font-family:var(--font-ui);color:var(--ops-text)}
+.ops-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}
+.ops-card{display:flex;flex-direction:column;padding:1.15rem;border:1px solid var(--ops-border);border-radius:var(--radius-lg);background:var(--ops-surface);box-shadow:var(--shadow-sm)}
+.ops-card-label{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ops-text-muted)}
+.ops-value{margin:.55rem 0 .25rem;font-size:1.8rem;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.ops-sub{font-size:.75rem;color:var(--ops-text-soft)}
+.ops-row{display:flex;flex-wrap:wrap;align-items:center;gap:.65rem;margin-top:1rem}
+.ops-button{min-height:2.5rem;padding:.65rem 1rem;border:1px solid transparent;border-radius:var(--radius-md);
+  background:var(--ops-action);color:#fff;font:600 .85rem/1 var(--font-ui)}
+.ops-button.secondary{background:var(--ops-surface);border-color:var(--ops-border);color:var(--ops-text)}
+.ops-input{min-height:2.5rem;padding:.62rem .75rem;border:1px solid var(--ops-border);border-radius:var(--radius-md);
+  background:var(--ops-surface);color:var(--ops-text);font:400 .85rem/1.2 var(--font-ui)}
+.ops-input:focus{outline:2px solid var(--ops-focus-ring);outline-offset:2px}
+.status{display:inline-flex;align-items:center;min-height:1.55rem;padding:.25rem .55rem;border-radius:var(--radius-pill);font:600 .7rem/1 var(--font-ui)}
+.status.success{background:var(--ops-success-bg);color:var(--ops-success)}
+.status.warning{background:var(--ops-warning-bg);color:var(--ops-warning)}
+.status.danger{background:var(--ops-danger-bg);color:var(--ops-danger)}
+.ops-table{margin:1rem 0 0;background:var(--ops-surface);border:1px solid var(--ops-border);border-radius:var(--radius-lg);overflow:hidden}
+.ops-table table{margin:0;font-family:var(--font-ui)}
+.ops-table th{background:var(--ops-surface-subtle);color:var(--ops-text-muted)}
+.ops-table td{border-color:var(--ops-border-soft);color:var(--ops-text)}
+.ops-table td:nth-child(2){color:var(--ops-text-muted)}
+.token-file{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem .75rem;border-radius:var(--radius-md);
+  background:var(--green-pale);color:var(--green);font:600 .78rem/1.2 var(--font-mono)}
+
+@media(max-width:860px){
+  .wrap{grid-template-columns:1fr}
+  .side{position:sticky;top:0;z-index:20;height:auto;padding:1rem 1.25rem;
+    border-right:0;border-bottom:1px solid rgba(221,183,101,.18)}
+  .side h1{font-size:.95rem}
+  .side .ver{display:none}
+  .side nav{display:flex;gap:.45rem;overflow-x:auto;margin-top:.75rem;padding-bottom:.2rem;
+    scrollbar-width:none}
+  .side nav::-webkit-scrollbar{display:none}
+  .side nav .grp{display:none}
+  .side nav a{flex:0 0 auto;padding:.38rem .72rem;border:1px solid rgba(251,248,241,.14);
+    border-radius:9999px;font-size:.75rem;white-space:nowrap}
+  .palette-preview{grid-template-columns:1fr}
+  .palette-preview-side{grid-template-columns:1fr 1fr;grid-template-rows:auto}
+  .palette-card{border-bottom:0;border-right:1px solid var(--border)}
+  .palette-card:last-child{border-right:0}
+  .ops-grid{grid-template-columns:1fr}
+}
+@media(max-width:560px){
+  .system-map,.layer-flow{grid-template-columns:1fr}
+  .layer:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-.62rem;transform:translateX(-50%)}
+  .palette-preview-side{grid-template-columns:1fr}
+  .palette-card{border-right:0;border-bottom:1px solid var(--border)}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<aside class="side">
+  <h1>IYKA-ARAM<br />Design System</h1>
+  <p class="ver">Unified v3.0 · Website + clinical operations</p>
+  <nav>
+    <p class="grp">Foundations</p>
+    <a href="#about">How to use this</a>
+    <a href="#architecture">System architecture</a>
+    <a href="#colour">Colour</a>
+    <a href="#contrast">Contrast</a>
+    <a href="#fonts">Typefaces</a>
+    <a href="#scale">Type scale</a>
+    <a href="#rhythm">Line height &amp; tracking</a>
+    <a href="#layout">Layout &amp; spacing</a>
+    <a href="#motion">Motion</a>
+    <p class="grp">Components</p>
+    <a href="#labels">Labels</a>
+    <a href="#headings">Headings</a>
+    <a href="#buttons">Buttons</a>
+    <a href="#cta">Calls to action</a>
+    <a href="#rails">Swipe rails</a>
+    <a href="#pagehero">Page hero</a>
+    <a href="#credibility">Credibility</a>
+    <a href="#shared">Shared components</a>
+    <p class="grp">Operations</p>
+    <a href="#operations">Operations theme</a>
+    <a href="#ops-components">UI components</a>
+    <p class="grp">Practice</p>
+    <a href="#anatomy">Anatomy of a section</a>
+    <a href="#dodont">Do &amp; don't</a>
+    <a href="#governance">Governance</a>
+    <a href="#changelog">What changed</a>
+  </nav>
+</aside>
+
+<main>
+
+<!-- ══════════════════ ABOUT ══════════════════ -->
+<section id="about">
+  <p class="eyebrow">Start here</p>
+  <h2 class="sec">How to use this document</h2>
+  <p class="note">
+    This is the single design reference for IYKA-ARAM. Shared foundations govern
+    every product; semantic themes adapt them for the expressive wellness website
+    and the information-dense clinical operations interface.
+  </p>
+  <div class="dd">
+    <div class="do">
+      <h4>Source of truth</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        <span class="token-file">src/app/design-tokens.css</span> is canonical and
+        this guide imports it directly. <code>globals.css</code> maps those values
+        into Tailwind and holds component styles.
+      </p>
+    </div>
+    <div class="dont">
+      <h4>Two themes, not two systems</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        The website uses botanical colour and expressive display type. MIS and
+        <code>/admin</code> use neutral surfaces, blue actions and Inter. Both share
+        spacing, radii, elevation, motion, accessibility and status meaning.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ ARCHITECTURE ══════════════════ -->
+<section id="architecture">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">One system, two semantic themes</h2>
+  <p class="note">The brand should feel related everywhere without making a patient table look like a campaign page.</p>
+  <div class="system-map">
+    <article class="system-card site">
+      <div><span class="system-kicker">Public website + store</span><h3>Calm, human and restorative</h3></div>
+      <p>Bricolage Grotesque creates warmth and distinction; DM Sans keeps longer reading effortless. Forest is the anchor and gold is controlled emphasis.</p>
+    </article>
+    <article class="system-card ops">
+      <div><span class="system-kicker">MIS + admin</span><h3>Clear, compact and dependable</h3></div>
+      <p>Inter supports scanning, neutral surfaces reduce noise, and clinical blue signals actions. Status colours carry meaning, never decoration.</p>
+    </article>
+  </div>
+  <div class="layer-flow" aria-label="Token architecture">
+    <div class="layer"><b>1 · Primitives</b><span><code>--iyka-forest-800</code><br />Raw brand, neutral and status values.</span></div>
+    <div class="layer"><b>2 · Semantics</b><span><code>--green</code> or <code>--ops-action</code><br />Stable roles that express each surface.</span></div>
+    <div class="layer"><b>3 · Components</b><span><code>.v2-btn</code> or <code>.mis-card</code><br />Reusable patterns consume roles only.</span></div>
+  </div>
+  <p class="note" style="margin-bottom:0"><b>Rule:</b> components never reach past semantics to a primitive colour. This makes a theme adjustable without hunting through JSX.</p>
+</section>
+
+<!-- ══════════════════ COLOUR ══════════════════ -->
+<section id="colour">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Colour</h2>
+  <p class="note">
+    The refreshed palette balances clinical confidence with natural warmth. Forest is
+    the brand anchor, ivory gives the page room to breathe, gold directs attention,
+    sage softens supporting surfaces, and clay is reserved for human or editorial accents.
+  </p>
+
+  <div class="palette-preview" aria-label="IYKA-ARAM palette applied to a sample wellness interface">
+    <div class="palette-preview-copy">
+      <p class="palette-preview-kicker">Shillong · Clinical wellness</p>
+      <p class="palette-preview-title">Care that sees the <em>whole person.</em></p>
+      <p class="palette-preview-lead">Evidence-informed functional medicine, naturopathy and therapeutic yoga in a calmer, more credible visual language.</p>
+      <div class="palette-preview-actions">
+        <button class="btn btn-gold">Book a consultation</button>
+        <button class="btn btn-outline-cream">Explore therapies</button>
+      </div>
+    </div>
+    <div class="palette-preview-side">
+      <article class="palette-card">
+        <span class="palette-card-icon" aria-hidden="true">✦</span>
+        <div><p class="meta-label">Signature care</p><h3>Functional Medicine</h3>
+          <p>Root-cause guidance with a considered, personal treatment path.</p></div>
+      </article>
+      <article class="palette-card">
+        <span class="palette-card-icon" aria-hidden="true">○</span>
+        <div><p class="meta-label">Restorative</p><h3>Therapeutic Yoga</h3>
+          <p>Movement and breath practices adapted to your needs and pace.</p></div>
+      </article>
+    </div>
+  </div>
+
+  <p class="label" style="margin-bottom:.7rem">Ivory &amp; sand — page grounds</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#FBF8F1;border-bottom:1px solid var(--ds-rule)"></div>
+      <div class="info"><b>--cream</b><span>#FBF8F1</span>Default page canvas</div></div>
+    <div class="sw"><div class="chip" style="background:#FFFDF8;border-bottom:1px solid var(--ds-rule)"></div>
+      <div class="info"><b>--surface</b><span>#FFFDF8</span>Cards and raised surfaces</div></div>
+    <div class="sw"><div class="chip" style="background:#F3EDDF"></div>
+      <div class="info"><b>--cream-deep</b><span>#F3EDDF</span>Alternating section band</div></div>
+    <div class="sw"><div class="chip" style="background:#E5D8C5"></div>
+      <div class="info"><b>--iyka-sand-200</b><span>#E5D8C5</span>Borders and quiet dividers</div></div>
+  </div>
+
+  <p class="label" style="margin-bottom:.7rem">Forest &amp; ink — trust and depth</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#0F2118"></div>
+      <div class="info"><b>--dark</b><span>#0F2118</span>Dark bands and navigation</div></div>
+    <div class="sw"><div class="chip" style="background:#172019"></div>
+      <div class="info"><b>--foreground</b><span>#172019</span>Primary text on light grounds</div></div>
+    <div class="sw"><div class="chip" style="background:#183D2B"></div>
+      <div class="info"><b>--green</b><span>#183D2B</span>Primary botanical brand colour</div></div>
+    <div class="sw"><div class="chip" style="background:#2B5A40"></div>
+      <div class="info"><b>--green-mid</b><span>#2B5A40</span>Interactive and supporting green</div></div>
+  </div>
+
+  <p class="label" style="margin-bottom:.7rem">Gold — accent</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#CA9C3D"></div>
+      <div class="info"><b>--gold</b><span>#CA9C3D</span>Primary buttons and rules</div></div>
+    <div class="sw"><div class="chip" style="background:#DDB765"></div>
+      <div class="info"><b>--gold-light</b><span>#DDB765</span>Text and detail on dark</div></div>
+    <div class="sw"><div class="chip" style="background:#785314"></div>
+      <div class="info"><b>--gold-deep</b><span>#785314</span>Accessible accent text on ivory</div></div>
+    <div class="sw"><div class="chip" style="background:#F3E2B8"></div>
+      <div class="info"><b>--gold-pale</b><span>#F3E2B8</span>Soft highlights and hairlines</div></div>
+  </div>
+
+  <p class="label" style="margin-bottom:.7rem">Sage &amp; clay — supporting accents</p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:#809A78"></div>
+      <div class="info"><b>--sage</b><span>#809A78</span>Decorative only; not body text</div></div>
+    <div class="sw"><div class="chip" style="background:#E7EEE3"></div>
+      <div class="info"><b>--green-pale</b><span>#E7EEE3</span>Quiet wellness surface</div></div>
+    <div class="sw"><div class="chip" style="background:#A75F42"></div>
+      <div class="info"><b>--clay</b><span>#A75F42</span>Human warmth, editorial accent</div></div>
+    <div class="sw"><div class="chip" style="background:#F3E1D7"></div>
+      <div class="info"><b>--clay-pale</b><span>#F3E1D7</span>Story and testimonial tint</div></div>
+  </div>
+
+  <p class="label" style="margin:2rem 0 .7rem">Semantic roles — use these first</p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Token</th><th>Role</th><th>Typical use</th></tr></thead>
+      <tbody>
+        <tr><td><code>--background</code></td><td>Page canvas</td><td>Body and quiet sections</td></tr>
+        <tr><td><code>--surface</code></td><td>Raised light surface</td><td>Cards, dialogs, form panels</td></tr>
+        <tr><td><code>--foreground</code></td><td>Primary light-ground text</td><td>Headings and body copy</td></tr>
+        <tr><td><code>--text-muted</code></td><td>Accessible secondary text</td><td>Supporting copy, metadata</td></tr>
+        <tr><td><code>--dark</code></td><td>Deep immersive ground</td><td>Navigation, footer, hero and CTA bands</td></tr>
+        <tr><td><code>--green</code></td><td>Brand ground</td><td>Feature bands, active states</td></tr>
+        <tr><td><code>--gold</code></td><td>Primary action</td><td>Filled buttons, rules, selected controls</td></tr>
+        <tr><td><code>--gold-deep</code></td><td>Light-ground accent text</td><td>Eyebrows, links, small labels</td></tr>
+        <tr><td><code>--clay</code></td><td>Human editorial accent</td><td>Stories, community and journal highlights</td></tr>
+        <tr><td><code>--focus-ring</code></td><td>Keyboard focus</td><td>All interactive components</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════ CONTRAST ══════════════════ -->
+<section id="contrast">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Contrast</h2>
+  <p class="note">
+    Measured, not estimated. <b>The rule worth memorising: colour follows a
+    semantic role, not personal taste.</b> Use <code>--gold-deep</code> and
+    <code>--clay</code> for accent text on ivory, <code>--gold-light</code> on dark,
+    and keep <code>--sage</code> decorative rather than using it for small copy.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Foreground</th><th>Background</th><th>Ratio</th><th>Verdict</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>--foreground</code></td><td><code>--cream</code></td><td>15.75:1</td><td><span class="tag pass">AAA</span></td><td>Primary body text</td></tr>
+      <tr><td><code>--cream</code></td><td><code>--dark</code></td><td>15.83:1</td><td><span class="tag pass">AAA</span></td><td>Primary copy on dark bands</td></tr>
+      <tr><td><code>--cream</code></td><td><code>--green</code></td><td>11.37:1</td><td><span class="tag pass">AAA</span></td><td>Copy on brand forest</td></tr>
+      <tr><td><code>--gold-light</code></td><td><code>--dark</code></td><td>8.82:1</td><td><span class="tag pass">AAA</span></td><td>Labels on dark</td></tr>
+      <tr><td><code>--gold</code></td><td><code>--green</code></td><td>4.79:1</td><td><span class="tag pass">AA</span></td><td>Accent text on forest</td></tr>
+      <tr><td><code>--gold-deep</code></td><td><code>--cream</code></td><td>6.50:1</td><td><span class="tag pass">AA</span></td><td>Accent text on ivory</td></tr>
+      <tr><td><code>--text-muted</code></td><td><code>--cream</code></td><td>4.77:1</td><td><span class="tag pass">AA</span></td><td>Secondary body copy</td></tr>
+      <tr><td><code>--clay</code></td><td><code>--cream</code></td><td>4.54:1</td><td><span class="tag pass">AA</span></td><td>Editorial accent text</td></tr>
+      <tr><td><code>--sage</code></td><td><code>--cream</code></td><td>2.91:1</td><td><span class="tag fail">Fails</span></td><td>Surfaces and decoration only</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    Gold buttons use dark forest text, not white. On light surfaces, gold should
+    appear as a border, icon, rule or large fill; small text always switches to
+    <code>--gold-deep</code>. Focus indicators use <code>--focus-ring</code> with a
+    light offset so controls remain visible on both ivory and gold.
+  </p>
+</section>
+
+<!-- ══════════════════ FONTS ══════════════════ -->
+<section id="fonts">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Typefaces</h2>
+  <p class="note">
+    The system has three deliberate roles. Bricolage Grotesque and DM Sans shape
+    the public brand; Inter is the compact UI face for MIS and admin. Do not mix
+    display typography into clinical data screens.
+  </p>
+  <div class="spec">
+    <div class="demo">
+      <p style="font-family:var(--font-display);font-size:2.4rem;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin:0">
+        Bricolage Grotesque
+      </p>
+      <p style="font-family:var(--font-display);font-size:1.1rem;font-weight:300;margin:.5rem 0 0;color:var(--dark-soft)">
+        Headings only — weights 300 and 700.
+      </p>
+    </div>
+    <div class="meta">
+      <span><b>Token</b> --font-display</span><span><b>Weights</b> 300, 400, 500, 700</span>
+      <span><b>Note</b> ships no true italic — see below</span>
+    </div>
+  </div>
+  <div class="spec">
+    <div class="demo">
+      <p style="font-family:var(--font-body);font-size:1.6rem;font-weight:400;margin:0">DM Sans</p>
+      <p style="font-family:var(--font-body);font-size:1rem;margin:.5rem 0 0;color:var(--dark-soft)">
+        Body copy, labels, buttons, UI. Has a real italic: <em>like this</em>.
+      </p>
+    </div>
+    <div class="meta"><span><b>Token</b> --font-body</span><span><b>Weights</b> 300–600</span></div>
+  </div>
+  <div class="dd">
+    <div class="dont">
+      <h4>Never italicise a heading</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        Bricolage has no italic, so the browser synthesises a slanted fake.
+        <code>globals.css</code> already sets <code>font-style:normal</code> on
+        <code>h1/h2/h3 em</code>. Carry emphasis in <b>gold</b> instead.
+      </p>
+    </div>
+    <div class="do">
+      <h4>Emphasis pattern</h4>
+      <p style="margin:0 0 .4rem;font-size:.9rem">Wrap the emphasised clause in <code>&lt;em&gt;</code>:</p>
+      <p class="t-h3" style="margin:0">Real people. Real clinic.<br /><em class="gold">Real healing.</em></p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ SCALE ══════════════════ -->
+<section id="scale">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Type scale</h2>
+  <p class="note">
+    Every heading on the site is one of five tiers. All are fluid
+    <code>clamp()</code> values, so they respond to viewport without breakpoints —
+    resize this window to watch them move. Pick by <b>job</b>, never by how big you
+    want it to look.
+  </p>
+
+  <div class="spec">
+    <div class="demo on-dark"><p class="t-display">Healing, <em class="gold">reimagined.</em></p></div>
+    <div class="meta"><span><b>--fs-display</b></span><span>clamp(2.6rem, 6.5vw, 5rem)</span>
+      <span><b>Weight</b> 700</span><span><b>LH</b> .98</span><span><b>Job</b> Landing hero h1 — one per site</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo on-dark"><p class="t-page">The Wellness Podcast</p></div>
+    <div class="meta"><span><b>--fs-page-title</b></span><span>clamp(3rem, 7vw, 5.5rem)</span>
+      <span><b>Weight</b> 300</span><span><b>LH</b> 1.05</span><span><b>Job</b> Inner-page hero h1</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo"><p class="t-feature">The 5 Pillars of<br /><em class="gold">Iyka-Aram.</em></p></div>
+    <div class="meta"><span><b>--fs-feature</b></span><span>clamp(2.2rem, 5.5vw, 4rem)</span>
+      <span><b>Weight</b> 700</span><span><b>LH</b> 1.02</span><span><b>Job</b> Big band headings &amp; centred statements</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo"><p class="t-h2">A different kind of <em class="gold">care.</em></p></div>
+    <div class="meta"><span><b>--fs-h2</b></span><span>clamp(2rem, 4.5vw, 3.2rem)</span>
+      <span><b>Weight</b> 700</span><span><b>LH</b> 1.1</span><span><b>Job</b> Default section title — use this one</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo"><p class="t-h2c">Rooted in Shillong,<br /><em class="gold">healing beyond borders.</em></p></div>
+    <div class="meta"><span><b>--fs-h2-compact</b></span><span>clamp(1.8rem, 3.5vw, 2.6rem)</span>
+      <span><b>Weight</b> 700</span><span><b>LH</b> 1.1</span><span><b>Job</b> Section title in a narrow column or dialog</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo"><p class="t-h3">Functional Medicine</p></div>
+    <div class="meta"><span><b>--fs-h3</b></span><span>clamp(1.35rem, 2.2vw, 1.75rem)</span>
+      <span><b>Weight</b> 700</span><span><b>LH</b> 1.3</span><span><b>Job</b> Card and sub-section titles</span></div>
+  </div>
+
+  <div class="dd">
+    <div class="do"><h4>Do — measure headings in <code>ch</code></h4>
+      <pre>max-width: 18ch;   /* ~2 lines, any tier */</pre>
+      <p style="margin:.5rem 0 0;font-size:.9rem;line-height:1.6">
+        <code>ch</code> scales with font-size, so the line length holds when a
+        heading moves tier or the viewport changes it. Aim for 18–22ch on
+        display headings.
+      </p></div>
+    <div class="dont"><h4>Don't — measure them in <code>rem</code></h4>
+      <pre>max-width: 22rem;  /* blind to the type */</pre>
+      <p style="margin:.5rem 0 0;font-size:.9rem;line-height:1.6">
+        A rem measure cannot see the type it holds. <code>.sv-title</code> sat
+        at 22rem; when it moved up to the feature tier (max 4rem) the same
+        measure broke a six-word headline onto <b>five</b> lines with the band
+        two-thirds empty.
+      </p></div>
+  </div>
+
+  <p class="label" style="margin:2rem 0 .7rem">Body &amp; supporting sizes</p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th>Job</th></tr></thead>
+    <tbody>
+      <tr><td><code>--fs-h4</code></td><td>1.125rem</td><td>Small headings, list leads</td></tr>
+      <tr><td><code>--fs-lead</code></td><td>1.05rem</td><td>Standfirst under a section title</td></tr>
+      <tr><td><code>--fs-body</code></td><td>1rem</td><td>Default paragraph</td></tr>
+      <tr><td><code>--fs-sm</code></td><td>0.875rem</td><td>Buttons, captions, secondary UI</td></tr>
+      <tr><td><code>--fs-xs</code></td><td>0.75rem</td><td>Fine print, filter tabs</td></tr>
+      <tr><td><code>--fs-label</code></td><td>0.7rem</td><td>Section eyebrow</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══════════════════ RHYTHM ══════════════════ -->
+<section id="rhythm">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Line height &amp; tracking</h2>
+  <p class="note">
+    Line height tightens as type grows — display sizes sit below 1, body prose runs
+    generous at 1.7. Tracking moves the opposite way: large type negative, uppercase
+    micro-type wide.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th>Applies to</th></tr></thead>
+    <tbody>
+      <tr><td><code>--lh-display</code></td><td>0.98</td><td>Landing hero</td></tr>
+      <tr><td><code>--lh-feature</code></td><td>1.02</td><td>Feature bands</td></tr>
+      <tr><td><code>--lh-tight</code></td><td>1.1</td><td>All h1–h3</td></tr>
+      <tr><td><code>--lh-snug</code></td><td>1.3</td><td>Card titles, captions</td></tr>
+      <tr><td><code>--lh-normal</code></td><td>1.5</td><td>UI text</td></tr>
+      <tr><td><code>--lh-relaxed</code></td><td>1.7</td><td>Body prose, standfirsts</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th>Applies to</th></tr></thead>
+    <tbody>
+      <tr><td><code>--ls-display</code></td><td>-0.025em</td><td>Landing hero</td></tr>
+      <tr><td><code>--ls-feature</code></td><td>-0.02em</td><td>Feature bands</td></tr>
+      <tr><td><code>--ls-heading</code></td><td>-0.01em</td><td>All other headings</td></tr>
+      <tr><td><code>--ls-normal</code></td><td>0</td><td>Body</td></tr>
+      <tr><td><code>--ls-wide</code></td><td>0.08em</td><td>Buttons</td></tr>
+      <tr><td><code>--ls-caps</code></td><td>0.12em</td><td>Meta chips, tabs, credential lines</td></tr>
+      <tr><td><code>--ls-label</code></td><td>0.2em</td><td>Section eyebrow only</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══════════════════ LAYOUT ══════════════════ -->
+<section id="layout">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Layout &amp; spacing</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Shared token</th><th>Value</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>--space-1</code> → <code>--space-6</code></td><td>4, 8, 12, 16, 20, 24px</td><td>Control padding and compact UI gaps</td></tr>
+      <tr><td><code>--space-8</code> → <code>--space-16</code></td><td>32, 40, 48, 64px</td><td>Cards, grids and content groups</td></tr>
+      <tr><td><code>--space-20</code> → <code>--space-24</code></td><td>80, 96px</td><td>Large page regions only</td></tr>
+      <tr><td><code>--radius-sm</code> → <code>--radius-xl</code></td><td>6, 10, 16, 20px</td><td>Controls, cards, dialogs and feature panels</td></tr>
+      <tr><td><code>--shadow-sm</code> → <code>--shadow-lg</code></td><td>3 elevations</td><td>Hierarchy, never decoration</td></tr>
+    </tbody>
+  </table>
+  <table>
+    <thead><tr><th>Helper</th><th>Value</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>.v2-container</code></td><td>width: min(90rem, 100% − 3rem); margin-inline: auto</td>
+        <td>Every section's inner wrapper. Never hand-roll this.</td></tr>
+      <tr><td><code>.v2-section-py</code></td><td>padding-block: clamp(4rem, 10vw, 8rem)</td>
+        <td>Standard section rhythm.</td></tr>
+      <tr><td><code>--section-py</code></td><td>clamp(4rem, 10vw, 8rem)</td>
+        <td>Same value as a token, when you need it inline.</td></tr>
+      <tr><td><code>.v2-gold-line</code></td><td>3rem × 1px, <code>--gold</code></td>
+        <td>Short rule under a label or between blocks.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    A denser band (a listing grid rather than a marketing section) may use
+    <code>clamp(3.5rem, 8vw, 6rem)</code>. That is the only sanctioned exception.
+  </p>
+</section>
+
+<!-- ══════════════════ MOTION ══════════════════ -->
+<section id="motion">
+  <p class="eyebrow">Foundations</p>
+  <h2 class="sec">Motion</h2>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Token / class</th><th>Value</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><code>--ease-out-expo</code></td><td>cubic-bezier(.16, 1, .3, 1)</td><td>The house easing curve</td></tr>
+      <tr><td><code>--transition-base</code></td><td>.35s var(--ease-out-expo)</td><td>Hovers, colour and transform changes</td></tr>
+      <tr><td><code>&lt;Reveal&gt;</code></td><td>IntersectionObserver</td><td>Scroll-triggered entrance, below the fold</td></tr>
+      <tr><td><code>.v2-reveal</code> / <code>-1</code>…<code>-5</code></td><td>staggered 0.1s steps</td><td>Above-the-fold entrance on mount</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note">
+    Everything animated must survive <code>prefers-reduced-motion: reduce</code>;
+    <code>globals.css</code> already disables the fade-up keyframes under it.
+  </p>
+  <div class="dd">
+    <div class="do"><h4>Do — one-shot entrances</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        <code>&lt;Reveal&gt;</code> and <code>.v2-reveal</code> play once and
+        stop. Hover transforms are fine — the visitor asked for them.
+      </p></div>
+    <div class="dont"><h4>Don't — add a looping animation</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        The homepage carried five at once: a 3.5s hero text rotation, a 28s
+        marquee, a 60s quote marquee and two gallery rows at 55s/65s. A
+        wellness site should read calm. Two loops remain by choice: the
+        modality strip under the hero, and the 3s scroll cue.
+      </p></div>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    A row of content that does not fit is a <a href="#rails">swipe rail</a>,
+    not a marquee.
+  </p>
+</section>
+
+<!-- ══════════════════ LABELS ══════════════════ -->
+<section id="labels">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Labels</h2>
+  <p class="note">
+    Three different jobs that used to be confused with one another. A section eyebrow
+    is <b>always</b> paired with a heading directly beneath it; a meta label never is.
+  </p>
+
+  <div class="spec">
+    <div class="demo">
+      <p class="label" style="margin:0 0 .6rem">Patient Stories</p>
+      <p class="t-h2" style="margin:0">Healing that speaks<br /><em class="gold">for itself.</em></p>
+    </div>
+    <div class="meta"><span><b>.v2-section-label</b></span><span>0.7rem / 500 / 0.2em / uppercase</span>
+      <span><b>Colour</b> --gold-deep</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo on-dark">
+      <p class="label label-light" style="margin:0 0 .6rem">Start Your Journey</p>
+      <p class="t-h2" style="margin:0;color:var(--cream)">Because we don't<br /><em class="gold">treat symptoms.</em></p>
+    </div>
+    <div class="meta"><span><b>.v2-section-label.v2-section-label-light</b></span>
+      <span><b>Colour</b> --gold-light</span><span><b>Use</b> on any dark band</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo">
+      <span class="meta-label" style="color:var(--gold-deep)">Yoga &amp; Wellness</span>
+    </div>
+    <div class="meta"><span><b>.v2-meta-label</b></span><span>0.625rem / 600 / 0.12em / uppercase</span>
+      <span><b>Use</b> card categories and tags</span></div>
+  </div>
+</section>
+
+<!-- ══════════════════ HEADINGS ══════════════════ -->
+<section id="headings">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Heading classes</h2>
+  <p class="note">
+    Apply one of these classes and set only <b>colour</b> and <b>margin</b> at the
+    call site. Font, size, weight, line height and tracking all come from the class.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Class</th><th>Tier</th><th>Where it is used</th></tr></thead>
+    <tbody>
+      <tr><td><code>.v2-section-title</code></td><td><code>--fs-h2</code></td>
+        <td>Mission, services, team, products, booking, contact, podcast, events, testimonials</td></tr>
+      <tr><td><code>.v2-section-title-compact</code></td><td><code>--fs-h2-compact</code></td>
+        <td>Location (narrow column), store teaser, podcast overlay</td></tr>
+      <tr><td><code>.v2-feature-title</code></td><td><code>--fs-feature</code></td>
+        <td>Pillars, moving gallery, services rail, CTA, video testimonials</td></tr>
+      <tr><td><code>.v2-page-hero-title</code></td><td><code>--fs-page-title</code></td>
+        <td>Set by <code>&lt;PageHero&gt;</code> — do not apply by hand</td></tr>
+      <tr><td><code>.v2-hero-title</code></td><td><code>--fs-display</code></td>
+        <td>Landing hero only</td></tr>
+      <tr><td><code>.v2-page-title-compact</code></td><td><code>--fs-h2-compact</code></td>
+        <td>Utility / flow page h1 — booking steps, article pages, about, products.
+        Replaced a parallel Tailwind scale (<code>text-3xl</code> / <code>text-2xl</code>).</td></tr>
+      <tr><td><code>.v2-card-title</code></td><td><code>--fs-h4</code></td>
+        <td>Blog post cards, booking service/class cards. Unified a
+        <code>text-lg</code> / <code>text-xl</code> drift.</td></tr>
+      <tr><td><code>.v2-card-title-lg</code></td><td><code>--fs-h3</code></td>
+        <td>Prominent card titles — booking cards, mission pillars, pillar names,
+        team names. Folded in six sizes between 1.1–1.5rem whose weights split
+        400/700 at random.</td></tr>
+      <tr><td><code>.v2-panel-title</code></td><td><code>--fs-sm</code></td>
+        <td>A real <code>h2</code> inside a form or panel, sized as UI text.
+        Was <code>text-sm</code> scattered through the booking flow.</td></tr>
+      <tr><td><code>.v2-lead</code></td><td><code>--fs-lead</code></td>
+        <td>Standfirst paragraph under any section title</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══════════════════ BUTTONS ══════════════════ -->
+<section id="buttons">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Buttons</h2>
+  <p class="note">
+    Pill buttons, uppercase, <code>--fs-sm</code> at <code>--ls-wide</code>. Gold is
+    the primary action; outlines are secondary and come in a cream and a dark variant
+    depending on the band behind them.
+  </p>
+  <div class="spec">
+    <div class="demo" style="display:flex;gap:.8rem;flex-wrap:wrap">
+      <button class="btn btn-gold">Book a consult</button>
+      <button class="btn btn-outline-dark">Explore services</button>
+    </div>
+    <div class="meta"><span><b>.v2-btn.v2-btn-gold</b></span><span><b>.v2-btn.v2-btn-outline-dark</b></span>
+      <span><b>On</b> cream grounds</span></div>
+  </div>
+  <div class="spec">
+    <div class="demo on-dark" style="display:flex;gap:.8rem;flex-wrap:wrap">
+      <button class="btn btn-gold">Book a consult</button>
+      <button class="btn btn-outline-cream">Listen to the podcast</button>
+    </div>
+    <div class="meta"><span><b>.v2-btn.v2-btn-gold</b></span><span><b>.v2-btn.v2-btn-outline-cream</b></span>
+      <span><b>On</b> dark bands</span></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ CTA ══════════════════ -->
+<section id="cta">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Calls to action</h2>
+  <p class="note">
+    <b>One primary action, site-wide: “Book a consultation.”</b> There were
+    seven competing labels — Book Now, Book a Consultation, Book Visit, Book
+    Online, Join Class, Book a Free Call and Book / Enquire — which made the
+    site feel like it wanted several different things from the visitor.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Where</th><th>Label</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Header, hero, founder, closing CTA, gallery, services</td>
+        <td><b>Book a consultation</b></td><td>The single primary action</td></tr>
+      <tr><td>Booking section cards</td>
+        <td>Book a visit / Book a consultation / Book a class</td>
+        <td>This section <i>is</i> the type chooser — the card names the type, so
+        the three stay distinct but parallel in grammar</td></tr>
+      <tr><td>Post-booking</td><td>Book another</td><td>A genuinely different action</td></tr>
+      <tr><td>Per-slot in a class list</td><td>Book seat</td><td>Selects one listed slot, not a new booking</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    <code>&lt;BookButton&gt;</code> defaults to “Book a consultation” — pass
+    children only when the context genuinely needs a different action.
+  </p>
+</section>
+
+<!-- ══════════════════ RAILS ══════════════════ -->
+<section id="rails">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Swipe rails</h2>
+  <p class="note">
+    A row of cards wider than the page. Still by default; the visitor scrolls
+    or swipes and cards snap. Add <code>.v2-rail-scroll</code> to the
+    scrolling element and a <code>.v2-rail-cue</code> beneath it.
+  </p>
+  <div class="spec">
+    <div class="demo" style="background:var(--cream-deep)">
+<pre style="margin:0;font-size:.8rem;line-height:1.7;overflow-x:auto"><code>&lt;div className="mg-row v2-rail-scroll"&gt;
+  &lt;div className="mg-track"&gt;{/* cards, each scroll-snap-align: start */}&lt;/div&gt;
+&lt;/div&gt;
+&lt;p className="v2-rail-cue"&gt;{/* arrow */} Swipe for more&lt;/p&gt;</code></pre>
+    </div>
+    <div class="meta">
+      <span><b>Snap</b> x mandatory</span>
+      <span><b>Scrollbar</b> hidden</span>
+      <span><b>Cue</b> shows below 900px only</span>
+    </div>
+  </div>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Rail</th><th>Was</th><th>Now</th></tr></thead>
+    <tbody>
+      <tr><td>Hero modality strip</td><td>28s marquee, half the list off-screen</td>
+        <td>Still, wrapping — every modality visible at once</td></tr>
+      <tr><td>Patient quotes</td><td>60s marquee behind a both-edges mask</td>
+        <td>Swipe rail, no mask, first card on the page measure</td></tr>
+      <tr><td>Community gallery</td><td>Two rows, opposite directions, 55s / 65s</td>
+        <td>One swipe rail</td></tr>
+      <tr><td>Services rail</td><td>—</td>
+        <td>Unchanged. Already falls back to native snap + dots on touch and
+        below 640px, and under reduced-motion.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    Cards no longer need duplicating. The old marquees rendered each array
+    twice (with the copy <code>aria-hidden</code>) purely to hide the loop
+    seam — a still rail has no seam.
+  </p>
+</section>
+
+<!-- ══════════════════ PAGE HERO ══════════════════ -->
+<section id="pagehero">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Page hero</h2>
+  <p class="note">
+    The banner that opens <code>/podcast</code>, <code>/blog</code> and
+    <code>/gallery</code>. All three used to be hand-written and had drifted apart —
+    two containers, three glow opacities, two lead widths and two title weights. It
+    is now one component, <code>&lt;PageHero&gt;</code>.
+  </p>
+
+  <div class="spec">
+    <div class="demo" style="padding:0">
+      <div class="hero-demo dark">
+        <div class="scrim"></div><div class="glow"></div>
+        <div class="body">
+          <p class="label label-light" style="margin:0 0 .5rem">Conversations on healing</p>
+          <p class="t-page" style="font-size:clamp(2rem,4vw,3rem)">The Wellness Podcast</p>
+          <p class="lead">Long-form conversations with doctors, therapists and teachers.</p>
+        </div>
+      </div>
+    </div>
+    <div class="meta"><span><b>tint</b> "dark"</span><span><b>Used by</b> /podcast</span></div>
+  </div>
+
+  <div class="spec">
+    <div class="demo" style="padding:0">
+      <div class="hero-demo earth">
+        <div class="scrim"></div><div class="glow"></div>
+        <div class="body">
+          <p class="label label-light" style="margin:0 0 .5rem">Iyka-Aram Wellness</p>
+          <p class="t-page" style="font-size:clamp(2rem,4vw,3rem)">Wellness Journal</p>
+          <p class="lead">Insights on functional medicine, yoga, nutrition and holistic living.</p>
+        </div>
+      </div>
+    </div>
+    <div class="meta"><span><b>tint</b> "earth"</span><span><b>Used by</b> /blog, /gallery</span></div>
+  </div>
+
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Prop</th><th>Type</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>eyebrow</code></td><td>ReactNode</td><td>Required. Renders as the light section label.</td></tr>
+      <tr><td><code>title</code></td><td>ReactNode</td><td>Required. The <code>h1</code>.</td></tr>
+      <tr><td><code>lead</code></td><td>ReactNode</td><td>Optional standfirst.</td></tr>
+      <tr><td><code>image</code></td><td>string</td><td>Decorative; never announced to screen readers.</td></tr>
+      <tr><td><code>tint</code></td><td>"dark" | "earth"</td><td>Defaults to "dark". "earth" is the warm editorial tint (#5C533D) — a deliberate counterpoint to the cool forest bands; title 7.17:1, lead 4.89:1.</td></tr>
+      <tr><td><code>vignette</code></td><td>boolean</td><td>Bottom scrim for busy photographs.</td></tr>
+      <tr><td><code>reveal</code></td><td>boolean</td><td>Staggered entrance animation.</td></tr>
+      <tr><td><code>containerClassName</code></td><td>string</td><td>Defaults to <code>v2-container</code>.</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══════════════════ SHARED ══════════════════ -->
+<section id="shared">
+  <p class="eyebrow">Components</p>
+  <h2 class="sec">Shared components</h2>
+  <p class="note">
+    Everything in <code>src/components/site/</code>. Before building a new section,
+    check whether one of these already does the job.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Component</th><th>File</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><b>PageHero</b></td><td><code>page-hero.tsx</code></td><td>Dark banner atop an inner content page</td></tr>
+      <tr><td><b>Reveal</b></td><td><code>reveal.tsx</code></td><td>IntersectionObserver entrance wrapper; takes a <code>delay</code></td></tr>
+      <tr><td><b>BookButton</b></td><td><code>book-button.tsx</code></td><td>Opens the booking modal from anywhere</td></tr>
+      <tr><td><b>BookingProvider</b></td><td><code>booking-provider.tsx</code></td><td>Context holding booking-modal open state</td></tr>
+      <tr><td><b>BookingModal</b></td><td><code>booking-modal.tsx</code></td><td>Book &amp; enquire dialog</td></tr>
+      <tr><td><b>SiteHeader / SiteFooter</b></td><td><code>site-header.tsx</code>, <code>site-footer.tsx</code></td><td>Global chrome</td></tr>
+      <tr><td colspan="3" style="padding-top:1.1rem"><span class="label">Homepage sections, in render order</span></td></tr>
+      <tr><td>Hero</td><td><code>hero.tsx</code></td><td>Landing proposition, primary actions and credential strip</td></tr>
+      <tr><td>Mission</td><td><code>mission.tsx</code></td><td>Mission statement + stat blocks</td></tr>
+      <tr><td>PillarsSection</td><td><code>pillars-section.tsx</code></td><td>The 5 pillars grid</td></tr>
+      <tr><td>Recognition</td><td><code>recognition.tsx</code></td><td>Ministry badges / trust signals</td></tr>
+      <tr><td>ServicesSection</td><td><code>services-section.tsx</code></td><td>Stepped horizontal service rail</td></tr>
+      <tr><td>MovingGallery</td><td><code>moving-gallery.tsx</code></td><td>Auto-scrolling photo band</td></tr>
+      <tr><td>VideoTestimonials</td><td><code>video-testimonials.tsx</code></td><td>Video carousel + scrolling text quotes</td></tr>
+      <tr><td>AboutSection</td><td><code>about-section.tsx</code></td><td>Founder portrait, credentials, quote</td></tr>
+      <tr><td>TeamSection</td><td><code>team-section.tsx</code></td><td>Practitioner cards</td></tr>
+      <tr><td>PodcastSection</td><td><code>podcast-section.tsx</code></td><td>Homepage podcast band</td></tr>
+      <tr><td>StoreTeaser</td><td><code>store-teaser.tsx</code></td><td>IYKA Living shop teaser</td></tr>
+      <tr><td>BookingSection</td><td><code>booking-section.tsx</code></td><td>Appointment / class entry points</td></tr>
+      <tr><td>CtaSection</td><td><code>cta-section.tsx</code></td><td>Closing call to action</td></tr>
+      <tr><td>LocationSection</td><td><code>location-section.tsx</code></td><td>Address and map</td></tr>
+      <tr><td colspan="3" style="padding-top:1.1rem"><span class="label">Podcast</span></td></tr>
+      <tr><td>PodcastRow / Card / Listing / Overlay</td>
+        <td><code>podcast-*.tsx</code></td>
+        <td>Teaser row, vertical card, listing grid, full-episode overlay</td></tr>
+      <tr><td colspan="3" style="padding-top:1.1rem"><span class="label">Not on the homepage</span></td></tr>
+      <tr><td>ProductsTeaser, EventsSection, Testimonials</td>
+        <td><code>products-teaser.tsx</code>, <code>events-section.tsx</code>, <code>testimonials.tsx</code></td>
+        <td>Built and maintained, but not currently rendered on <code>/</code></td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<!-- ══════════════════ OPERATIONS THEME ══════════════════ -->
+<section id="operations">
+  <p class="eyebrow">Operations</p>
+  <h2 class="sec">Clinical operations theme</h2>
+  <p class="note">
+    MIS and admin keep the shared geometry and accessibility rules, but use a
+    dedicated semantic layer. Blue means action or selection; it is not a second
+    brand colour for the marketing site.
+  </p>
+  <div class="swatches">
+    <div class="sw"><div class="chip" style="background:var(--ops-background)"></div>
+      <div class="info"><b>--ops-background</b><span>#F7F8F7</span>Application canvas</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-surface);border-bottom:1px solid var(--ds-rule)"></div>
+      <div class="info"><b>--ops-surface</b><span>#FFFFFF</span>Cards, tables, menus</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-text)"></div>
+      <div class="info"><b>--ops-text</b><span>#111827</span>Primary UI text</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-action)"></div>
+      <div class="info"><b>--ops-action</b><span>#2563EB</span>Primary actions and selection</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-success)"></div>
+      <div class="info"><b>--ops-success</b><span>#047857</span>Confirmed, paid, complete</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-warning)"></div>
+      <div class="info"><b>--ops-warning</b><span>#A15C00</span>Pending, rescheduled</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-danger)"></div>
+      <div class="info"><b>--ops-danger</b><span>#B42318</span>Failed, cancelled, destructive</div></div>
+    <div class="sw"><div class="chip" style="background:var(--ops-purple)"></div>
+      <div class="info"><b>--ops-purple</b><span>#7C3AED</span>Neutral category distinction</div></div>
+  </div>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Existing alias</th><th>Canonical role</th><th>Migration rule</th></tr></thead>
+      <tbody>
+        <tr><td><code>--color-mis-blue</code></td><td><code>--ops-action</code></td><td>Existing components remain valid; prefer the ops name in new CSS.</td></tr>
+        <tr><td><code>--color-mis-bg</code></td><td><code>--ops-background</code></td><td>No visual change; now sourced from the unified token file.</td></tr>
+        <tr><td><code>--color-mis-text*</code></td><td><code>--ops-text*</code></td><td>Use primary, muted and soft by information priority.</td></tr>
+        <tr><td><code>--color-mis-*-bg</code></td><td><code>--ops-*-bg</code></td><td>Status foreground and background must always travel as a pair.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════ OPERATIONS COMPONENTS ══════════════════ -->
+<section id="ops-components">
+  <p class="eyebrow">Operations</p>
+  <h2 class="sec">UI components</h2>
+  <p class="note">The useful coverage from the former MIS-only guide is preserved here as rules and live specimens.</p>
+  <div class="ops-preview">
+    <div class="ops-grid">
+      <article class="ops-card"><span class="ops-card-label">Appointments today</span><strong class="ops-value">18</strong><span class="ops-sub">4 still to check in</span></article>
+      <article class="ops-card"><span class="ops-card-label">Collection</span><strong class="ops-value">₹42,600</strong><span class="ops-sub">Updated 12 minutes ago</span></article>
+      <article class="ops-card"><span class="ops-card-label">Follow-ups due</span><strong class="ops-value">7</strong><span class="ops-sub">2 marked high priority</span></article>
+    </div>
+    <div class="ops-row">
+      <button class="ops-button">Add appointment</button>
+      <button class="ops-button secondary">Export</button>
+      <input class="ops-input" aria-label="Search patients" placeholder="Search patients…" />
+      <span class="status success">Confirmed</span>
+      <span class="status warning">Pending</span>
+      <span class="status danger">Cancelled</span>
+    </div>
+    <div class="ops-table scroll">
+      <table>
+        <thead><tr><th>Patient</th><th>Care</th><th>Time</th><th>Status</th></tr></thead>
+        <tbody>
+          <tr><td><b>Amrita Das</b></td><td>Functional medicine</td><td>10:30</td><td><span class="status success">Confirmed</span></td></tr>
+          <tr><td><b>Nikhil Marak</b></td><td>Therapeutic yoga</td><td>11:15</td><td><span class="status warning">Pending</span></td></tr>
+          <tr><td><b>Rita Lyngdoh</b></td><td>Naturopathy</td><td>12:00</td><td><span class="status danger">Cancelled</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="scroll" style="margin-top:1.5rem">
+    <table>
+      <thead><tr><th>Pattern</th><th>Rule</th><th>Accessibility</th></tr></thead>
+      <tbody>
+        <tr><td>Cards / KPI</td><td>One value, one label, one supporting line; use tabular numerals.</td><td>Do not encode a trend with colour alone.</td></tr>
+        <tr><td>Buttons</td><td>Primary, secondary and destructive variants; 40px minimum height.</td><td>Visible focus; icon-only buttons require an accessible name.</td></tr>
+        <tr><td>Forms</td><td>Persistent label above control; helper or error text below.</td><td>Error copy identifies the problem and correction.</td></tr>
+        <tr><td>Status pills</td><td>Pair semantic foreground and background tokens.</td><td>Status remains written in text; colour is reinforcement.</td></tr>
+        <tr><td>Tables</td><td>Left-align words, right-align quantities, use tabular numerals.</td><td>Use real headers and preserve keyboard access when scrollable.</td></tr>
+        <tr><td>Icons</td><td>Lucide-style inline SVG, round caps, 2px stroke below 32px.</td><td>Decorative icons are hidden; meaningful icons have labels.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ══════════════════ ANATOMY ══════════════════ -->
+<section id="anatomy">
+  <p class="eyebrow">Practice</p>
+  <h2 class="sec">Anatomy of a section</h2>
+  <p class="note">The standard shape. Copy this when adding anything new.</p>
+  <div class="spec">
+    <div class="demo" style="background:var(--cream-deep)">
+<pre style="margin:0;font-size:.8rem;line-height:1.7;overflow-x:auto"><code>&lt;section className="v2-landing v2-section-py" style={{ background: "var(--cream)" }}&gt;
+  &lt;div className="v2-container"&gt;
+    &lt;Reveal&gt;
+      &lt;p className="v2-section-label" style={{ marginBottom: "1rem" }}&gt;
+        Patient Stories
+      &lt;/p&gt;
+      &lt;h2 className="v2-section-title"&gt;
+        Healing that speaks&lt;br /&gt;&lt;em&gt;for itself.&lt;/em&gt;
+      &lt;/h2&gt;
+      &lt;p className="v2-lead"&gt;Optional standfirst.&lt;/p&gt;
+    &lt;/Reveal&gt;
+
+    &lt;Reveal delay={0.2}&gt;
+      {/* section body */}
+    &lt;/Reveal&gt;
+  &lt;/div&gt;
+&lt;/section&gt;</code></pre>
+    </div>
+    <div class="meta">
+      <span><b>1</b> .v2-landing scopes website typography</span>
+      <span><b>2</b> .v2-section-py sets rhythm</span>
+      <span><b>3</b> .v2-container sets measure</span>
+      <span><b>4</b> label → title → lead</span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ DO / DON'T ══════════════════ -->
+<section id="dodont">
+  <p class="eyebrow">Practice</p>
+  <h2 class="sec">Do &amp; don't</h2>
+  <div class="dd">
+    <div class="do"><h4>Do — use a heading class</h4>
+      <pre>&lt;h2 className="v2-section-title"
+    style={{ color: "var(--cream)" }}&gt;</pre></div>
+    <div class="dont"><h4>Don't — inline a size</h4>
+      <pre>&lt;h2 style={{ fontSize:
+  "clamp(2rem, 4.5vw, 3.2rem)",
+  fontWeight: 700 }}&gt;</pre></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Do — use the label modifier</h4>
+      <pre>&lt;p className="v2-section-label
+             v2-section-label-light"&gt;</pre></div>
+    <div class="dont"><h4>Don't — override the colour inline</h4>
+      <pre>&lt;p className="v2-section-label"
+   style={{ color: "var(--gold-light)" }}&gt;</pre></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Do — use the container helper</h4>
+      <pre>&lt;div className="v2-container"&gt;</pre></div>
+    <div class="dont"><h4>Don't — re-derive its width</h4>
+      <pre>&lt;div className=
+  "w-[min(90rem,100%-3rem)] mx-auto"&gt;</pre></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Do — gold-deep on cream, gold-light on dark</h4>
+      <pre>color: var(--gold-deep)   /* on cream */
+color: var(--gold-light)  /* on dark  */</pre></div>
+    <div class="dont"><h4>Don't — use --gold for text on cream</h4>
+      <pre>color: var(--gold)  /* 2.38:1 — fails */</pre></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Do — add a tier if a real new job appears</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">Define it as a token in
+        <code>design-tokens.css</code>, give it a class, and document it here.</p></div>
+    <div class="dont"><h4>Don't — nudge an existing one</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">A 3.6rem next to a 3.8rem
+        is how this site ended up with nine heading scales.</p></div>
+  </div>
+</section>
+
+
+<!-- ══════════════════ CREDIBILITY ══════════════════ -->
+<section id="credibility">
+  <p class="eyebrow">Practice</p>
+  <h2 class="sec">Clinical credibility</h2>
+  <p class="note">
+    A wellness site earns trust by claiming less than it could. Three rules,
+    each from a real problem found in the audit.
+  </p>
+  <div class="dd">
+    <div class="do"><h4>Separate recognition from collaboration</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        Two labelled groups: <b>Recognised by</b> (AYUSH, Ministry of
+        Education, Govt. of Meghalaya) and <b>In collaboration with</b>
+        (Decathlon, HP Tourism).
+      </p></div>
+    <div class="dont"><h4>Don't put a ministry beside a retailer</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        One combined “Recognised &amp; Collaborated With” heading over all five
+        logos invited the reader to credit the brand with an endorsement it
+        does not have.
+      </p></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Measured positioning</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        “Pioneering drugless healthcare in the North East.” Describes the
+        practice without an unverifiable primacy claim.
+      </p></div>
+    <div class="dont"><h4>Don't claim to be first</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        “The first…” appeared in <b>three mutually inconsistent forms</b> —
+        first wellness centre, first start-up, first functional medicine
+        startup — which undermined all three.
+      </p></div>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Patient stories carry a note</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        <code>.v2-testimonial-note</code> states consent, that these are
+        personal accounts rather than clinical results, and that nothing is a
+        promise of outcome.
+      </p></div>
+    <div class="dont"><h4>Don't quote a clinical outcome</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">
+        “Completely reversed my pre-diabetes” asserts a medical result in a
+        patient's voice. Personal, non-clinical wording instead.
+      </p></div>
+  </div>
+</section>
+
+<!-- ══════════════════ GOVERNANCE ══════════════════ -->
+<section id="governance">
+  <p class="eyebrow">Practice</p>
+  <h2 class="sec">Governance &amp; website repair order</h2>
+  <p class="note">
+    Use the system as a decision filter, not a gallery of options. Fix the
+    highest-impact inconsistencies first and migrate without breaking existing
+    routes.
+  </p>
+  <div class="scroll">
+    <table>
+      <thead><tr><th>Priority</th><th>Website pass</th><th>Definition of done</th></tr></thead>
+      <tbody>
+        <tr><td><b>P0</b></td><td>Visibility, focus and navigation contrast</td><td>Content remains readable before hydration; every interactive element has visible keyboard focus; header text passes on every hero state.</td></tr>
+        <tr><td><b>P1</b></td><td>Replace one-off colours, type sizes and spacing</td><td>No new hex values or near-duplicate clamps in components; section hierarchy uses the documented roles.</td></tr>
+        <tr><td><b>P2</b></td><td>Consolidate repeated patterns</td><td>Page heroes, CTAs, cards, labels, form controls and rails have one implementation per job.</td></tr>
+        <tr><td><b>P3</b></td><td>Responsive and reduced-motion QA</td><td>320px to wide desktop has no clipping; touch rails are usable; motion is optional and content is never animation-dependent.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="dd">
+    <div class="do"><h4>Change process</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">Start with a semantic role, update <code>design-tokens.css</code>, map it in <code>globals.css</code>, update the live specimen, then run production build and visual checks.</p></div>
+    <div class="dont"><h4>Exception process</h4>
+      <p style="margin:0;font-size:.9rem;line-height:1.6">Do not add a value because one screen feels “slightly off.” Document a genuinely new job, test it in both themes, and only then add a token.</p></div>
+  </div>
+  <p class="note" style="margin-bottom:0"><b>Minimum review:</b> contrast, keyboard focus, touch target, empty/error/loading state, 320px layout, desktop layout and reduced motion.</p>
+</section>
+
+<!-- ══════════════════ CHANGELOG ══════════════════ -->
+<section id="changelog">
+  <p class="eyebrow">Practice</p>
+  <h2 class="sec">What this pass changed</h2>
+  <p class="note">
+    The consistency audit that produced this document, for reviewers of the
+    accompanying branch.
+  </p>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Area</th><th>Before</th><th>After</th></tr></thead>
+    <tbody>
+      <tr><td>Heading scales</td><td>9 distinct values across inline styles and CSS, incl. 3.5 / 3.6 / 3.8 / 4.0rem near-duplicates and two byte-identical rules</td><td>5 named tiers, all tokenised</td></tr>
+      <tr><td>Section titles</td><td>12 inline <code>fontSize</code> declarations</td><td>3 shared classes; call sites set colour and margin only</td></tr>
+      <tr><td>Eyebrow labels</td><td>1 class + 6 ad-hoc reimplementations at 3 tracking values</td><td><code>.v2-section-label</code> + <code>-light</code> modifier, and <code>.v2-meta-label</code> for chips</td></tr>
+      <tr><td>Font variables</td><td><code>--font-body</code> / <code>--font-display</code> defined only inside <code>.v2-landing</code>; 9 components fell back silently</td><td>Defined at <code>:root</code></td></tr>
+      <tr><td>Line height</td><td>No tokens; 5 ad-hoc values</td><td>6 named steps</td></tr>
+      <tr><td>Tracking</td><td>0.1 / 0.14 / 0.2em drifting</td><td><code>--ls-caps</code> 0.12em and <code>--ls-label</code> 0.2em</td></tr>
+      <tr><td>Page hero</td><td>Hand-rolled 3×, drifted</td><td><code>&lt;PageHero&gt;</code></td></tr>
+      <tr><td>Container</td><td><code>.v2-container</code> plus one hand-rolled copy in the gallery</td><td>Helper everywhere</td></tr>
+      <tr><td>Palette</td><td>Taupe occupied the green token names and weakened the wellness signal</td><td>Botanical forest, warm ivory, accessible gold, sage and restrained clay</td></tr>
+      <tr><td>Token structure</td><td>Brand values repeated as unrelated hex codes</td><td>Primitive <code>--iyka-*</code> colours mapped to stable semantic aliases</td></tr>
+      <tr><td>Contrast</td><td>Several accents depended on context-specific overrides</td><td>Documented AA pairs; muted text is 4.77:1 and light-ground gold is 6.50:1</td></tr>
+      <tr><td>System ownership</td><td>Website and MIS had separate, contradictory HTML guides</td><td>One canonical token file, one unified guide and two purpose-built semantic themes</td></tr>
+      <tr><td>MIS compatibility</td><td>Clinical-blue values lived directly inside the Tailwind theme</td><td>Existing <code>--color-mis-*</code> names map to reusable <code>--ops-*</code> semantics</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p class="note" style="margin-bottom:0">
+    <b>Visual principle:</b> forest communicates clinical steadiness and nature;
+    ivory keeps the experience calm; gold is a controlled action colour; sage is
+    atmospheric; clay adds humanity without competing with the primary brand.
+  </p>
+</section>
+
+</main>
+</div>
+</body>
+</html>

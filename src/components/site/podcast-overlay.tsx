@@ -114,7 +114,7 @@ export function usePodcastOverlay(): {
             <span>{active.duration}</span>
           </p>
 
-          <h2 id="pod-overlay-title" className="pod-overlay-title">
+          <h2 id="pod-overlay-title" className="v2-section-title-compact pod-overlay-title">
             {active.title}
           </h2>
 
