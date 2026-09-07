@@ -304,7 +304,7 @@ export default function CheckoutPage() {
           </div>
 
           {formError && (
-            <div style={{ background: "#fff0f0", border: "1px solid #f5c6cb", color: "#721c24", padding: "0.8rem 1rem", fontSize: "0.85rem", marginBottom: "1rem" }}>
+            <div style={{ background: "var(--danger-bg)", border: "1px solid var(--danger-border)", color: "var(--danger-deep)", padding: "0.8rem 1rem", fontSize: "0.85rem", marginBottom: "1rem" }}>
               {formError}
             </div>
           )}
