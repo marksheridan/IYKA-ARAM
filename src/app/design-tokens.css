@@ -122,7 +122,10 @@
   --text-muted: #687168;
   --cream: var(--iyka-ivory-50);
   --cream-deep: var(--iyka-ivory-100);
-  --cream-band: #eae4d8;
+  /* Sampled from public/services-foliage.webp, whose sky is #ece8e3. The
+     canopy dissolves into this value, so any drift here reappears as a
+     seam where the band meets the section above it. */
+  --cream-band: #ece8e3;
   --dark: var(--iyka-forest-950);
   --dark-soft: #26352b;
   --gold: var(--iyka-gold-500);
