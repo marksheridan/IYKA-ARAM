@@ -5,7 +5,7 @@ import { useState, useEffect, useCallback } from "react";
 const CATEGORIES = ["All", "Yoga & Wellness", "Events", "Products", "Team"] as const;
 
 const PHOTOS = [
-  { src: "/dr-emidaka-bio.jpg", caption: "Dr. Emidaka, Founder",            alt: "Dr. Emidaka, founder of Iyka-Aram, seated on the red steps of the clinic veranda in a navy blazer and white shirt, smiling towards the camera", category: "Team",            size: "tall" },
+  { src: "/dr-emidaka-bio.jpg", caption: "Dr. Emidaka, Founder",            alt: "Dr. Emidaka, founder of Iyka-Aram, seated in the clinic garden in a navy blazer and white shirt, the veranda's red plinth and hedge behind her, smiling towards the camera", category: "Team",            size: "tall" },
   { src: "/gallery/img8.jpg",  caption: "YONA Yoga for All Ages",                alt: "A young girl in a pink YONA sweatshirt sitting cross-legged on a colourful yoga mat making a peace sign during a YONA wellness session",                         category: "Yoga & Wellness", size: "wide" },
   { src: "/gallery/img9.jpg",  caption: "YONA Certificate Ceremony",             alt: "A participant receiving a YONA Certificate of Participation from a female instructor in front of a projected YONA logo at a wellness event",                       category: "Events",          size: "wide" },
   { src: "/gallery/img11.jpg", caption: "Joy in Every Session",                  alt: "A child and adult participants laughing with arms raised joyfully during a group yoga session at a YONA wellness event",                                           category: "Yoga & Wellness", size: "wide" },

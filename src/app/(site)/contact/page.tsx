@@ -13,7 +13,7 @@ export default function ContactPage() {
       {/* Slim page header — deliberately lighter than the services hero so it
           reads as a page title rather than competing with the form heading. */}
       <section style={{ background: "var(--green)", padding: "10rem 0 4rem" }}>
-        <div className="v2-container">
+        <div className="v2-container" style={{ textAlign: "center" }}>
           <p
             className="v2-section-label v2-reveal"
             style={{ color: "var(--gold-light)", marginBottom: "1rem" }}

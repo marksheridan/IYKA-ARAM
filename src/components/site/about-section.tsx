@@ -50,7 +50,7 @@ export function AboutSection() {
                 marginBottom: "1.8rem",
               }}
             >
-              B.Nat, M.Sc Clinical Nutrition · Functional Medicine Practitioner
+              BNYS, MBA in Public Health and Hospital Management · Wellness Consultant
             </p>
 
             <blockquote

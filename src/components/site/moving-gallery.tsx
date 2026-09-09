@@ -29,7 +29,7 @@ const rowBottom: Shot[] = [
   { src: "/gallery/img9.jpg", tag: "IYKA Circle", caption: "Certificate ceremony", alt: "A participant receiving a certificate at an IYKA community event" },
   { src: "/gallery/img23.jpg", tag: "Movement", caption: "Mindful movement", alt: "A smiling participant holding a mudra during a yoga session" },
   { src: "/gallery/img8.jpg", tag: "Every Age", caption: "Wellness for all ages", alt: "A young girl on a colourful yoga mat during a wellness session" },
-  { src: "/dr-emidaka-bio.jpg", tag: "The Founder", caption: "Dr. Emidaka", alt: "Dr. Emidaka, founder of IYKA-ARAM, seated on the steps of the clinic veranda" },
+  { src: "/dr-emidaka-bio.jpg", tag: "The Founder", caption: "Dr. Emidaka", alt: "Dr. Emidaka, founder of IYKA-ARAM, seated in the clinic garden in front of the veranda" },
 ];
 
 function Row({ shots, reverse }: { shots: Shot[]; reverse?: boolean }) {

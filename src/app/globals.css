@@ -460,10 +460,12 @@ h3 em {
 /* ── Marquee ── */
 .v2-marquee-section {
   overflow: hidden;
-  background: var(--green);
+  /* Very light beige band. --cream-deep, not --cream, so the strip still
+     separates from the cream mission section directly below it. */
+  background: var(--cream-deep);
   padding-block: 1rem;
-  border-top: 1px solid rgba(200, 151, 60, 0.2);
-  border-bottom: 1px solid rgba(200, 151, 60, 0.2);
+  border-top: 1px solid rgba(200, 151, 60, 0.35);
+  border-bottom: 1px solid rgba(200, 151, 60, 0.35);
 }
 @keyframes v2-marquee-scroll {
   from { transform: translateX(0); }
@@ -485,7 +487,9 @@ h3 em {
   font-size: 0.95rem;
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: var(--gold-light);
+  /* --gold-light was for the old dark-green band; on beige it is ~1.6:1.
+     --gold-deep is the palette's cream-safe gold. */
+  color: var(--gold-deep);
   white-space: nowrap;
 }
 
@@ -635,23 +639,41 @@ h3 em {
 /* ── Mission ── */
 .v2-mission-grid {
   display: grid;
-  grid-template-columns: 1fr 1.5fr;
-  gap: 5rem;
+  grid-template-columns: 1.2fr 1.5fr;
+  gap: 4rem;
   align-items: center;
 }
 .v2-mission-stats {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+.v2-mission-logo {
+  width: 100%;
+  max-width: 26rem;
+  height: auto;
+}
+/* Metrics sit in one row under the logo, split by hairline rules. */
+.v2-mission-metrics {
+  display: flex;
+  align-items: stretch;
+  gap: 1.25rem;
+  width: 100%;
+  /* Same cap as the logo so the two read as one lockup. */
+  max-width: 26rem;
 }
 .v2-stat-block {
-  padding-block: 2rem;
+  flex: 1;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0.3rem;
 }
 .v2-stat-num {
   font-family: var(--font-display);
-  font-size: 3.5rem;
+  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
   font-weight: 700;
   color: var(--dark);
   line-height: 1;
@@ -661,14 +683,16 @@ h3 em {
   color: var(--gold);
 }
 .v2-stat-label {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   color: var(--dark-soft);
   letter-spacing: 0.03em;
+  line-height: 1.4;
 }
 .v2-stat-divider {
-  height: 1px;
+  width: 1px;
+  align-self: stretch;
   background: var(--cream-deep);
-  width: 100%;
+  flex: none;
 }
 .v2-pillars-grid {
   display: grid;
@@ -709,10 +733,13 @@ h3 em {
 }
 @media (max-width: 900px) {
   .v2-mission-grid { grid-template-columns: 1fr; gap: 3rem; }
+  .v2-mission-logo,
+  .v2-mission-metrics { max-width: 20rem; }
   .v2-pillars-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 580px) {
   .v2-pillars-grid { grid-template-columns: 1fr; }
+  .v2-mission-metrics { gap: 0.75rem; }
 }
 
 /* ── Services ── */
@@ -1095,15 +1122,27 @@ h3 em {
 }
 
 /* ── Team ── */
+/* Seven practitioners over a four-wide row leave the second row three long
+   and hanging off the left edge. Laying the grid out in half-columns - eight
+   of them, each card spanning two - lets the short row start one half-column
+   in and sit centred under the first, an inverted pyramid rather than a gap.
+   The card comes out exactly the width it had at four columns: spanning two
+   of eight columns picks up the gap between them, and (W - 7g)/4 + g is the
+   same (W - 3g)/4 that four columns gave. */
 .v2-team-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   gap: 1.5rem;
 }
 .v2-team-card {
   display: flex;
   flex-direction: column;
   gap: 1.2rem;
+  grid-column: span 2;
+}
+/* First card of the short row; the two behind it follow on their own. */
+.v2-team-card:nth-child(5) {
+  grid-column: 2 / span 2;
 }
 .v2-team-photo {
   position: relative;
@@ -1154,11 +1193,20 @@ h3 em {
   color: rgba(248, 244, 238, 0.4);
   letter-spacing: 0.02em;
 }
+/* Two-wide: four half-columns, and it is the seventh card left over rather
+   than the fifth, so the centring moves to it. */
 @media (max-width: 900px) {
-  .v2-team-grid { grid-template-columns: repeat(2, 1fr); }
+  .v2-team-grid { grid-template-columns: repeat(4, 1fr); }
+  .v2-team-card:nth-child(5) { grid-column: span 2; }
+  .v2-team-card:nth-child(7) { grid-column: 2 / span 2; }
 }
+/* Single file: nothing to centre, and a card still spanning two columns would
+   have the grid invent a second one. */
 @media (max-width: 580px) {
   .v2-team-grid { grid-template-columns: 1fr; }
+  .v2-team-card,
+  .v2-team-card:nth-child(5),
+  .v2-team-card:nth-child(7) { grid-column: auto; }
 }
 
 /* ── Shop / Products ── */
@@ -1636,6 +1684,7 @@ h3 em {
 .v2-contact-form-wrap {
   background: var(--cream);
   border: 1px solid var(--cream-deep);
+  border-radius: 1.25rem;
   padding: 2rem;
   box-shadow: 0 1px 30px rgba(27, 25, 22, 0.06);
 }
@@ -1659,6 +1708,9 @@ h3 em {
 .v2-form-group input,
 .v2-form-group textarea {
   border: 1px solid var(--cream-deep);
+  /* Softer than the pill buttons on purpose — a pill textarea reads wrong
+     once it wraps to several lines. */
+  border-radius: 0.75rem;
   background: var(--cream);
   padding: 0.8rem 1rem;
   font-family: var(--font-body);
@@ -2473,7 +2525,37 @@ h3 em {
    padding the band needs to sit flush against the section edge.
    ════════════════════════════════════════════════════════════════ */
 .svd-hero {
-  background: #fff;
+  /* The canopy below opens on the photo's own sky (--cream-band). Flat
+     white met that as a hard horizontal edge, so the hero ramps into the
+     sky colour over its lower half and the seam disappears. Same
+     smootherstep curve and sampling as .sv-canopy: a plain two-stop fade
+     leaves a Mach band where the ramp begins. */
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(236, 232, 226, 0) 50%,
+      rgba(236, 232, 226, 0.0012) 52.5%,
+      rgba(236, 232, 226, 0.0086) 55%,
+      rgba(236, 232, 226, 0.0266) 57.5%,
+      rgba(236, 232, 226, 0.0579) 60%,
+      rgba(236, 232, 226, 0.1035) 62.5%,
+      rgba(236, 232, 226, 0.1631) 65%,
+      rgba(236, 232, 226, 0.2352) 67.5%,
+      rgba(236, 232, 226, 0.3174) 70%,
+      rgba(236, 232, 226, 0.4069) 72.5%,
+      rgba(236, 232, 226, 0.5) 75%,
+      rgba(236, 232, 226, 0.5931) 77.5%,
+      rgba(236, 232, 226, 0.6826) 80%,
+      rgba(236, 232, 226, 0.7648) 82.5%,
+      rgba(236, 232, 226, 0.8369) 85%,
+      rgba(236, 232, 226, 0.8965) 87.5%,
+      rgba(236, 232, 226, 0.9421) 90%,
+      rgba(236, 232, 226, 0.9734) 92.5%,
+      rgba(236, 232, 226, 0.9914) 95%,
+      rgba(236, 232, 226, 0.9988) 97.5%,
+      var(--cream-band) 100%
+    )
+    #fff;
   padding: 10rem 0 4.5rem;
 }
 .svd-hero-title {
@@ -3131,6 +3213,58 @@ h3 em {
     opacity: 1;
     transform: translate(-50%, -50%);
     transition: none;
+  }
+}
+
+/* ── Back-to-top FAB ───────────────────────────────────
+   Sits under the podcast overlay (200) and the store modal (1000) so it
+   never floats over a dialog, but above ordinary page content. */
+.v2-to-top {
+  position: fixed;
+  right: clamp(1rem, 3vw, 2rem);
+  bottom: clamp(1rem, 3vw, 2rem);
+  z-index: 150;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--gold);
+  color: var(--dark);
+  border: 1px solid rgba(27, 25, 22, 0.12);
+  box-shadow: 0 6px 20px rgba(27, 25, 22, 0.22);
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(0.75rem);
+  pointer-events: none;
+  transition:
+    opacity 0.3s var(--ease-out-expo),
+    transform 0.3s var(--ease-out-expo),
+    visibility 0s linear 0.3s,
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+.v2-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+  pointer-events: auto;
+  transition-delay: 0s;
+}
+.v2-to-top:hover {
+  background: var(--gold-light);
+  box-shadow: 0 8px 26px rgba(27, 25, 22, 0.28);
+}
+.v2-to-top:focus-visible {
+  outline: 2px solid var(--dark);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-to-top {
+    transition: opacity 0.01s, visibility 0.01s;
+    transform: none;
   }
 }
 

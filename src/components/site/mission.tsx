@@ -1,3 +1,6 @@
+import { Fragment } from "react";
+import Image from "next/image";
+
 import { Reveal } from "./reveal";
 
 const stats = [
@@ -33,20 +36,29 @@ export function Mission() {
     >
       <div className="v2-container">
         <div className="v2-mission-grid">
-          {/* Left: stat blocks */}
+          {/* Left: logo above a horizontal row of stats */}
           <Reveal className="v2-mission-stats">
-            {stats.map((s, i) => (
-              <div key={s.label}>
-                <div className="v2-stat-block">
-                  <span className="v2-stat-num">
-                    {s.num}
-                    {s.sup && <sup>{s.sup}</sup>}
-                  </span>
-                  <span className="v2-stat-label">{s.label}</span>
-                </div>
-                {i < stats.length - 1 && <div className="v2-stat-divider" />}
-              </div>
-            ))}
+            <Image
+              src="/logo-color.png"
+              alt="IYKA-ARAM — Wellness Starts Here"
+              width={518}
+              height={481}
+              className="v2-mission-logo"
+            />
+            <div className="v2-mission-metrics">
+              {stats.map((s, i) => (
+                <Fragment key={s.label}>
+                  <div className="v2-stat-block">
+                    <span className="v2-stat-num">
+                      {s.num}
+                      {s.sup && <sup>{s.sup}</sup>}
+                    </span>
+                    <span className="v2-stat-label">{s.label}</span>
+                  </div>
+                  {i < stats.length - 1 && <div className="v2-stat-divider" />}
+                </Fragment>
+              ))}
+            </div>
           </Reveal>
 
           {/* Right: mission text */}
@@ -105,7 +117,7 @@ export function Mission() {
                   color: "var(--gold-deep)",
                 }}
               >
-                Dr. Emidaka — Founder
+                Dr. Emidaka — CEO & Founder
               </span>
             </div>
           </Reveal>

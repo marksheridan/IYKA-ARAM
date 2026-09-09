@@ -53,18 +53,24 @@ const team = [
   },
 ];
 
-/* Portraits live in /public/team and are all cropped to one framing — crown at
-   12% of the frame, shoulders spanning 68% of its width — so heads and bodies
-   line up across the row. Anything new dropped in here has to be cropped the
-   same way or it will sit at the wrong height; the script that does it is
-   scripts/normalize-team-portraits.py.
+/* Portraits live in /public/team. They are the client's own photographs, so
+   the backgrounds differ from card to card — six were shot on location at the
+   clinic, Dr. Ramya's was supplied separately — and only the framing is
+   normalised: every face is placed at the same size and height so heads line
+   up across the row. Anything new dropped in here has to go through
+   scripts/normalize-team-portraits.py or it will sit at the wrong height.
+   Two plates are too tight for that framing to be reached. Dr. Ramya's is
+   phone-sized, and Dr. Emidaka's is a WhatsApp crop the client chose over the
+   full-size shoot frame, so both are cropped as wide as their plate allows
+   and both heads read larger than the rest — Dr. Ramya's markedly, Dr.
+   Emidaka's slightly. Full-size originals of those two frames are the fix.
 
    All seven names and roles come from the team's own list, in the order the
    portraits were supplied. Two independent checks back that ordering up:
-   entry 1's scrubs badge reads "Dr Emidaka", and entry 7's reads "Ms. Aiba",
-   matching Aibashisha Wett. `speciality` is an optional second line, left
-   empty wherever the team gave a role only — the card omits it rather than
-   rendering an empty paragraph. */
+   entry 1's scrubs badge reads "Dr Emidaka Dkhar", and entry 7's reads
+   "Ms. Aiba / Iyka Aram Therapist", matching Aibashisha Wett. `speciality` is
+   an optional second line, left empty wherever the team gave a role only —
+   the card omits it rather than rendering an empty paragraph. */
 
 export function TeamSection() {
   return (
