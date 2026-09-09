@@ -57,8 +57,8 @@ export function BookingModal({
             <p className="text-xs uppercase tracking-[0.25em] text-gold-deep">
               Wellness Starts Here
             </p>
-            <h2 className="mt-1 font-display text-2xl text-forest">
-              Book &amp; Enquire
+            <h2 className="mt-1 v2-page-title-compact text-forest">
+              Book a consultation
             </h2>
           </div>
           <button

@@ -15,7 +15,7 @@ export function BookingSection() {
             <p className="v2-section-label" style={{ color: "var(--gold)", marginBottom: "1rem" }}>
               Begin Your Healing
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4.5vw, 3.2rem)", color: "var(--cream)", fontWeight: 700 }}>
+            <h2 className="v2-section-title" style={{ color: "var(--cream)" }}>
               Choose how you want to connect.
             </h2>
           </Reveal>
@@ -30,7 +30,7 @@ export function BookingSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
               </svg>
             </div>
-            <h3 className="v2-book-card-title">In-Person Visit</h3>
+            <h3 className="v2-card-title-lg v2-book-card-title">In-person visit</h3>
             <p className="v2-book-card-desc">
               Visit our clinic in Shillong, Meghalaya for a comprehensive in-person consultation.
             </p>
@@ -39,7 +39,7 @@ export function BookingSection() {
               <span>Mon – Sat, 9am – 6pm</span>
             </div>
             <BookButton interest="OFFLINE_SESSION" className={goldBtn}>
-              Book Visit
+              Book a visit
             </BookButton>
           </Reveal>
 
@@ -51,7 +51,7 @@ export function BookingSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3" />
               </svg>
             </div>
-            <h3 className="v2-book-card-title">Online Consultation</h3>
+            <h3 className="v2-card-title-lg v2-book-card-title">Online consultation</h3>
             <p className="v2-book-card-desc">
               Expert guidance from Dr. Emidaka via video call — anywhere in India and beyond.
             </p>
@@ -60,7 +60,7 @@ export function BookingSection() {
               <span>All days, flexible hours</span>
             </div>
             <BookButton interest="CONSULTATION" className={goldBtn}>
-              Book Online
+              Book a consultation
             </BookButton>
           </Reveal>
 
@@ -71,7 +71,7 @@ export function BookingSection() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
               </svg>
             </div>
-            <h3 className="v2-book-card-title">Online Yoga Class</h3>
+            <h3 className="v2-card-title-lg v2-book-card-title">Online yoga class</h3>
             <p className="v2-book-card-desc">
               Join live or recorded therapeutic yoga sessions led by certified IYKA instructors.
             </p>
@@ -80,7 +80,7 @@ export function BookingSection() {
               <span>Beginner to Advanced</span>
             </div>
             <BookButton interest="YOGA" className={goldBtn}>
-              Join Class
+              Book a class
             </BookButton>
           </Reveal>
         </div>

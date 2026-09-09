@@ -37,7 +37,7 @@ export function AboutSection() {
             <p className="v2-section-label" style={{ marginBottom: "1.2rem" }}>
               Meet the Founder
             </p>
-            <h2 style={{ fontSize: "clamp(2rem, 4vw, 3rem)", fontWeight: 700, marginBottom: "0.5rem" }}>
+            <h2 className="v2-section-title" style={{ marginBottom: "0.5rem" }}>
               Dr. Emidaka
             </h2>
             <p
@@ -45,7 +45,7 @@ export function AboutSection() {
                 fontFamily: "var(--font-body)",
                 color: "var(--gold-deep)",
                 fontSize: "0.85rem",
-                letterSpacing: "0.1em",
+                letterSpacing: "var(--ls-caps)",
                 textTransform: "uppercase",
                 marginBottom: "1.8rem",
               }}
@@ -94,7 +94,7 @@ export function AboutSection() {
                 interest="CONSULTATION"
                 className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
               >
-                Book with Dr. Emidaka
+                Book a consultation
               </BookButton>
               <a href="/about" className="v2-btn v2-btn-outline-dark">
                 Full Profile

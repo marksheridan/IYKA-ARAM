@@ -41,12 +41,19 @@ export type Service = {
   how: string[];
   /** What it is meant to leave you with once the course ends. */
   benefits: string[];
+  /**
+   * Shown on the homepage rail. /services always lists everything; the
+   * homepage carries only the signature therapies so the page stays
+   * readable. Keep this to four–six.
+   */
+  featured?: boolean;
 };
 
 export const services: Service[] = [
   {
     num: "01",
     slug: "acupuncture",
+    featured: true,
     name: "Acupuncture",
     desc: "Precision needling to regulate pain, nerve function and energy flow",
     summary: "Precision needling to regulate pain, nerve function and energy flow.",
@@ -67,6 +74,7 @@ export const services: Service[] = [
   {
     num: "02",
     slug: "naturopathy",
+    featured: true,
     name: "Naturopathy",
     desc: "Drug-free healing using natural methods and elements",
     summary: "Drug-free healing using natural methods and the body's own repair capacity.",
@@ -87,6 +95,7 @@ export const services: Service[] = [
   {
     num: "03",
     slug: "yoga-therapy",
+    featured: true,
     name: "Yoga Therapy",
     desc: "Therapeutic yoga for chronic conditions & mental wellness",
     summary: "Therapeutic yoga for chronic conditions and mental wellness, in-clinic or live online.",
@@ -127,6 +136,7 @@ export const services: Service[] = [
   {
     num: "05",
     slug: "functional-medicine",
+    featured: true,
     name: "Functional Medicine Consultation",
     desc: "Root-cause analysis to understand what drives your symptoms",
     summary: "Root-cause analysis to understand what is actually driving your symptoms.",
@@ -147,6 +157,7 @@ export const services: Service[] = [
   {
     num: "06",
     slug: "functional-nutrition",
+    featured: true,
     name: "Functional Nutrition Consultation",
     desc: "Food as medicine — personalised therapeutic diet plans",
     summary: "Food as medicine — therapeutic diet plans built around what you will realistically eat.",
@@ -167,6 +178,7 @@ export const services: Service[] = [
   {
     num: "07",
     slug: "gut-health-reset",
+    featured: true,
     name: "Gut Health Reset Programs",
     desc: "Structured protocols to rebuild digestion and the microbiome",
     summary: "Structured, staged protocols to rebuild digestion and the microbiome.",
@@ -285,3 +297,12 @@ export const services: Service[] = [
     ],
   },
 ];
+
+/**
+ * The homepage rail. Falls back to the first six entries if nobody has
+ * flagged any, so the landing page can never render an empty rail.
+ */
+export function getFeaturedServices(): Service[] {
+  const picked = services.filter((s) => s.featured);
+  return picked.length > 0 ? picked : services.slice(0, 6);
+}

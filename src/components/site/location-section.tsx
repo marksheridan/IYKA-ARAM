@@ -14,12 +14,10 @@ export function LocationSection() {
             <p className="v2-section-label" style={{ marginBottom: "1rem" }}>
               Find Us
             </p>
+            {/* Compact tier: this heading sits in a narrow grid column. */}
             <h2
-              style={{
-                fontSize: "clamp(1.8rem, 3.5vw, 2.6rem)",
-                fontWeight: 700,
-                marginBottom: "1.5rem",
-              }}
+              className="v2-section-title-compact"
+              style={{ marginBottom: "1.5rem" }}
             >
               Rooted in Shillong,
               <br />

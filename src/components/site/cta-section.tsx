@@ -6,17 +6,12 @@ export function CtaSection() {
     <section className="v2-landing v2-cta-panel">
       <div className="v2-container v2-cta-inner">
         <Reveal>
-          <p className="v2-section-label" style={{ color: "var(--gold-light)", marginBottom: "1rem" }}>
+          <p className="v2-section-label v2-section-label-light" style={{ marginBottom: "1rem" }}>
             Start Your Journey
           </p>
           <h2
-            style={{
-              fontSize: "clamp(2.2rem, 5vw, 3.8rem)",
-              color: "var(--cream)",
-              fontWeight: 700,
-              lineHeight: 1.1,
-              maxWidth: "30rem",
-            }}
+            className="v2-feature-title"
+            style={{ color: "var(--cream)", maxWidth: "18ch" }}
           >
             Because we don&apos;t
             <br />
@@ -42,7 +37,7 @@ export function CtaSection() {
               interest="GENERAL"
               className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
             >
-              Book a Free Call
+              Book a consultation
             </BookButton>
             <a href="#services" className="v2-btn v2-btn-outline-cream">
               Explore Services

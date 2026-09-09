@@ -7,34 +7,35 @@ export default function AdminLoginPage() {
   const [state, action, pending] = useActionState(adminLogin, null);
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-neutral-50">
-      <div className="w-full max-w-sm rounded-2xl border border-neutral-200 bg-white p-8 shadow-sm">
+    <div className="flex min-h-screen items-center justify-center bg-mis-bg" style={{ fontFamily: "var(--font-dmsans), system-ui, sans-serif" }}>
+      <div className="animate-fade-in-up w-full max-w-sm rounded-2xl border border-mis-border bg-white p-8 shadow-sm">
         <div className="mb-8 text-center">
-          <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">IYKA-ARAM</p>
-          <h1 className="mt-1 text-2xl font-semibold text-neutral-900">Admin</h1>
+          <p className="admin-eyebrow">IYKA-ARAM</p>
+          <h1 className="admin-display mt-1 text-3xl text-mis-text">Living Store</h1>
+          <span className="mx-auto mt-3 block h-px w-8 bg-gold" />
         </div>
 
         <form action={action} className="space-y-4">
           <div>
-            <label className="mb-1.5 block text-sm font-medium text-neutral-700">Password</label>
+            <label className="mb-1.5 block text-sm font-medium text-mis-text">Password</label>
             <input
               name="password"
               type="password"
               required
               autoFocus
-              className="w-full rounded-lg border border-neutral-300 px-3.5 py-2.5 text-sm outline-none focus:border-neutral-500 focus:ring-1 focus:ring-neutral-500"
+              className="w-full rounded-lg border border-mis-border px-3.5 py-2.5 text-sm outline-none focus:border-mis-blue focus:ring-1 focus:ring-mis-blue"
               placeholder="Enter admin password"
             />
           </div>
 
           {state?.error && (
-            <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{state.error}</p>
+            <p className="rounded-lg bg-mis-danger-bg px-3 py-2 text-sm text-mis-danger">{state.error}</p>
           )}
 
           <button
             type="submit"
             disabled={pending}
-            className="w-full rounded-lg bg-neutral-900 py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-50"
+            className="w-full rounded-lg bg-mis-blue py-2.5 text-sm font-semibold text-white transition-opacity hover:opacity-80 disabled:opacity-50"
           >
             {pending ? "Signing in…" : "Sign in"}
           </button>

@@ -53,19 +53,17 @@ export function RichEditor({ name, defaultValue = "", placeholder = "Start writi
     : [];
 
   return (
-    <div className="overflow-hidden rounded-lg border border-neutral-300 focus-within:border-neutral-500 focus-within:ring-1 focus-within:ring-neutral-500">
+    <div className="overflow-hidden rounded-lg border border-mis-border focus-within:border-mis-blue focus-within:ring-1 focus-within:ring-mis-blue">
       {/* Toolbar */}
-      <div className="flex flex-wrap gap-0.5 border-b border-neutral-200 bg-neutral-50 p-2">
+      <div className="flex flex-wrap gap-0.5 border-b border-mis-border bg-mis-bg p-2">
         {toolbar.map((t) => (
           <button
             key={t.label}
             type="button"
             onMouseDown={(e) => { e.preventDefault(); t.action(); }}
-            className="rounded px-2.5 py-1 text-xs font-semibold transition-colors"
-            style={t.active
-              ? { background: "#1f2937", color: "#fff" }
-              : { color: "#374151" }
-            }
+            className={`rounded px-2.5 py-1 text-xs font-semibold transition-colors ${
+              t.active ? "bg-mis-blue text-white" : "text-mis-text-muted hover:bg-mis-border-soft hover:text-mis-text"
+            }`}
           >
             {t.label}
           </button>

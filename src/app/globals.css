@@ -1,30 +1,16 @@
+/* ORDER MATTERS — do not swap these two lines.
+ *
+ * design-tokens.css redefines variable names Tailwind's own theme owns:
+ * --radius-* (5 of Tailwind's 8), --shadow-* (3 of 8), --font-* (4 of 3)
+ * and --text-* (1 of 13). Because it is imported second, our values win,
+ * which is what utilities like rounded-xl and shadow-lg resolve against.
+ *
+ * Swap the order and every one of those silently reverts to Tailwind's
+ * default — e.g. --radius-xl goes 1.25rem -> 0.75rem, shrinking every
+ * panel on the site — with no error and nothing failing to build.
+ */
 @import "tailwindcss";
-
-:root {
-  --background: #faf7f0; /* warm cream */
-  --foreground: #1c1b17; /* warm near-black */
-
-  /* Brand palette — also defined in .v2-landing; exposed at root so
-     store and other non-v2-landing sections can use them */
-  --cream:      #F8F4EE;
-  --cream-deep: #EEE8DF;
-  --dark:       #1B1916;
-  --dark-soft:  #2A2520;
-  --gold:       #C8973C;
-  --gold-light: #DEB86A;
-  --gold-pale:  #F0DEB8;
-  /* --gold is AA on the dark sections (6.6:1) but only 2.4:1 on cream, so
-     cream sections use this deeper gold instead (>=4.65:1 on every cream). */
-  --gold-deep:  #866018;
-  /* Dominant colour moved off forest green to warm taupe #847858.
-     Original green kept here, commented out, for easy restoration. */
-  /* --green:      #2C4028; */
-  /* --green-mid:  #3A5234; */
-  /* --green-pale: #E8EEE7; */
-  --green:      #847858;
-  --green-mid:  #9F926F;
-  --green-pale: #F0EDE5;
-}
+@import "./design-tokens.css";
 
 /*
  * IYKA-ARAM design system — Tailwind v4 theme tokens.
@@ -35,58 +21,61 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Brand palette */
-  --color-cream: #faf7f0;
-  --color-sand: #efe9dc;
-  --color-ink: #1c1b17;
-  --color-muted: #6b6863;
-  --color-gold: #c2a14d;
-  /* bg-gold keeps the bright tone (dark text on it is 7.1:1); text-gold on
-     the light booking/MIS surfaces was 2.3:1, so it uses gold-deep instead. */
-  --color-gold-deep: #866018;
-  --color-gold-soft: #e7d8ae;
-  /* Forest/sage greens retired in favour of the #847858 taupe family;
-     originals commented out rather than deleted. */
-  /* --color-forest: #2f4733; */
-  /* --color-sage: #7c8b6f; */
-  --color-forest: #847858;
-  --color-sage: #B8AE94;
+  /* Public website palette. The semantic CSS variables above remain the
+     source of truth; these names expose them to Tailwind utilities. */
+  --color-cream: var(--cream);
+  --color-sand: var(--cream-deep);
+  --color-ink: var(--foreground);
+  --color-muted: var(--text-muted);
+  --color-gold: var(--gold);
+  --color-gold-deep: var(--gold-deep);
+  --color-gold-soft: var(--gold-pale);
+  --color-gold-light: var(--gold-light);
+  --color-forest: var(--green);
+  --color-sage: var(--sage);
+  --color-clay: var(--clay);
+
+  /* The website briefly used -taupe utilities, from the interim palette
+     where --green held a taupe value. Now that the family is forest again,
+     -forest/-sage are accurate and every call site has been migrated, so
+     the taupe aliases are gone. */
 
   /* Typography (fonts injected by next/font in layout.tsx) */
   --font-sans: var(--font-inter);
   --font-display: var(--font-bricolage);
 
-  /* ── MIS dashboard design system (clinical blue) ── */
-  --color-mis-bg:              #f6f6f6;
-  --color-mis-surface:         #ffffff;
-  --color-mis-border:          #e5e7eb;
-  --color-mis-border-soft:     #f3f4f6;
-
-  /* Primary blue */
-  --color-mis-blue:            #2563eb;
-  --color-mis-blue-dark:       #1d4ed8;
-  --color-mis-blue-light:      #dbeafe;
-  --color-mis-blue-subtle:     #eff6ff;
-
-  /* Text */
-  --color-mis-text:            #111827;
-  --color-mis-text-muted:      #6b7280;
-  --color-mis-text-soft:       #9ca3af;
-
-  /* Semantic status colours */
-  --color-mis-success:         #10b981;
-  --color-mis-success-bg:      #d1fae5;
-  --color-mis-warning:         #f59e0b;
-  --color-mis-warning-bg:      #fef3c7;
-  --color-mis-info:            #3b82f6;
-  --color-mis-info-bg:         #dbeafe;
-  --color-mis-purple:          #8b5cf6;
-  --color-mis-purple-bg:       #ede9fe;
-  --color-mis-danger:          #ef4444;
-  --color-mis-danger-bg:       #fee2e2;
-
-  /* Sidebar dimensions */
-  --mis-sidebar-w:             240px;
+  /* Clinical operations mappings. Existing --color-mis-* call sites remain
+     compatible while new work uses the clearer --ops-* semantic layer. */
+  --color-mis-bg: var(--ops-background);
+  --color-mis-surface: var(--ops-surface);
+  --color-mis-border: var(--ops-border);
+  --color-mis-border-soft: var(--ops-border-soft);
+  --color-mis-blue: var(--ops-action);
+  --color-mis-blue-dark: var(--ops-action-hover);
+  --color-mis-blue-light: var(--ops-action-muted);
+  --color-mis-blue-subtle: var(--ops-action-subtle);
+  --color-mis-text: var(--ops-text);
+  --color-mis-text-muted: var(--ops-text-muted);
+  --color-mis-text-soft: var(--ops-text-soft);
+  --color-mis-success: var(--ops-success);
+  --color-mis-success-bg: var(--ops-success-bg);
+  --color-mis-warning: var(--ops-warning);
+  --color-mis-warning-bg: var(--ops-warning-bg);
+  /* The admin retheme split warning into a light dot colour and a deeper
+     text colour, because its raw brand gold was illegible at small sizes.
+     --ops-warning is already the legible deep tone, so both map to it. */
+  --color-mis-warning-deep: var(--ops-warning);
+  /* The inactive/neutral badge state. Every other badge pair is a token;
+     these two were the last raw hex in the family. */
+  --color-mis-neutral: var(--ops-text-muted);
+  --color-mis-neutral-bg: var(--ops-surface-subtle);
+  --color-mis-info: var(--ops-info);
+  --color-mis-info-bg: var(--ops-info-bg);
+  --color-mis-purple: var(--ops-purple);
+  --color-mis-purple-bg: var(--ops-purple-bg);
+  --color-mis-danger: var(--ops-danger);
+  --color-mis-danger-bg: var(--ops-danger-bg);
+  --mis-sidebar-w: var(--ops-sidebar-w);
 }
 
 body {
@@ -123,35 +112,17 @@ body {
    not-yet-ported sections. Brand palette + hero/marquee styles.
    ════════════════════════════════════════════════════════════════ */
 .v2-landing {
-  /* Brand palette */
-  --cream:      #F8F4EE;
-  --cream-deep: #EEE8DF;
-  --dark:       #1B1916;
-  --dark-soft:  #2A2520;
-  --gold:       #C8973C;
-  --gold-light: #DEB86A;
-  --gold-pale:  #F0DEB8;
-  /* --gold is AA on the dark sections (6.6:1) but only 2.4:1 on cream, so
-     cream sections use this deeper gold instead (>=4.65:1 on every cream). */
-  --gold-deep:  #866018;
-  /* --green:      #2C4028; */
-  /* --green-mid:  #3A5234; */
-  --green:      #847858;
-  --green-mid:  #9F926F;
-  /* --cream one step down in lightness, same hue. A neutral grey here
-     fought the warm off-white of the section above; keeping the hue and
-     only dropping lightness makes the two bands relate. */
-  --cream-band: #ECE8E2;
-
-  /* Design-system fonts (loaded via next/font in layout.tsx) */
-  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
-  --font-body:    var(--font-dmsans), system-ui, sans-serif;
-
-  --section-py: clamp(4rem, 10vw, 8rem);
-  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
-  --transition-base: 0.35s var(--ease-out-expo);
+  /* Colour tokens live at :root so modals, overlays, the store and every
+     public route inherit one system. This class scopes website typography
+     away from the MIS/admin system. */
 
   font-family: var(--font-body);
+}
+
+.v2-landing :where(a, button, input, textarea, select, [tabindex]):focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 1px var(--cream);
 }
 
 .v2-landing h1,
@@ -159,8 +130,8 @@ body {
 .v2-landing h3 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
 }
 
 /* Bricolage ships no italic, so a bare <em> in a heading would be
@@ -172,13 +143,112 @@ h3 em {
   font-style: normal;
 }
 
+/* ── Shared section typography ───────────────────────────────────
+   Every section title on the site is one of these three classes. They
+   carry font/size/leading/tracking, so a section only needs to set
+   colour and margin. Use .v2-section-title unless the heading sits in
+   a narrow column (-compact) or is a large feature/statement band.
+   ──────────────────────────────────────────────────────────────── */
+.v2-section-title,
+.v2-section-title-compact,
+.v2-feature-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+  /* Evens the ragged edge and stops a one-word last line ("...simple for
+     / all."). The browser only balances short blocks, so it costs nothing
+     on long headings. */
+  text-wrap: balance;
+}
+.v2-section-title         { font-size: var(--fs-h2); }
+.v2-section-title-compact { font-size: var(--fs-h2-compact); }
+.v2-feature-title {
+  font-size: var(--fs-feature);
+  line-height: var(--lh-feature);
+  letter-spacing: var(--ls-feature);
+}
+
+/* Utility / flow page h1 — booking steps, article pages, about, products.
+   These pages open with content rather than a hero banner, so they take a
+   smaller title than .v2-page-hero-title. Replaces a parallel Tailwind
+   scale (text-3xl / text-2xl) that had grown up on those pages. */
+.v2-page-title-compact {
+  font-family: var(--font-display);
+  font-size: var(--fs-h2-compact);
+  font-weight: 700;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-heading);
+}
+
+/* ── Card titles ──────────────────────────────────────────────────
+   Every card heading on the site is one of these two. They were six
+   sizes between 1.1 and 1.5rem with weights split 400/700 at random:
+   .v2-product-name 1.1/400, .sv-card-name 1.1/700, .pod-card-title
+   1.15/700, .v2-team-name 1.3/400, .pl-name 1.35/400,
+   .v2-book-card-title 1.4/700, .v2-pillar-title 1.5/700.
+   Prominent cards take -lg; dense grids take the base size. Call sites
+   set colour and spacing only.
+   ──────────────────────────────────────────────────────────────── */
+.v2-card-title-lg {
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-heading);
+}
+
+/* Card title — blog post cards, booking service/class cards. Unifies a
+   drift between text-lg (1.125rem) and text-xl (1.25rem). */
+.v2-card-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-heading);
+}
+
+/* Small heading inside a form or panel — a real <h2> semantically, but sized
+   as UI text. Was `text-sm` scattered across the booking flow. */
+.v2-panel-title {
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-normal);
+}
+
+/* Standfirst / intro paragraph under a section title. */
+.v2-lead {
+  font-family: var(--font-body);
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  font-weight: 400;
+}
+
 .v2-section-label {
   font-family: var(--font-body);
-  font-size: 0.7rem;
+  font-size: var(--fs-label);
   font-weight: 500;
-  letter-spacing: 0.2em;
+  letter-spacing: var(--ls-label);
   text-transform: uppercase;
+  /* --gold-deep clears 4.65:1 on every cream ground. */
   color: var(--gold-deep);
+}
+/* Same label on a dark band, where --gold-deep would be too low-contrast.
+   Replaces five inline `style={{ color: "var(--gold-light)" }}` overrides. */
+.v2-section-label-light {
+  color: var(--gold-light);
+}
+
+/* Micro-label for card categories and tags — smaller and tighter-tracked
+   than a section eyebrow, and never paired with a title. */
+.v2-meta-label {
+  font-family: var(--font-body);
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
 }
 
 /* ── Buttons ── */
@@ -188,14 +258,14 @@ h3 em {
   gap: 0.5rem;
   padding: 0.85rem 2rem;
   font-family: var(--font-body);
-  font-size: 0.875rem;
+  font-size: var(--fs-sm);
   font-weight: 500;
-  letter-spacing: 0.08em;
+  letter-spacing: var(--ls-wide);
   text-transform: uppercase;
   cursor: pointer;
   transition: var(--transition-base);
   border: 1px solid transparent;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 .v2-btn-gold {
   background: var(--gold);
@@ -219,7 +289,13 @@ h3 em {
 /* ── Hero ── */
 .v2-hero {
   position: relative;
-  min-height: 80svh;
+  /* Full first fold. svh, not vh or dvh: vh overflows on mobile because it
+     ignores the browser chrome (the credential strip would sit below the
+     cut), and dvh re-lays-out mid-scroll as the chrome hides. svh is the
+     smallest viewport height, so the hero is always whole on arrival.
+     min-height, not height, so a short landscape screen grows instead of
+     clipping the copy. */
+  min-height: 100svh;
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -317,11 +393,11 @@ h3 em {
   flex-shrink: 0;
 }
 .v2-hero-title {
-  font-size: clamp(2.6rem, 6.5vw, 5rem);
+  font-size: var(--fs-display);
   color: var(--cream);
   font-weight: 700;
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+  line-height: var(--lh-display);
+  letter-spacing: var(--ls-display);
   margin-bottom: 2rem;
   text-shadow: 0 2px 40px rgba(0, 0, 0, 0.35);
 }
@@ -332,28 +408,18 @@ h3 em {
   font-style: normal;
   color: var(--gold-light);
 }
-.v2-hero-rotate {
-  position: relative;
-  min-height: 4.25rem;
+/* One standing subline. This was a stack of four absolutely-positioned
+   lines crossfading on a 3.5s setInterval — the loudest of five looping
+   motions on the page, and it meant three quarters of the message was
+   never on screen. */
+.v2-hero-sub {
   margin-bottom: 2.75rem;
-  overflow: hidden;
-}
-.v2-hero-rotate-line {
-  position: absolute;
-  inset-inline: 0;
   font-family: var(--font-body);
   font-size: clamp(1.05rem, 1.6vw, 1.25rem);
   color: rgba(248, 244, 238, 0.82);
-  max-width: 34rem;
+  max-width: 36rem;
   font-weight: 300;
   line-height: 1.65;
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.v2-hero-rotate-line.is-active {
-  opacity: 1;
-  transform: translateY(0);
 }
 .v2-hero-actions {
   display: flex;
@@ -450,11 +516,63 @@ h3 em {
   width: 1px;
   height: 3rem;
   background: linear-gradient(to bottom, rgba(248, 244, 238, 0.4), transparent);
-  animation: v2-scroll-pulse 1.8s ease-in-out infinite;
+  /* The only looping motion left on the page. Slowed from 1.8s — it is a
+     wayfinding cue, not a heartbeat. */
+  animation: v2-scroll-pulse 3s ease-in-out infinite;
 }
 @keyframes v2-scroll-pulse {
   0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
   50%      { opacity: 0.8; transform: scaleY(1); }
+}
+
+/* Consent + outcome disclaimer under patient stories. Deliberately quiet
+   but not hidden: it clears AA on the cream ground. */
+.v2-testimonial-note {
+  max-width: 44rem;
+  margin: 2.5rem auto 0;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-soft);
+}
+
+/* ── Swipe rail ───────────────────────────────────────────────────
+   A still, horizontally scrollable row with scroll snapping. This
+   replaces three auto-scrolling marquees (28s / 55s / 60s loops) that
+   ran simultaneously on the homepage. Nothing moves until the visitor
+   scrolls or swipes — a wellness site should read calm.
+   Cards snap to the container gutter, so a card is never half-clipped
+   at the leading edge.
+   ──────────────────────────────────────────────────────────────── */
+.v2-rail-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.v2-rail-scroll::-webkit-scrollbar { display: none; }
+
+/* Swipe affordance — a short gold rule that only shows where the row
+   actually overflows, i.e. on narrow screens. */
+.v2-rail-cue {
+  display: none;
+  margin-top: 1rem;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
+  color: var(--gold-deep);
+}
+.v2-rail-cue svg { flex: none }
+@media (max-width: 900px) {
+  .v2-rail-cue { display: flex }
 }
 
 /* ── Marquee ── */
@@ -471,13 +589,24 @@ h3 em {
   from { transform: translateX(0); }
   to   { transform: translateX(-50%); }
 }
+/* The one moving element on the page, kept on purpose. Hovering pauses it,
+   and it stops entirely under prefers-reduced-motion (below). */
 .v2-marquee-track {
   display: flex;
   width: max-content;
-  animation: v2-marquee-scroll 28s linear infinite;
+  animation: v2-marquee-scroll 34s linear infinite;
 }
 .v2-marquee-track:hover {
   animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .v2-marquee-track {
+    animation: none;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: center;
+    row-gap: 0.4rem;
+  }
 }
 .v2-marquee-item {
   display: inline-flex;
@@ -492,6 +621,7 @@ h3 em {
   color: var(--gold-deep);
   white-space: nowrap;
 }
+/* The strip loops, so every item keeps its separator. */
 
 /* ── Entrance reveal (above-the-fold, plays on mount) ── */
 @keyframes v2-reveal-in {
@@ -518,7 +648,7 @@ h3 em {
   padding-block: 0.5rem;
 }
 .v2-nav.scrolled {
-  background: rgba(27, 25, 22, 0.96);
+  background: rgba(15, 33, 24, 0.96);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 1px 0 rgba(200, 151, 60, 0.15);
@@ -615,14 +745,128 @@ h3 em {
   width: min(90rem, 100% - 3rem);
   margin-inline: auto;
 }
+/* The single section rhythm. Adjacent sections each contribute this, so
+   the value is half the gap between two of them: at the old
+   clamp(4rem, 10vw, 8rem) two neighbours on the same ground left 16rem
+   (256px) of dead space between the last card of one and the heading of
+   the next. */
 .v2-section-py {
-  padding-block: clamp(4rem, 10vw, 8rem);
+  padding-block: var(--section-py);
 }
 .v2-gold-line {
   display: block;
   width: 3rem;
   height: 1px;
   background: var(--gold);
+}
+
+
+/* ── Page hero ────────────────────────────────────────────────────
+   The dark banner atop /podcast, /blog and /gallery. All three were
+   hand-rolled and had drifted: different containers, three radial-glow
+   opacities, two lead widths and two title weights (300 vs 700).
+   Rendered by <PageHero>; the tint modifier picks the scrim colour.
+   ──────────────────────────────────────────────────────────────── */
+.v2-page-hero {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  min-height: 42vh;
+  overflow: hidden;
+  background: var(--dark);
+}
+.v2-page-hero-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 62%;
+  object-fit: cover;
+  object-position: 72% center;
+  opacity: 1;
+  pointer-events: none;
+}
+.v2-page-hero-scrim,
+.v2-page-hero-glow,
+.v2-page-hero-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.v2-page-hero-dark .v2-page-hero-scrim {
+  /* Light: this layer now only has to seat the photo in the band, not carry
+     text legibility. The title runs to roughly 70% of the width, so it *does*
+     cross the photo — .v2-page-hero-body::before is what keeps it readable,
+     which is why this can fall away by 70%. */
+  background: linear-gradient(to right, #0F2118 34%, rgba(15, 33, 24, 0.30) 52%, rgba(15, 33, 24, 0) 70%);
+}
+/* The warm-earth editorial tint is retained for the journal and gallery —
+   a deliberate warm counterpoint to the cool forest bands. Its deeper value
+   preserves contrast for cream copy over photography: the title lands at
+   7.17:1 and the lead (ivory at 75%) at 4.89:1.
+   Named "earth", not "taupe" — taupe no longer names a palette colour now
+   that the brand family is forest. */
+/* Legibility for the copy, decoupled from the band's overall darkness.
+   Confined to the rows the copy occupies, so the photograph stays bright
+   above and below it — that is the point: the global scrim can be light
+   because this carries contrast only where it is needed.
+   Measured worst case for the title, across the full run of the fade, on
+   each page's own photograph: /podcast 4.16:1, /gallery 5.88:1, /blog
+   4.64:1 — against the 3:1 large text requires.
+   The mask fades only inside the bleed, so the text rows get the alpha
+   above rather than a soft edge eating into the copy. */
+.v2-page-hero-body { position: relative; }
+/* Positioned so they paint above the ::before, which is absolute and would
+   otherwise cover them. */
+.v2-page-hero-body > * { position: relative; }
+.v2-page-hero-body::before {
+  content: "";
+  position: absolute;
+  inset: -2.5rem -1rem;
+  pointer-events: none;
+  background: linear-gradient(
+    to right,
+    rgba(15, 33, 24, 0.85) 0%,
+    rgba(15, 33, 24, 0.72) 55%,
+    rgba(15, 33, 24, 0.35) 95%
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);
+}
+
+.v2-page-hero-earth .v2-page-hero-scrim {
+  /* Matches the dark tint's stops; see the note there. */
+  background: linear-gradient(to right, #5C533D 34%, rgba(92, 83, 61, 0.30) 52%, rgba(92, 83, 61, 0) 70%);
+}
+.v2-page-hero-glow {
+  background:
+    radial-gradient(ellipse 80% 60% at 60% 100%, rgba(202, 156, 61, 0.12), transparent),
+    radial-gradient(ellipse 50% 80% at 0% 0%, rgba(202, 156, 61, 0.08), transparent);
+}
+.v2-page-hero-vignette {
+  background: linear-gradient(to top, rgba(15, 33, 24, 0.25) 0%, transparent 60%);
+}
+.v2-page-hero-body {
+  position: relative;
+  padding-block: 10rem 4rem;
+}
+.v2-page-hero-title {
+  font-family: var(--font-display);
+  font-size: var(--fs-page-title);
+  /* Light on the inner pages, against the bold landing hero — an
+     editorial register for content, impact for the front door. */
+  font-weight: 300;
+  line-height: 1.05;
+  color: var(--cream);
+}
+.v2-page-hero-lead {
+  margin-top: 1rem;
+  max-width: 34rem;
+  font-size: var(--fs-lead);
+  font-weight: 300;
+  line-height: var(--lh-relaxed);
+  /* 0.75, not 0.65 — see the contrast note on the taupe scrim above. */
+  color: rgba(248, 244, 238, 0.75);
 }
 
 /* ── Scroll reveal (IntersectionObserver-driven via <Reveal>) ── */
@@ -637,33 +881,73 @@ h3 em {
 }
 
 /* ── Mission ── */
+/* ── Mission ──────────────────────────────────────────────────────
+   Logo left with the stats rail beneath it, headline and copy right.
+   The rail is a row inside that column, never a full-width band: as a band
+   it ran rules under an empty remainder and the section read as two thirds
+   air. align-items: start, not center — centring floated the short column
+   against the tall one.
+   ──────────────────────────────────────────────────────────────── */
 .v2-mission-grid {
   display: grid;
-  grid-template-columns: 1.2fr 1.5fr;
-  gap: 4rem;
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: start;
 }
-.v2-mission-stats {
+@media (max-width: 900px) {
+  .v2-mission-grid { grid-template-columns: 1fr; }
+}
+
+/* The headline sets its own measure so it breaks where it should. */
+.v2-mission-grid .v2-section-title { max-width: 20ch; }
+/* The copy now follows the headline in one column rather than starting a
+   column of its own, so it has to space itself off it. */
+.v2-section-title + .v2-mission-copy { margin-top: 1.5rem; }
+
+/* 62ch, not the full column: the copy was running ~95 characters a line. */
+.v2-mission-copy {
+  max-width: 62ch;
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--dark-soft);
+}
+.v2-mission-copy + .v2-mission-copy { margin-top: 1.1rem; }
+
+.v2-mission-sign {
   display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+.v2-mission-sign span:last-child {
+  /* Body face — its italic is real; Bricolage has none. */
+  font-family: var(--font-body);
+  font-size: 1.05rem;
+  font-style: italic;
+  color: var(--gold-deep);
 }
 .v2-mission-logo {
   width: 100%;
   max-width: 26rem;
   height: auto;
 }
-/* Metrics sit in one row under the logo, split by hairline rules. */
-.v2-mission-metrics {
+/* A compact row under the logo, not a full-width band. As a band it sat
+   directly above the three principle cards, so the page ran two 3-up grids
+   back to back and then PillarsSection's five — three card grids in a row.
+   Here it fills the logo column instead. */
+.v2-mission-stats {
   display: flex;
-  align-items: stretch;
-  gap: 1.25rem;
-  width: 100%;
-  /* Same cap as the logo so the two read as one lockup. */
-  max-width: 26rem;
+  gap: clamp(1.25rem, 2.5vw, 2rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+  padding-top: clamp(1.5rem, 3vw, 2rem);
+  border-top: 1px solid var(--cream-deep);
+}
+@media (max-width: 640px) {
+  .v2-mission-stats { grid-template-columns: 1fr; }
 }
 .v2-stat-block {
+  /* Equal shares, so the rules between them land on an even rhythm
+     under the logo rather than following the width of each numeral. */
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -671,65 +955,80 @@ h3 em {
   text-align: center;
   gap: 0.3rem;
 }
+.v2-stat-block + .v2-stat-block {
+  padding-inline-start: clamp(1.25rem, 2.5vw, 2rem);
+  border-inline-start: 1px solid var(--cream-deep);
+}
 .v2-stat-num {
   font-family: var(--font-display);
-  font-size: clamp(1.9rem, 3.4vw, 2.8rem);
+  /* --fs-h3, not --fs-h2: they caption the logo above rather than
+     compete with the headline opposite. */
+  font-size: var(--fs-h3);
   font-weight: 700;
   color: var(--dark);
   line-height: 1;
+  /* Digits share one advance, so the three numerals sit on a rhythm
+     instead of drifting with 1s and 2s. */
+  font-variant-numeric: tabular-nums;
 }
 .v2-stat-num sup {
   font-size: 1.5rem;
   color: var(--gold);
 }
+/* Small caps rather than sentence-case body text — it reads as a caption
+   belonging to the numeral instead of a stray line under it. */
 .v2-stat-label {
-  font-size: 0.75rem;
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  letter-spacing: var(--ls-caps);
+  text-transform: uppercase;
   color: var(--dark-soft);
-  letter-spacing: 0.03em;
-  line-height: 1.4;
 }
-.v2-stat-divider {
-  width: 1px;
-  align-self: stretch;
-  background: var(--cream-deep);
-  flex: none;
-}
+
+/* ── Mission principles ──────────────────────────────────────────
+   Three columns, no boxes. The bordered card was a near-copy of the
+   PillarsSection tiles further down the page — same device twice — and
+   its 1px cream-deep edge on a cream ground was barely visible anyway,
+   so it framed without structuring. One rule carries the row; the
+   columns are held by the grid and by whitespace.
+   ──────────────────────────────────────────────────────────────── */
 .v2-pillars-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.5rem;
-  padding-top: 3rem;
-  margin-top: 4rem;
+  gap: clamp(1.75rem, 4vw, 3.5rem);
+  margin-top: clamp(2.25rem, 4.5vw, 3.25rem);
+  padding-top: clamp(1.75rem, 3.5vw, 2.5rem);
   border-top: 1px solid var(--cream-deep);
 }
 .v2-pillar-card {
-  padding: 2rem 1.5rem;
-  background: var(--cream);
-  border: 1px solid var(--cream-deep);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  gap: 0.7rem;
 }
-.v2-pillar-card:hover {
-  border-color: var(--gold-pale);
-  box-shadow: 0 4px 24px rgba(200, 151, 60, 0.08);
+
+/* Icon and title share one baseline — the icon used to float alone above
+   the title with a gap between them, reading as two separate things. */
+.v2-pillar-head {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
 }
+/* Was an emoji: 🌿 rendered in full colour while ⚕️ and ∞ fell back to
+   monochrome glyphs, so the three never matched — and each OS drew them
+   differently. Stroke icons, same weight as the booking cards. */
 .v2-pillar-icon {
-  font-size: 1.8rem;
-  line-height: 1;
+  flex: none;
+  color: var(--gold-deep);
 }
-.v2-pillar-title {
-  font-family: var(--font-display);
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--dark);
-  letter-spacing: -0.01em;
-}
+.v2-pillar-title { color: var(--dark); }
 .v2-pillar-desc {
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--dark-soft);
-  line-height: 1.7;
+  line-height: var(--lh-relaxed);
+  /* No max-width: the column is already ~59 characters, well inside the
+     comfortable range, and capping it left each block ragged against a
+     much wider column. */
 }
 @media (max-width: 900px) {
   .v2-mission-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -812,11 +1111,14 @@ h3 em {
      also the colour the section must already be where the band stops — the
      ground stays flat at it until 40% before it deepens, which puts the
      join inside a single flat colour however tall the section grows. */
-  --sv-canopy-end: #0C1F0A;
-  --sv-ground: #070E06;
-  /* The Figma card's butter yellow. Note it lands a hair off --gold-pale
-     (#F0DEB8), which is warmer-dull; this is the brighter of the two. */
-  --sv-card-cream: #FFE9BA;
+  /* The ramp stops and --sv-canopy-end MUST be the same colour, or the fade
+     darkens toward one green and snaps to another at the last stop — a hard
+     horizontal line across the band. These stops were left at #0C1F0A while
+     --green moved to forest-800; keep this triplet equal to --green. */
+  --sv-canopy-rgb: 24 61 43;   /* #183D2B = --iyka-forest-800 */
+  --sv-canopy-end: var(--green);
+  --sv-ground: var(--dark);
+  --sv-card-cream: var(--gold-pale);
   background:
     linear-gradient(to bottom, var(--sv-canopy-end) 40%, var(--sv-ground) 88%)
     var(--sv-ground);
@@ -855,35 +1157,53 @@ h3 em {
   background-image:
     linear-gradient(
       to bottom,
-      rgba(12, 31, 10, 0) 50%,
-      rgba(12, 31, 10, 0.0012) 52.5%,
-      rgba(12, 31, 10, 0.0086) 55%,
-      rgba(12, 31, 10, 0.0266) 57.5%,
-      rgba(12, 31, 10, 0.0579) 60%,
-      rgba(12, 31, 10, 0.1035) 62.5%,
-      rgba(12, 31, 10, 0.1631) 65%,
-      rgba(12, 31, 10, 0.2352) 67.5%,
-      rgba(12, 31, 10, 0.3174) 70%,
-      rgba(12, 31, 10, 0.4069) 72.5%,
-      rgba(12, 31, 10, 0.5) 75%,
-      rgba(12, 31, 10, 0.5931) 77.5%,
-      rgba(12, 31, 10, 0.6826) 80%,
-      rgba(12, 31, 10, 0.7648) 82.5%,
-      rgba(12, 31, 10, 0.8369) 85%,
-      rgba(12, 31, 10, 0.8965) 87.5%,
-      rgba(12, 31, 10, 0.9421) 90%,
-      rgba(12, 31, 10, 0.9734) 92.5%,
-      rgba(12, 31, 10, 0.9914) 95%,
-      rgba(12, 31, 10, 0.9988) 97.5%,
+      rgb(var(--sv-canopy-rgb) / 0) 50%,
+      rgb(var(--sv-canopy-rgb) / 0.0012) 52.5%,
+      rgb(var(--sv-canopy-rgb) / 0.0086) 55%,
+      rgb(var(--sv-canopy-rgb) / 0.0266) 57.5%,
+      rgb(var(--sv-canopy-rgb) / 0.0579) 60%,
+      rgb(var(--sv-canopy-rgb) / 0.1035) 62.5%,
+      rgb(var(--sv-canopy-rgb) / 0.1631) 65%,
+      rgb(var(--sv-canopy-rgb) / 0.2352) 67.5%,
+      rgb(var(--sv-canopy-rgb) / 0.3174) 70%,
+      rgb(var(--sv-canopy-rgb) / 0.4069) 72.5%,
+      rgb(var(--sv-canopy-rgb) / 0.5) 75%,
+      rgb(var(--sv-canopy-rgb) / 0.5931) 77.5%,
+      rgb(var(--sv-canopy-rgb) / 0.6826) 80%,
+      rgb(var(--sv-canopy-rgb) / 0.7648) 82.5%,
+      rgb(var(--sv-canopy-rgb) / 0.8369) 85%,
+      rgb(var(--sv-canopy-rgb) / 0.8965) 87.5%,
+      rgb(var(--sv-canopy-rgb) / 0.9421) 90%,
+      rgb(var(--sv-canopy-rgb) / 0.9734) 92.5%,
+      rgb(var(--sv-canopy-rgb) / 0.9914) 95%,
+      rgb(var(--sv-canopy-rgb) / 0.9988) 97.5%,
       var(--sv-canopy-end) 100%
     ),
+    /* Top fade. The photo's sky is an off-white, not pure white, so
+       multiplying it against --cream-band lands a shade darker than the
+       strip above and the two met on a faint line. This holds the first
+       few percent at exactly the band colour and releases before the
+       leaves begin, so there is no edge to see. */
+    linear-gradient(
+      to bottom,
+      var(--cream-band) 0%,
+      var(--cream-band) 6%,
+      rgba(234, 228, 216, 0) 42%
+    ),
     url("/services-foliage.webp");
+  /* The file's sky is a cold near-white that no longer matches the warm
+     --cream-band strip above it, so the two met on a visible seam. The photo
+     is multiplied against that band colour instead: pure white resolves to
+     exactly --cream-band, and the leaves keep their green (warmed a touch,
+     which suits the palette). Retint by changing this one colour. */
+  background-color: var(--cream-band);
+  background-blend-mode: normal, normal, multiply;
   /* Anchored to the bottom so any crop takes sky off the top and never
      clips the leaves — which is what lets the cap below work. */
   background-position: center bottom;
-  background-size: 100% 100%, cover;
+  background-size: 100% 100%, 100% 100%, cover;
   background-repeat: no-repeat;
-  /* The top half of the file is empty --cream-band sky, so on a wide
+  /* The top half of the file is empty sky, so on a wide
      viewport the aspect-ratio scales that blank half up with the width and
      it reads as dead space between this section and the one above (~280px
      of nothing at 1900px). Capping the height crops the sky back; the
@@ -899,10 +1219,11 @@ h3 em {
 }
 
 .sv-title {
-  font-size: clamp(2.2rem, 5vw, 3.5rem);
   color: var(--cream);
-  font-weight: 700;
-  max-width: 22rem;
+  /* Measured in ch, not rem, so it tracks the font size. At the old 22rem
+     this heading broke to five lines once it moved up to the feature tier
+     (max 4rem) — a rem measure is blind to the type it holds. */
+  max-width: 18ch;
 }
 
 .sv-viewport {
@@ -978,13 +1299,7 @@ h3 em {
   flex-direction: column;
   gap: 0.75rem;
 }
-.sv-card-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 700;
-  color: var(--dark);
-  text-wrap: balance;
-}
+.sv-card-name { color: var(--dark); text-wrap: balance; }
 .sv-card-desc {
   font-size: 0.82rem;
   color: rgba(27, 25, 22, 0.72);
@@ -1073,7 +1388,7 @@ h3 em {
   border: 1px solid var(--gold);
   /* 21px card radius + the 0.5rem the outline sits outside the image, so
      its corners stay concentric with the portrait's. */
-  border-radius: 29px;
+  border-radius: calc(var(--radius-xl) + 8px);
   opacity: 0.25;
   z-index: 0;
   transform: translate(0.8rem, 0.8rem);
@@ -1176,12 +1491,7 @@ h3 em {
   flex-direction: column;
   gap: 0.25rem;
 }
-.v2-team-name {
-  font-family: var(--font-display);
-  font-size: 1.3rem;
-  font-weight: 400;
-  color: var(--cream);
-}
+.v2-team-name { color: var(--cream); }
 .v2-team-role {
   font-size: 0.78rem;
   color: var(--gold);
@@ -1267,12 +1577,7 @@ h3 em {
   text-transform: uppercase;
   color: var(--gold);
 }
-.v2-product-name {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
-  font-weight: 400;
-  color: var(--dark);
-}
+.v2-product-name { color: var(--dark); }
 .v2-product-price {
   font-size: 0.9rem;
   color: var(--dark-soft);
@@ -1507,13 +1812,13 @@ h3 em {
 .store-cart-summary,
 .store-checkout-section,
 .store-detail-image-main {
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
 }
 /* These images sit flush against the top edge of a bordered card whose
    parent has no overflow:hidden, so square corners would poke out. */
 .store-product-img-wrap,
 .store-related-img {
-  border-radius: 21px 21px 0 0;
+  border-radius: var(--radius-xl) var(--radius-xl) 0 0;
 }
 
 .v2-book-grid {
@@ -1562,18 +1867,13 @@ h3 em {
   width: 3rem;
   height: 3rem;
   background: var(--cream);
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--dark);
 }
-.v2-book-card-title {
-  font-family: var(--font-display);
-  font-size: 1.4rem;
-  font-weight: 700;
-  color: var(--dark);
-}
+.v2-book-card-title { color: var(--dark); }
 .v2-book-card-desc {
   font-size: 0.88rem;
   color: rgba(27, 25, 22, 0.65);
@@ -1863,16 +2163,21 @@ h3 em {
    on the grey band a cream plate would leave a visible warm halo around
    each emblem. Wider than the monogram box because wordmarks need the
    horizontal room. */
+/* No plate, no border: a white box with a gold hairline around each emblem
+   read as five clunky tiles on the band.
+   The files have an alpha channel but their white is opaque and baked in,
+   so removing the plate alone still left white rectangles. multiply drops
+   pure white to the ground colour while leaving the marks intact — it
+   works because every ground this sits on is light. */
 .v2-recognition-logo {
-  width: 8rem;
-  height: 4.25rem;
+  width: 9rem;
+  height: 4.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.5rem 0.75rem;
-  background: #fff;
-  border: 1px solid rgba(200, 151, 60, 0.4);
-  transition: border-color 0.3s;
+}
+.v2-recognition-logo img {
+  mix-blend-mode: multiply;
 }
 .v2-recognition-item:hover .v2-recognition-logo {
   border-color: var(--gold);
@@ -1983,23 +2288,34 @@ h3 em {
 /* ════════════════════════════════════════════════════════════════
    MOVING TESTIMONIALS — full-bleed marquee of patient quotes
    ════════════════════════════════════════════════════════════════ */
+/* Was a 60s infinite marquee behind a both-edges mask, which clipped a
+   card at each side. Now a still swipe rail; the gutter padding means the
+   first card starts on the page's measure. */
 .tm-marquee {
-  overflow: hidden;
   width: 100%;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-  mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
-}
-@keyframes tm-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  padding-inline: max(1.5rem, calc((100% - 90rem) / 2));
+  scroll-padding-inline-start: max(1.5rem, calc((100% - 90rem) / 2));
 }
 .tm-track {
   display: flex;
   gap: 1.5rem;
   width: max-content;
-  animation: tm-scroll 60s linear infinite;
 }
-.tm-marquee:hover .tm-track { animation-play-state: paused; }
+.tm-card { scroll-snap-align: start }
+
+/* Control row for the quote rail. Carries the 4.5rem the rail used to hold
+   inline, so the gap below the carousel is unchanged. */
+.tm-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  margin-top: 1.75rem;
+  margin-bottom: 4.5rem;
+}
+/* .vtc-dots carries its own top margin for the video reel; here .tm-nav
+   owns the vertical rhythm instead. */
+.tm-dots { margin-top: 0; }
 .tm-card {
   position: relative;
   flex: 0 0 min(26rem, 82vw);
@@ -2022,33 +2338,18 @@ h3 em {
   flex-wrap: wrap;
   margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
 }
-.mg-title {
-  font-size: clamp(2.2rem, 5.5vw, 4rem);
-  color: var(--dark);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
-}
+
 .mg-title em { font-style: normal; color: var(--gold-deep); }
 
-.mg-rows { display: flex; flex-direction: column; gap: 1.1rem; }
-.mg-row { overflow: hidden; width: 100%; }
-@keyframes mg-scroll {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
-}
-@keyframes mg-scroll-reverse {
-  from { transform: translateX(-50%); }
-  to   { transform: translateX(0); }
-}
+/* Was two rows scrolling in opposite directions at 55s and 65s — two
+   competing motions in one band. Now a single still swipe rail. */
+.mg-row { width: 100% }
 .mg-track {
   display: flex;
   gap: 1.1rem;
   width: max-content;
-  animation: mg-scroll 55s linear infinite;
 }
-.mg-track--reverse { animation-name: mg-scroll-reverse; animation-duration: 65s; }
-.mg-row:hover .mg-track { animation-play-state: paused; }
+.mg-card { scroll-snap-align: start }
 
 .mg-card {
   position: relative;
@@ -2105,16 +2406,19 @@ h3 em {
   align-items: end;
   margin-bottom: clamp(3rem, 6vw, 4.5rem);
 }
-.pl-title {
-  font-size: clamp(2.2rem, 5.5vw, 4rem);
+/* .pl-title and .mg-title were byte-identical; both now inherit the shared
+   feature tier via .v2-feature-title and only set colour. They part ways on
+   ground: the pillars band is forest, the moving gallery is light. */
+.mg-title {
   color: var(--dark);
-  font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.02em;
 }
-.pl-title em { font-style: normal; color: var(--gold-deep); }
+.pl-title {
+  color: var(--cream);
+}
+.pl-title em { font-style: normal; color: var(--gold-light); }
+/* On the forest band: cream at 75% measures 7.13:1. */
 .pl-intro {
-  color: var(--dark-soft);
+  color: rgba(248, 244, 238, 0.75);
   line-height: 1.8;
   font-size: 1.05rem;
   max-width: 30rem;
@@ -2146,12 +2450,7 @@ h3 em {
   transition: opacity 0.4s ease;
 }
 .pl-card:hover .pl-num { opacity: 1; }
-.pl-name {
-  font-size: 1.35rem;
-  font-weight: 400;
-  color: var(--dark);
-  letter-spacing: -0.01em;
-}
+.pl-name { color: var(--dark); }
 .pl-desc {
   font-size: 0.9rem;
   line-height: 1.7;
@@ -2179,6 +2478,7 @@ h3 em {
   padding: clamp(2rem, 4vw, 3.5rem);
   background: var(--cream);
   border: 1px solid rgba(200, 151, 60, 0.35);
+  border-radius: var(--radius-xl);
 }
 .st-badge {
   display: inline-block;
@@ -2193,9 +2493,6 @@ h3 em {
   background: var(--gold);
 }
 .st-title {
-  font-size: clamp(1.8rem, 3.6vw, 2.8rem);
-  font-weight: 700;
-  line-height: 1.08;
   color: var(--dark);
   margin-bottom: 1.2rem;
 }
@@ -2207,7 +2504,7 @@ h3 em {
   max-width: 30rem;
 }
 .st-visual { position: relative; aspect-ratio: 16 / 10; }
-.st-image { width: 100%; height: 100%; object-fit: cover; display: block; }
+.st-image { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: var(--radius-lg); }
 .st-placeholder {
   width: 100%;
   height: 100%;
@@ -2219,6 +2516,7 @@ h3 em {
   color: var(--gold);
   background: var(--cream-deep);
   border: 1px dashed rgba(200, 151, 60, 0.55);
+  border-radius: var(--radius-lg);
 }
 .st-placeholder span {
   font-family: var(--font-body);
@@ -2312,7 +2610,7 @@ h3 em {
 .store-add-to-cart-btn,
 .store-qty-btn,
 .store-qty-btn-small {
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 
 .btn-store-primary {
@@ -2341,6 +2639,7 @@ h3 em {
 
 /* Store listing */
 .store-filter-bar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 2.5rem; }
+/* 2px, not --radius-sm: these chips read as near-square by design. */
 .store-filter-btn {
   padding: 0.5rem 1.2rem; background: transparent; border: 1.5px solid var(--cream-deep);
   font-family: var(--font-body); font-size: 0.8rem; font-weight: 500; color: var(--dark-soft);
@@ -2466,7 +2765,7 @@ h3 em {
 .store-otp-digit:focus { border-color: var(--gold); }
 .store-otp-digit.filled { border-color: var(--green); }
 .store-otp-timer { font-size: 0.78rem; color: rgba(27,25,22,0.45); margin-bottom: 1.2rem; }
-.store-otp-error { background: #fff0f0; border: 1px solid #f5c6cb; color: #721c24; font-size: 0.82rem; padding: 0.6rem 0.9rem; margin-bottom: 1rem; text-align: left; }
+.store-otp-error { background: var(--danger-bg); border: 1px solid var(--danger-border); color: var(--danger-deep); font-size: 0.82rem; padding: 0.6rem 0.9rem; margin-bottom: 1rem; text-align: left; }
 .store-otp-cancel-btn { background: none; border: none; font-family: var(--font-body); font-size: 0.8rem; color: rgba(27,25,22,0.45); cursor: pointer; margin-top: 0.75rem; width: 100%; }
 .store-otp-cancel-btn:hover { color: var(--dark); }
 @media (max-width: 640px) { .store-nav-links li:not(:last-child):not(:nth-last-child(2)) { display: none; } }
@@ -2485,7 +2784,7 @@ h3 em {
 /* ── MIS card base ── */
 .mis-card {
   background: var(--color-mis-surface);
-  border-radius: 1rem;
+  border-radius: var(--radius-lg);
 }
 
 /* ── MIS nav active pill ── */
@@ -2501,7 +2800,7 @@ h3 em {
 
 /* ── MIS form input ── */
 .mis-input {
-  border-radius: 0.625rem;
+  border-radius: var(--radius-md);
   border: 1px solid var(--color-mis-border);
   background: var(--color-mis-bg);
   padding: 0.5rem 0.75rem;
@@ -2525,45 +2824,19 @@ h3 em {
    padding the band needs to sit flush against the section edge.
    ════════════════════════════════════════════════════════════════ */
 .svd-hero {
-  /* The canopy below opens on the photo's own sky (--cream-band). Flat
-     white met that as a hard horizontal edge, so the hero ramps into the
-     sky colour over its lower half and the seam disappears. Same
-     smootherstep curve and sampling as .sv-canopy: a plain two-stop fade
-     leaves a Mach band where the ramp begins. */
-  background:
-    linear-gradient(
-      to bottom,
-      rgba(236, 232, 226, 0) 50%,
-      rgba(236, 232, 226, 0.0012) 52.5%,
-      rgba(236, 232, 226, 0.0086) 55%,
-      rgba(236, 232, 226, 0.0266) 57.5%,
-      rgba(236, 232, 226, 0.0579) 60%,
-      rgba(236, 232, 226, 0.1035) 62.5%,
-      rgba(236, 232, 226, 0.1631) 65%,
-      rgba(236, 232, 226, 0.2352) 67.5%,
-      rgba(236, 232, 226, 0.3174) 70%,
-      rgba(236, 232, 226, 0.4069) 72.5%,
-      rgba(236, 232, 226, 0.5) 75%,
-      rgba(236, 232, 226, 0.5931) 77.5%,
-      rgba(236, 232, 226, 0.6826) 80%,
-      rgba(236, 232, 226, 0.7648) 82.5%,
-      rgba(236, 232, 226, 0.8369) 85%,
-      rgba(236, 232, 226, 0.8965) 87.5%,
-      rgba(236, 232, 226, 0.9421) 90%,
-      rgba(236, 232, 226, 0.9734) 92.5%,
-      rgba(236, 232, 226, 0.9914) 95%,
-      rgba(236, 232, 226, 0.9988) 97.5%,
-      var(--cream-band) 100%
-    )
-    #fff;
+  /* The same beige as the foliage band's sky (--cream-band, sampled from
+     public/services-foliage.webp). Flat rather than a ramp, so the hero and
+     the band are one continuous colour and the leaves are the only edge.
+     Was #fff, which put a white-to-beige step across the full width. */
+  background: var(--cream-band);
   padding: 10rem 0 4.5rem;
 }
+/* Takes --fs-page-title from .v2-page-hero-title so every inner-page h1 is
+   one size, but keeps weight 700: that class is tuned for cream on a dark
+   banner, and 300 in --dark over the foliage canopy loses its edges. */
 .svd-hero-title {
-  font-size: clamp(2.6rem, 6.5vw, 4.5rem);
   color: var(--dark);
   font-weight: 700;
-  line-height: 1.03;
-  letter-spacing: -0.02em;
 }
 .svd-hero-title em {
   font-style: normal;
@@ -2580,8 +2853,13 @@ h3 em {
 .svd-body {
   /* Same values as .sv-rail — the band has to dissolve into the exact
      colour the section already is where it stops. */
-  --sv-canopy-end: #0C1F0A;
-  --sv-ground: #070E06;
+  /* The ramp stops and --sv-canopy-end MUST be the same colour, or the fade
+     darkens toward one green and snaps to another at the last stop — a hard
+     horizontal line across the band. These stops were left at #0C1F0A while
+     --green moved to forest-800; keep this triplet equal to --green. */
+  --sv-canopy-rgb: 24 61 43;   /* #183D2B = --iyka-forest-800 */
+  --sv-canopy-end: var(--green);
+  --sv-ground: var(--dark);
   background:
     linear-gradient(to bottom, var(--sv-canopy-end) 40%, var(--sv-ground) 88%)
     var(--sv-ground);
@@ -2609,7 +2887,7 @@ h3 em {
   position: relative;
   aspect-ratio: 4 / 3;
   overflow: hidden;
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   background: rgba(248, 244, 238, 0.06);
 }
 .svd-media img {
@@ -2626,13 +2904,7 @@ h3 em {
   color: var(--gold);
   margin-bottom: 0.6rem;
 }
-.svd-name {
-  font-family: var(--font-display);
-  font-size: clamp(1.5rem, 2.6vw, 2.1rem);
-  font-weight: 700;
-  color: var(--cream);
-  line-height: 1.15;
-}
+.svd-name { color: var(--cream); }
 .svd-summary {
   margin-top: 0.6rem;
   font-size: 1rem;
@@ -2824,7 +3096,7 @@ h3 em {
 .pod-card:focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 4px;
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
 }
 .pod-card-media {
   position: relative;
@@ -2857,7 +3129,7 @@ h3 em {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(150deg, #2A2520 0%, #1B1916 60%, #3A2F1A 100%);
+  background: linear-gradient(150deg, var(--dark) 0%, var(--green) 100%);
   font-family: var(--font-display);
   font-size: 4rem;
   font-weight: 700;
@@ -2887,7 +3159,7 @@ h3 em {
   color: var(--dark);
   background: var(--gold);
   padding: 0.3rem 0.6rem;
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
 }
 /* Centred white play button, revealed on hover. The triangle is nudged
    right so it sits optically centred in the circle rather than measured
@@ -2936,13 +3208,7 @@ h3 em {
   color: var(--gold-light);
   margin-bottom: 0.45rem;
 }
-.pod-card-title {
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--cream);
-}
+.pod-card-title { color: var(--cream); }
 .pod-card-blurb {
   margin-top: 0.4rem;
   font-size: 0.8rem;
@@ -3077,7 +3343,7 @@ h3 em {
   align-items: center;
   justify-content: center;
   gap: 1.1rem;
-  background: linear-gradient(150deg, #2A2520 0%, #1B1916 65%, #3A2F1A 100%);
+  background: linear-gradient(150deg, var(--dark) 0%, var(--green) 100%);
   font-family: var(--font-body);
   font-size: 0.7rem;
   font-weight: 500;
@@ -3112,7 +3378,7 @@ h3 em {
   color: var(--gold-light);
   text-decoration: none;
   border: 1px solid rgba(200, 151, 60, 0.4);
-  border-radius: 9999px;
+  border-radius: var(--radius-pill);
   padding: 0.4rem 0.95rem;
   transition: background 0.2s, color 0.2s;
 }
@@ -3294,7 +3560,7 @@ h3 em {
   position: relative;
   width: min(56rem, 100%);
   background: var(--cream);
-  border-radius: 21px;
+  border-radius: var(--radius-xl);
   overflow: hidden;
   /* The panel scrolls with the backdrop rather than trapping a second
      scrollbar inside itself — long write-ups stay easy to read. No auto
@@ -3353,8 +3619,6 @@ h3 em {
 }
 .pod-overlay-title {
   margin-top: 0.6rem;
-  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
-  font-weight: 700;
   color: var(--dark);
 }
 .pod-overlay-guest {
