@@ -4,13 +4,20 @@ import { Reveal } from "./reveal";
    Store "Coming Soon" banner.
 
    The store itself is de-wired until launch (no nav/footer links).
-   When the client sends the banner artwork: drop the file into
-   /public and set STORE_BANNER_IMAGE to its path — the placeholder
-   panel is replaced automatically. To go live, re-add the store
-   links in site-header.tsx / site-footer.tsx and swap this section
-   back for the product grid.
+   The visual is a mosaic collage of the IYKA Living product shoot —
+   edit STORE_COLLAGE to swap a tile (files live in
+   /public/store-collage). To go live, re-add the store links in
+   site-header.tsx / site-footer.tsx and swap this section back for
+   the product grid.
    ──────────────────────────────────────────────────────────── */
-const STORE_BANNER_IMAGE = "/store-banner.jpg";
+const STORE_COLLAGE = [
+  { slot: "a", src: "/store-collage/gift-box.webp", alt: "IYKA-ARAM elixir gift box with dropper bottles on a woven rattan tray" },
+  { slot: "b", src: "/store-collage/yoga-mat.webp", alt: "Cork yoga mat printed with the IYKA-ARAM logo, unrolled beside rolled mats" },
+  { slot: "c", src: "/store-collage/elixir.webp", alt: "IYKA-ARAM Elixir roll-on oil resting on river stones" },
+  { slot: "d", src: "/store-collage/jars.webp", alt: "Elixir skincare jars beside an IYKA-ARAM gift bag" },
+  { slot: "e", src: "/store-collage/soaps.webp", alt: "Handmade IYKA-ARAM soap bars with kraft packaging" },
+  { slot: "f", src: "/store-collage/hamper.webp", alt: "IYKA-ARAM gift hamper of wrapped soaps in a woven basket" },
+] as const;
 
 export function StoreTeaser() {
   return (
@@ -37,19 +44,14 @@ export function StoreTeaser() {
           </div>
 
           <div className="st-visual">
-            {STORE_BANNER_IMAGE ? (
-              /* eslint-disable-next-line @next/next/no-img-element */
-              <img src={STORE_BANNER_IMAGE} alt="IYKA Living online store — opening soon" className="st-image" />
-            ) : (
-              <div className="st-placeholder" role="img" aria-label="Store banner artwork coming soon">
-                <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z" />
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <path d="M16 10a4 4 0 01-8 0" />
-                </svg>
-                <span>Store artwork coming soon</span>
-              </div>
-            )}
+            <div className="st-collage">
+              {STORE_COLLAGE.map((tile, i) => (
+                <figure key={tile.slot} className={`st-tile st-tile-${tile.slot}`} style={{ "--i": i } as React.CSSProperties}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={tile.src} alt={tile.alt} loading="lazy" decoding="async" />
+                </figure>
+              ))}
+            </div>
           </div>
         </Reveal>
       </div>
