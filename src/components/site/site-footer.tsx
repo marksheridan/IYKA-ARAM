@@ -2,14 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { business } from "@/content/site";
 
-/* Store links are removed until the shop launches — restore
-   { href: "/store", label: "IYKA Living Store" } here when it goes live. */
+/* Store and blog links are removed until those phases launch — restore
+   { href: "/store", label: "IYKA Living Store" } and
+   { href: "/blog", label: "Wellness Blog" } here when they go live. */
 const platform = [
   { href: "/#services", label: "Services" },
   { href: "/#pillars", label: "The 5 Pillars" },
   { href: "/#about", label: "About Dr. Emidaka" },
   { href: "/gallery", label: "Gallery" },
-  { href: "/blog", label: "Wellness Blog" },
   { href: "/podcast", label: "The Podcast" },
 ];
 

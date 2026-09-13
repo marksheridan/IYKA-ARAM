@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import { BookButton } from "@/components/site/book-button";
 import { PageHero } from "@/components/site/page-hero";
 
 const CATEGORIES = ["All", "Yoga & Wellness", "Events", "Products", "Team"] as const;
@@ -209,7 +210,7 @@ export function GalleryClient() {
             Ready to begin your healing journey?
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <a href="/booking" className="v2-btn v2-btn-gold">Book a consultation</a>
+            <BookButton interest="CONSULTATION" className="v2-btn v2-btn-gold bg-transparent text-[inherit]">Book a consultation</BookButton>
             <a href="/" className="v2-btn v2-btn-outline-cream">Back to Home</a>
           </div>
         </div>

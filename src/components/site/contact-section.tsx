@@ -2,6 +2,7 @@
 
 import { useActionState } from "react";
 import { submitLead, type LeadState } from "@/app/(site)/actions";
+import { EnquiryGuards } from "./enquiry-guards";
 import { business } from "@/content/site";
 import { Reveal } from "./reveal";
 
@@ -83,6 +84,8 @@ export function ContactSection() {
           <Reveal delay={0.2} className="v2-contact-form-wrap">
             <form action={formAction} className="v2-contact-form">
               <input type="hidden" name="interest" value="GENERAL" />
+              <EnquiryGuards />
+              <input type="hidden" name="source" value="contact-page" />
               <h3 className="v2-card-title-lg" style={{ marginBottom: "0.3rem" }}>
                 Send a message
               </h3>

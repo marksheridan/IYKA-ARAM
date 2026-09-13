@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitLead, type LeadState } from "@/app/(site)/actions";
+import { EnquiryGuards } from "./enquiry-guards";
 
 const INTERESTS = [
   { value: "CONSULTATION", label: "Functional Medicine Consultation" },
@@ -83,6 +84,8 @@ export function BookingModal({
           </div>
         ) : (
           <form action={formAction} className="mt-5 space-y-4">
+            <EnquiryGuards />
+            <input type="hidden" name="source" value="booking-modal" />
             <Field label="Full name" name="name" required placeholder="Your name" />
             <Field
               label="Phone (WhatsApp)"
