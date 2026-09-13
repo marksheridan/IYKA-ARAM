@@ -69,6 +69,24 @@ export function checkEnquiryLimits(opts: {
   return { ok: true };
 }
 
+/**
+ * Reduce a typed phone number to a stable identity.
+ *
+ * The same person writes "+91 98765 43210", "098765 43210" and "9876543210",
+ * and stripping non-digits alone leaves those as three different keys — so the
+ * per-phone limit could be walked past by simply dropping the +91. Indian
+ * mobiles are 10 digits; take the last 10 so every spelling lands in one bucket.
+ *
+ * Longer international numbers keep their full digit string, which is correct:
+ * two different foreign numbers must not collide just because they share a tail.
+ */
+export function phoneKey(raw: string): string {
+  const digits = raw.replace(/\D/g, "");
+  if (digits.length > 10 && digits.startsWith("91")) return digits.slice(-10);
+  if (digits.length === 11 && digits.startsWith("0")) return digits.slice(-10);
+  return digits;
+}
+
 /** Bots fill every field they find; this one is hidden from people. */
 export const HONEYPOT_FIELD = "company_website";
 

@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { sendMail, enquiryMail } from "@/lib/mail";
 import {
   checkEnquiryLimits,
+  phoneKey,
   HONEYPOT_FIELD,
   MIN_FILL_MS,
 } from "@/lib/rate-limit";
@@ -94,8 +95,12 @@ export async function submitLead(
     ? (interestRaw as Interest)
     : "GENERAL";
 
-  // 3. Rate limits, keyed on the normalised phone so formatting can't evade them.
-  const verdict = checkEnquiryLimits({ ip: await clientIp(), phone: digits });
+  // 3. Rate limits, keyed on the canonical phone so re-typing it another way
+  //    does not mint a fresh bucket.
+  const verdict = checkEnquiryLimits({
+    ip: await clientIp(),
+    phone: phoneKey(phone),
+  });
   if (!verdict.ok) {
     return { ok: false, message: verdict.reason };
   }
