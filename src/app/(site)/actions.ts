@@ -27,10 +27,24 @@ function clamp(value: FormDataEntryValue | null, max: number): string {
   return String(value ?? "").trim().slice(0, max);
 }
 
+/**
+ * SECURITY ASSUMPTION: the host overwrites x-forwarded-for.
+ *
+ * x-forwarded-for is a client→proxy chain, and its leftmost entry is only the
+ * real caller when the outermost edge replaces whatever the client sent. Vercel
+ * does exactly that, so the first entry is trustworthy there.
+ *
+ * On a self-hosted box this is NOT automatic. If a reverse proxy (nginx, Caddy,
+ * Traefik) merely appends, anyone can send their own x-forwarded-for and get a
+ * fresh bucket on every request, defeating the per-IP limits entirely. Configure
+ * the proxy to set — not append — the header before trusting this.
+ *
+ * A CDN in front fails the other way: every visitor arrives as the CDN's IP, so
+ * one bucket is shared by everyone and real patients get blocked.
+ */
 async function clientIp(): Promise<string> {
   const h = await headers();
   const forwarded = h.get("x-forwarded-for");
-  // x-forwarded-for is a client→proxy chain; the first entry is the caller.
   return forwarded?.split(",")[0]?.trim() || h.get("x-real-ip") || "unknown";
 }
 
