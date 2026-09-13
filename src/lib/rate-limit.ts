@@ -12,6 +12,28 @@
  * Turnstile (still no database) rather than a bigger in-memory table.
  */
 
+import { createHmac, randomBytes } from "node:crypto";
+
+/**
+ * Per-process key for identifying callers without holding their phone numbers.
+ *
+ * A bare hash would be no protection: a 10-digit number is only 10^10
+ * possibilities, which is minutes of brute force. Keying the hash with a secret
+ * removes that. The secret is random per process and never persisted, which is
+ * exactly the right lifetime — buckets live in this process's memory and die
+ * with it, so the key never needs to survive a restart either.
+ */
+const IDENTITY_KEY = randomBytes(32);
+
+/**
+ * One-way identity for a caller. The limiter only ever compares for equality,
+ * so it has no reason to keep the value itself: a heap dump or crash report
+ * then reveals nothing about who enquired.
+ */
+export function identify(value: string): string {
+  return createHmac("sha256", IDENTITY_KEY).update(value).digest("base64url");
+}
+
 type Hit = { count: number; resetAt: number };
 
 const buckets = new Map<string, Hit>();
@@ -50,17 +72,17 @@ export function checkEnquiryLimits(opts: {
   ip: string;
   phone: string;
 }): LimitVerdict {
-  if (!take(`phone:${opts.phone}`, 2, 60 * MINUTE)) {
+  if (!take(`phone:${identify(opts.phone)}`, 2, 60 * MINUTE)) {
     return {
       ok: false,
       reason:
         "We've already received your enquiry — our team will call you shortly.",
     };
   }
-  if (!take(`ip:${opts.ip}`, 3, 10 * MINUTE)) {
+  if (!take(`ip:${identify(opts.ip)}`, 3, 10 * MINUTE)) {
     return { ok: false, reason: "Too many enquiries just now. Please try again in a few minutes." };
   }
-  if (!take(`ip-day:${opts.ip}`, 10, 24 * 60 * MINUTE)) {
+  if (!take(`ip-day:${identify(opts.ip)}`, 10, 24 * 60 * MINUTE)) {
     return { ok: false, reason: "Too many enquiries from this connection today. Please call us instead." };
   }
   if (!take("global", 40, 60 * MINUTE)) {
@@ -87,11 +109,3 @@ export function phoneKey(raw: string): string {
   return digits;
 }
 
-/** Bots fill every field they find; this one is hidden from people. */
-export const HONEYPOT_FIELD = "company_website";
-
-/**
- * Milliseconds a human needs, at minimum, to read three fields and type into
- * them. Anything faster is a script posting straight at the action.
- */
-export const MIN_FILL_MS = 3_000;

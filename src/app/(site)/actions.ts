@@ -2,12 +2,8 @@
 
 import { headers } from "next/headers";
 import { sendMail, enquiryMail } from "@/lib/mail";
-import {
-  checkEnquiryLimits,
-  phoneKey,
-  HONEYPOT_FIELD,
-  MIN_FILL_MS,
-} from "@/lib/rate-limit";
+import { checkEnquiryLimits, phoneKey } from "@/lib/rate-limit";
+import { HONEYPOT_FIELD, MIN_FILL_MS } from "@/lib/enquiry-fields";
 
 const INTERESTS = [
   "CONSULTATION",

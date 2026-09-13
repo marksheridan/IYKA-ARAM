@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { HONEYPOT_FIELD } from "@/lib/rate-limit";
+import { HONEYPOT_FIELD } from "@/lib/enquiry-fields";
 
 /**
  * The two hidden fields every public enquiry form carries.
