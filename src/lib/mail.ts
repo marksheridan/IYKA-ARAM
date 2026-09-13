@@ -14,7 +14,10 @@ import { business } from "@/content/site";
  * so the site works end-to-end before the credentials exist.
  */
 const SMTP_USER = process.env.SMTP_USER;
-const SMTP_PASS = process.env.SMTP_PASS;
+// Google shows App Passwords as "abcd efgh ijkl mnop"; people paste them with
+// the spaces. Gmail only accepts the 16 characters, so strip whitespace here
+// rather than making everyone remember to.
+const SMTP_PASS = process.env.SMTP_PASS?.replace(/\s/g, "");
 const MAIL_TO = process.env.MAIL_TO ?? business.email;
 
 export function isMailConfigured(): boolean {
