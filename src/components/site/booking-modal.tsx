@@ -26,6 +26,8 @@ export function BookingModal({
     null,
   );
 
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => {
@@ -33,6 +35,14 @@ export function BookingModal({
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+
+    /* Move focus into the dialog. Without this a keyboard or screen-reader user
+       opens the modal and their focus is still on the page behind it. */
+    const first = panelRef.current?.querySelector<HTMLElement>(
+      "input:not([type=hidden]):not([tabindex='-1'])",
+    );
+    first?.focus();
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -50,6 +60,7 @@ export function BookingModal({
       aria-label="Booking and enquiry"
     >
       <div
+        ref={panelRef}
         className="animate-fade-in-up w-full max-w-lg rounded-t-2xl bg-cream p-6 shadow-2xl sm:rounded-2xl sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >

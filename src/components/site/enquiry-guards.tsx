@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { HONEYPOT_FIELD } from "@/lib/rate-limit";
 
 /**
@@ -9,24 +9,26 @@ import { HONEYPOT_FIELD } from "@/lib/rate-limit";
  * - a honeypot input that people never see and bots fill in
  * - the time the form was rendered, so the server can reject instant submits
  *
- * `rendered_at` is set in an effect rather than at module scope so it reflects
- * when this visitor opened the form, not when the page was built or cached.
+ * The timestamp is written straight to the input in an effect rather than held
+ * in state: it must reflect when this visitor opened the form (not when the
+ * page was built or served from cache), and nothing needs to re-render when it
+ * changes.
  */
 export function EnquiryGuards() {
-  const [renderedAt, setRenderedAt] = useState("");
-  const ref = useRef<HTMLInputElement>(null);
+  const stampRef = useRef<HTMLInputElement>(null);
 
-  useEffect(() => setRenderedAt(String(Date.now())), []);
+  useEffect(() => {
+    if (stampRef.current) stampRef.current.value = String(Date.now());
+  }, []);
 
   return (
     <>
-      <input type="hidden" name="rendered_at" value={renderedAt} />
+      <input ref={stampRef} type="hidden" name="rendered_at" defaultValue="" />
       <div aria-hidden="true" className="hidden">
         <label htmlFor={HONEYPOT_FIELD}>
           Company website (leave this empty)
         </label>
         <input
-          ref={ref}
           id={HONEYPOT_FIELD}
           name={HONEYPOT_FIELD}
           type="text"
