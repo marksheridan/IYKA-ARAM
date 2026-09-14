@@ -1,0 +1,732 @@
+<title>IYKA Droplet Runbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  /* ── Light palette: complete definition lives on bare :root ─────────────── */
+  :root {
+    --paper:      #f1f4f0;
+    --surface:    #fbfcfa;
+    --sunken:     #e6ebe4;
+    --ink:        #16201a;
+    --ink-soft:   #4a5850;
+    --ink-faint:  #78867d;
+    --rule:       #d3dbd0;
+    --rule-soft:  #e2e8e0;
+
+    --forest:     #1f4030;
+    --forest-lit: #2d5a43;
+    --gold:       #9a7414;
+    --gold-bg:    #fbf4e0;
+    --brick:      #8f3021;
+    --brick-bg:   #fbeeeb;
+
+    --code-bg:    #16201a;
+    --code-ink:   #dce5dd;
+    --code-dim:   #7d8f83;
+    --code-lit:   #d9b75a;
+
+    --shadow: 0 1px 2px rgba(22,32,26,.05), 0 8px 24px -12px rgba(22,32,26,.14);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:     #0f1512;
+      --surface:   #161e1a;
+      --sunken:    #1c2621;
+      --ink:       #e3ebe4;
+      --ink-soft:  #a3b2a8;
+      --ink-faint: #75857a;
+      --rule:      #27332c;
+      --rule-soft: #1f2a24;
+
+      --forest:     #7fc9a0;
+      --forest-lit: #9ad9b6;
+      --gold:       #d9b75a;
+      --gold-bg:    #221d0f;
+      --brick:      #e08a76;
+      --brick-bg:   #26140f;
+
+      --code-bg:   #0a0f0c;
+      --code-ink:  #d3ddd5;
+      --code-dim:  #6d7e73;
+      --code-lit:  #d9b75a;
+
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.6);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:     #0f1512;
+    --surface:   #161e1a;
+    --sunken:    #1c2621;
+    --ink:       #e3ebe4;
+    --ink-soft:  #a3b2a8;
+    --ink-faint: #75857a;
+    --rule:      #27332c;
+    --rule-soft: #1f2a24;
+
+    --forest:     #7fc9a0;
+    --forest-lit: #9ad9b6;
+    --gold:       #d9b75a;
+    --gold-bg:    #221d0f;
+    --brick:      #e08a76;
+    --brick-bg:   #26140f;
+
+    --code-bg:   #0a0f0c;
+    --code-ink:  #d3ddd5;
+    --code-dim:  #6d7e73;
+    --code-lit:  #d9b75a;
+
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 30px -14px rgba(0,0,0,.6);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 24px 96px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0 56px;
+  }
+  @media (min-width: 1000px) {
+    .wrap { grid-template-columns: 214px minmax(0, 1fr); }
+  }
+
+  /* ── Masthead ───────────────────────────────────────────────────────────── */
+  .masthead {
+    grid-column: 1 / -1;
+    padding: 72px 0 40px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(2.1rem, 5.2vw, 3.15rem);
+    line-height: 1.05;
+    letter-spacing: -.025em;
+    font-weight: 600;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  .standfirst {
+    font-size: 1.0625rem;
+    color: var(--ink-soft);
+    max-width: 62ch;
+    margin: 0 0 30px;
+  }
+  .facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .fact {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    padding: 6px 11px;
+    border: 1px solid var(--rule);
+    border-radius: 3px;
+    background: var(--surface);
+    color: var(--ink-soft);
+  }
+  .fact b { color: var(--ink); font-weight: 600; }
+
+  /* ── Contents rail ──────────────────────────────────────────────────────── */
+  .rail { display: none; }
+  @media (min-width: 1000px) {
+    .rail {
+      display: block;
+      grid-column: 1;
+      align-self: start;
+      position: sticky;
+      top: 28px;
+    }
+  }
+  .rail h2 {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11px;
+    letter-spacing: .15em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+  .rail ol { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .rail a {
+    display: flex;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    text-decoration: none;
+    padding: 3px 0;
+    line-height: 1.4;
+  }
+  .rail a:hover { color: var(--forest); }
+  .rail a:focus-visible { outline: 2px solid var(--forest); outline-offset: 3px; border-radius: 2px; }
+  .rail .n {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    font-variant-numeric: tabular-nums;
+    padding-top: 1px;
+  }
+
+  main { grid-column: 1 / -1; min-width: 0; }
+  @media (min-width: 1000px) { main { grid-column: 2; } }
+
+  /* ── Steps ──────────────────────────────────────────────────────────────── */
+  .step { margin: 0 0 52px; scroll-margin-top: 24px; }
+  .step-head {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  .step-n {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 12px;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    color: var(--paper);
+    background: var(--forest);
+    border-radius: 3px;
+    padding: 3px 8px;
+    flex: none;
+    letter-spacing: .02em;
+  }
+  :root[data-theme="dark"] .step-n,
+  :root:not([data-theme="light"]) .step-n { color: #0f1512; }
+  @media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .step-n { color: var(--paper); }
+  }
+  h2.step-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    letter-spacing: -.016em;
+    margin: 0;
+    line-height: 1.25;
+    text-wrap: balance;
+  }
+  .step p { max-width: 66ch; margin: 0 0 14px; }
+  .step p:last-child { margin-bottom: 0; }
+  .step ul { max-width: 66ch; margin: 0 0 14px; padding-left: 20px; }
+  .step li { margin-bottom: 6px; }
+  .step li::marker { color: var(--ink-faint); }
+
+  h3 {
+    font-size: .95rem;
+    font-weight: 600;
+    margin: 26px 0 10px;
+    letter-spacing: -.006em;
+  }
+
+  a { color: var(--forest); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; border-radius: 2px; }
+
+  code:not(pre code) {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: .855em;
+    background: var(--sunken);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 1px 5px;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  /* ── Command blocks ─────────────────────────────────────────────────────── */
+  .cmd {
+    background: var(--code-bg);
+    border-radius: 6px;
+    margin: 0 0 16px;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+  }
+  .cmd-label {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    color: var(--code-dim);
+    padding: 9px 16px 0;
+  }
+  .cmd pre {
+    margin: 0;
+    padding: 12px 16px 15px;
+    overflow-x: auto;
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 13px;
+    line-height: 1.72;
+    color: var(--code-ink);
+    tab-size: 2;
+  }
+  .cmd pre::-webkit-scrollbar { height: 9px; }
+  .cmd pre::-webkit-scrollbar-thumb { background: #33443a; border-radius: 5px; }
+  .cmd .p { color: var(--code-lit); user-select: none; }
+  .cmd .c { color: var(--code-dim); font-style: italic; }
+
+  /* ── Callouts ───────────────────────────────────────────────────────────── */
+  .note {
+    border-left: 3px solid var(--gold);
+    background: var(--gold-bg);
+    border-radius: 0 5px 5px 0;
+    padding: 15px 18px;
+    margin: 0 0 18px;
+    max-width: 68ch;
+  }
+  .note.stop { border-left-color: var(--brick); background: var(--brick-bg); }
+  .note-t {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--gold);
+    margin: 0 0 7px;
+  }
+  .note.stop .note-t { color: var(--brick); }
+  .note p { margin: 0 0 9px; font-size: .93rem; max-width: none; }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* ── Verify table ───────────────────────────────────────────────────────── */
+  .tablewrap { overflow-x: auto; margin: 0 0 18px; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .9rem;
+    min-width: 440px;
+  }
+  th, td {
+    text-align: left;
+    padding: 10px 14px 10px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top;
+  }
+  th {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    border-bottom-color: var(--rule);
+  }
+  td code { white-space: nowrap; }
+
+  /* ── Closing ────────────────────────────────────────────────────────────── */
+  .outro {
+    margin-top: 56px;
+    padding-top: 28px;
+    border-top: 1px solid var(--rule);
+    color: var(--ink-faint);
+    font-size: .875rem;
+    max-width: 66ch;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+  }
+  html { scroll-behavior: smooth; }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">Phase 1 · Production deployment</p>
+    <h1>Putting IYKA-ARAM on a DigitalOcean droplet</h1>
+    <p class="standfirst">
+      From an empty account to the site serving over HTTPS from Bangalore. Fourteen steps,
+      roughly ninety minutes, most of it waiting on installs. Every config file referenced
+      here is committed in <code>deploy/</code>.
+    </p>
+    <div class="facts">
+      <span class="fact"><b>Ubuntu</b> 24.04 LTS</span>
+      <span class="fact"><b>Region</b> BLR1 Bangalore</span>
+      <span class="fact"><b>Size</b> 2 GB / 1 vCPU · $12</span>
+      <span class="fact"><b>Node</b> 22 LTS</span>
+      <span class="fact"><b>Runtime</b> next start + nginx</span>
+    </div>
+  </header>
+
+  <nav class="rail" aria-label="Steps">
+    <h2>Steps</h2>
+    <ol>
+      <li><a href="#s1"><span class="n">01</span><span>Create the droplet</span></a></li>
+      <li><a href="#s2"><span class="n">02</span><span>First login</span></a></li>
+      <li><a href="#s3"><span class="n">03</span><span>Deploy user</span></a></li>
+      <li><a href="#s4"><span class="n">04</span><span>Firewall</span></a></li>
+      <li><a href="#s5"><span class="n">05</span><span>Swap</span></a></li>
+      <li><a href="#s6"><span class="n">06</span><span>Node, nginx, git</span></a></li>
+      <li><a href="#s7"><span class="n">07</span><span>Clone the repo</span></a></li>
+      <li><a href="#s8"><span class="n">08</span><span>Secrets</span></a></li>
+      <li><a href="#s9"><span class="n">09</span><span>First build</span></a></li>
+      <li><a href="#s10"><span class="n">10</span><span>Run as a service</span></a></li>
+      <li><a href="#s11"><span class="n">11</span><span>nginx</span></a></li>
+      <li><a href="#s12"><span class="n">12</span><span>Point the domain</span></a></li>
+      <li><a href="#s13"><span class="n">13</span><span>HTTPS</span></a></li>
+      <li><a href="#s14"><span class="n">14</span><span>Verify</span></a></li>
+      <li><a href="#after"><span class="n">→</span><span>Deploying again</span></a></li>
+      <li><a href="#phase2"><span class="n">→</span><span>Phase 2</span></a></li>
+    </ol>
+  </nav>
+
+  <main>
+
+    <!-- 1 -->
+    <section class="step" id="s1">
+      <div class="step-head"><span class="step-n">01</span><h2 class="step-title">Create the droplet</h2></div>
+      <p>In the DigitalOcean console: <b>Create → Droplets</b>.</p>
+      <ul>
+        <li><b>Region</b> — Bangalore (BLR1). This is the whole reason for choosing a droplet over Vercel: it is far closer to Shillong than Singapore.</li>
+        <li><b>Image</b> — Ubuntu 24.04 (LTS) x64</li>
+        <li><b>Type</b> — Basic → Regular → <b>2 GB RAM / 1 vCPU / $12</b></li>
+        <li><b>Authentication</b> — SSH key, not password. Paste your <code>~/.ssh/id_ed25519.pub</code>; if you have no key, create one with <code>ssh-keygen -t ed25519</code>.</li>
+        <li><b>Hostname</b> — <code>iyka-web</code></li>
+      </ul>
+      <div class="note stop">
+        <p class="note-t">Do not take the $6 droplet</p>
+        <p>Building this app needs roughly 2 GB of memory. On the 1 GB box the Next build is
+        killed by the kernel partway through, and the error it leaves behind looks nothing like
+        an out-of-memory problem. Step 5 adds swap as a second safety net.</p>
+      </div>
+      <p>Note the IPv4 address once it finishes provisioning. It appears below as <code>DROPLET_IP</code>.</p>
+    </section>
+
+    <!-- 2 -->
+    <section class="step" id="s2">
+      <div class="step-head"><span class="step-n">02</span><h2 class="step-title">First login and updates</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">from your laptop</div>
+<pre><span class="p">$</span> ssh root@DROPLET_IP
+
+<span class="p">#</span> apt update &amp;&amp; apt upgrade -y
+<span class="p">#</span> apt install -y curl git ufw</pre>
+      </div>
+      <p>If the upgrade replaces the kernel it may ask about restarting services — accept the defaults, then reboot with <code>reboot</code> and log back in after a minute.</p>
+    </section>
+
+    <!-- 3 -->
+    <section class="step" id="s3">
+      <div class="step-head"><span class="step-n">03</span><h2 class="step-title">Create the deploy user</h2></div>
+      <p>The site should not run as root. This user owns the code and the process; it gets exactly one sudo privilege, to restart its own service.</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> adduser --disabled-password --gecos "" iyka
+
+<span class="p">#</span> <span class="c"># carry your SSH key over so you can log in directly</span>
+<span class="p">#</span> mkdir -p /home/iyka/.ssh
+<span class="p">#</span> cp /root/.ssh/authorized_keys /home/iyka/.ssh/
+<span class="p">#</span> chown -R iyka:iyka /home/iyka/.ssh
+<span class="p">#</span> chmod 700 /home/iyka/.ssh &amp;&amp; chmod 600 /home/iyka/.ssh/authorized_keys
+
+<span class="p">#</span> <span class="c"># one narrow sudo right, so deploy.sh can restart the app unattended</span>
+<span class="p">#</span> echo 'iyka ALL=(ALL) NOPASSWD: /bin/systemctl restart iyka-web' \
+      &gt; /etc/sudoers.d/iyka-web
+<span class="p">#</span> chmod 440 /etc/sudoers.d/iyka-web
+<span class="p">#</span> visudo -c</pre>
+      </div>
+      <p><code>visudo -c</code> must print <i>parsed OK</i>. A malformed sudoers file can lock you out of sudo entirely, so never skip that check.</p>
+    </section>
+
+    <!-- 4 -->
+    <section class="step" id="s4">
+      <div class="step-head"><span class="step-n">04</span><h2 class="step-title">Close the firewall</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> ufw allow OpenSSH
+<span class="p">#</span> ufw allow 'Nginx Full'
+<span class="p">#</span> ufw enable
+<span class="p">#</span> ufw status</pre>
+      </div>
+      <div class="note">
+        <p class="note-t">Order matters</p>
+        <p>Allow OpenSSH <i>before</i> <code>ufw enable</code>. Reversed, the firewall comes up
+        denying port 22 and closes your own connection — recoverable only through the
+        DigitalOcean web console.</p>
+      </div>
+      <p>Port 3000 is deliberately absent. Next binds to <code>127.0.0.1</code> only and is reachable exclusively through nginx.</p>
+    </section>
+
+    <!-- 5 -->
+    <section class="step" id="s5">
+      <div class="step-head"><span class="step-n">05</span><h2 class="step-title">Add swap</h2></div>
+      <p>2 GB of RAM builds this app, but without much headroom. Swap turns a hard out-of-memory kill into a slow build, which is a far better failure.</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> fallocate -l 2G /swapfile
+<span class="p">#</span> chmod 600 /swapfile
+<span class="p">#</span> mkswap /swapfile &amp;&amp; swapon /swapfile
+<span class="p">#</span> echo '/swapfile none swap sw 0 0' &gt;&gt; /etc/fstab
+
+<span class="p">#</span> <span class="c"># prefer RAM; only reach for swap under real pressure</span>
+<span class="p">#</span> sysctl vm.swappiness=10
+<span class="p">#</span> echo 'vm.swappiness=10' &gt;&gt; /etc/sysctl.conf
+<span class="p">#</span> free -h</pre>
+      </div>
+    </section>
+
+    <!-- 6 -->
+    <section class="step" id="s6">
+      <div class="step-head"><span class="step-n">06</span><h2 class="step-title">Install Node, nginx and certbot</h2></div>
+      <p>Next 16 requires Node ≥ 20.9. Ubuntu's own package is older, so take it from NodeSource.</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> curl -fsSL https://deb.nodesource.com/setup_22.x | bash -
+<span class="p">#</span> apt install -y nodejs nginx certbot python3-certbot-nginx
+
+<span class="p">#</span> node -v   <span class="c"># expect v22.x</span>
+<span class="p">#</span> npm -v</pre>
+      </div>
+    </section>
+
+    <!-- 7 -->
+    <section class="step" id="s7">
+      <div class="step-head"><span class="step-n">07</span><h2 class="step-title">Clone the repository</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as root, then as iyka</div>
+<pre><span class="p">#</span> mkdir -p /srv/iyka-web &amp;&amp; chown iyka:iyka /srv/iyka-web
+<span class="p">#</span> su - iyka
+
+<span class="p">$</span> git clone https://github.com/marksheridan/IYKA-ARAM.git /srv/iyka-web
+<span class="p">$</span> cd /srv/iyka-web &amp;&amp; git log -1 --oneline</pre>
+      </div>
+      <div class="note">
+        <p class="note-t">If the repository is private</p>
+        <p>HTTPS cloning will prompt for credentials the server cannot supply. Generate a key
+        on the droplet with <code>ssh-keygen -t ed25519 -C iyka-droplet</code>, add the public
+        half to the repo under <b>Settings → Deploy keys</b> (read-only is enough), and clone
+        the <code>git@github.com:…</code> URL instead.</p>
+      </div>
+    </section>
+
+    <!-- 8 -->
+    <section class="step" id="s8">
+      <div class="step-head"><span class="step-n">08</span><h2 class="step-title">Put the secrets in place</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as iyka</div>
+<pre><span class="p">$</span> cp /srv/iyka-web/deploy/env.production.example /srv/iyka-web/.env
+<span class="p">$</span> chmod 600 /srv/iyka-web/.env
+<span class="p">$</span> nano /srv/iyka-web/.env</pre>
+      </div>
+      <p>The template lists every variable with a note on where its value comes from. For Phase 1 the ones that matter are:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Variable</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td><code>SMTP_USER</code></td><td>The clinic mailbox — <code>yonawellnessandhealthcare@gmail.com</code>, not a personal account</td></tr>
+            <tr><td><code>SMTP_PASS</code></td><td>A 16-character Google App Password generated on <i>that</i> account</td></tr>
+            <tr><td><code>MAIL_TO</code></td><td>Same clinic address — it mails itself</td></tr>
+            <tr><td><code>ADMIN_PASSWORD</code></td><td>Backoffice password</td></tr>
+            <tr><td><code>ADMIN_SECRET</code></td><td><code>openssl rand -base64 32</code></td></tr>
+            <tr><td><code>DATABASE_URL</code></td><td>Neon connection string. Unused by Phase 1 pages, still wanted by <code>/api/health</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note stop">
+        <p class="note-t">No credentials, no bookings</p>
+        <p>With <code>SMTP_PASS</code> empty the site still works and still accepts enquiries —
+        but it prints them to the system journal instead of emailing anyone. Nobody at the
+        clinic finds out, and patient phone numbers accumulate in the logs in plain text.
+        Fill this in before announcing the site.</p>
+      </div>
+    </section>
+
+    <!-- 9 -->
+    <section class="step" id="s9">
+      <div class="step-head"><span class="step-n">09</span><h2 class="step-title">First install and build</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as iyka</div>
+<pre><span class="p">$</span> cd /srv/iyka-web
+<span class="p">$</span> npm ci
+<span class="p">$</span> npm run build</pre>
+      </div>
+      <p>The build takes two to four minutes on this box. It should end with the route table
+      and no <code>/booking</code>, <code>/store</code> or <code>/blog</code> surprises. Confirm it runs before going further:</p>
+      <div class="cmd">
+        <div class="cmd-label">as iyka</div>
+<pre><span class="p">$</span> npm start &amp;
+<span class="p">$</span> curl -s -o /dev/null -w '%{http_code}\n' http://127.0.0.1:3000/
+<span class="p">$</span> kill %1</pre>
+      </div>
+      <p>A <code>200</code> means the app is sound and everything after this is plumbing.</p>
+    </section>
+
+    <!-- 10 -->
+    <section class="step" id="s10">
+      <div class="step-head"><span class="step-n">10</span><h2 class="step-title">Run it as a service</h2></div>
+      <p>systemd keeps the site up across crashes and reboots. The unit is committed at <code>deploy/iyka-web.service</code>.</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> cp /srv/iyka-web/deploy/iyka-web.service /etc/systemd/system/
+<span class="p">#</span> systemctl daemon-reload
+<span class="p">#</span> systemctl enable --now iyka-web
+<span class="p">#</span> systemctl status iyka-web --no-pager</pre>
+      </div>
+      <p>Expect <i>active (running)</i>. Live logs — including simulated enquiry emails while SMTP is unset — come from:</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> journalctl -u iyka-web -f</pre>
+      </div>
+    </section>
+
+    <!-- 11 -->
+    <section class="step" id="s11">
+      <div class="step-head"><span class="step-n">11</span><h2 class="step-title">Put nginx in front</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> cp /srv/iyka-web/deploy/nginx.conf /etc/nginx/sites-available/iyka-aram
+<span class="p">#</span> ln -s /etc/nginx/sites-available/iyka-aram /etc/nginx/sites-enabled/
+<span class="p">#</span> rm -f /etc/nginx/sites-enabled/default
+
+<span class="p">#</span> <span class="c"># nginx reads the static files directly, so it needs to traverse the path</span>
+<span class="p">#</span> chmod o+x /srv /srv/iyka-web
+
+<span class="p">#</span> nginx -t &amp;&amp; systemctl reload nginx</pre>
+      </div>
+      <div class="note">
+        <p class="note-t">The one line that carries security weight</p>
+        <p>The supplied config sets <code>proxy_set_header X-Forwarded-For $remote_addr;</code> —
+        <b>set</b>, not append. Most nginx examples use
+        <code>$proxy_add_x_forwarded_for</code>, which <i>adds to</i> whatever the caller sent.
+        Under that version, anyone can put a fabricated address in front of the chain, land in a
+        fresh rate-limit bucket on every request, and walk straight past the per-IP limits on the
+        booking form. <code>$remote_addr</code> is the real TCP peer and cannot be forged.</p>
+        <p>The reasoning is recorded in <code>src/app/(site)/actions.ts</code> beside the code
+        that depends on it. If you ever put Cloudflare in front of this droplet, revisit both —
+        with a CDN in the path, every visitor arrives as the CDN's address instead.</p>
+      </div>
+      <p>The site should now answer on <code>http://DROPLET_IP</code>.</p>
+    </section>
+
+    <!-- 12 -->
+    <section class="step" id="s12">
+      <div class="step-head"><span class="step-n">12</span><h2 class="step-title">Point the domain</h2></div>
+      <p>At your registrar for <code>iyka-aram.com</code>, create two A records:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>Type</th><th>Host</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td><code>A</code></td><td><code>@</code></td><td><code>DROPLET_IP</code></td></tr>
+            <tr><td><code>A</code></td><td><code>www</code></td><td><code>DROPLET_IP</code></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Wait for it to propagate before attempting the certificate — Let's Encrypt validates by fetching over HTTP, and fails if DNS has not caught up.</p>
+      <div class="cmd">
+        <div class="cmd-label">from your laptop</div>
+<pre><span class="p">$</span> dig +short iyka-aram.com</pre>
+      </div>
+      <div class="note">
+        <p class="note-t">This domain is baked into the build</p>
+        <p><code>sitemap.xml</code> and <code>robots.txt</code> are generated from
+        <code>business.url</code> in <code>src/content/site.ts</code>, which is set to
+        <code>https://iyka-aram.com</code>. Deploy under any other hostname and the sitemap
+        will advertise URLs that do not resolve.</p>
+      </div>
+    </section>
+
+    <!-- 13 -->
+    <section class="step" id="s13">
+      <div class="step-head"><span class="step-n">13</span><h2 class="step-title">Turn on HTTPS</h2></div>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> certbot --nginx -d iyka-aram.com -d www.iyka-aram.com
+<span class="p">#</span> systemctl status certbot.timer --no-pager</pre>
+      </div>
+      <p>Choose redirect-to-HTTPS when asked. Certbot edits the site config in place, adding the
+      TLS block and the redirect. Renewal is automatic through <code>certbot.timer</code>; confirm it
+      works without waiting ninety days:</p>
+      <div class="cmd">
+        <div class="cmd-label">as root</div>
+<pre><span class="p">#</span> certbot renew --dry-run</pre>
+      </div>
+    </section>
+
+    <!-- 14 -->
+    <section class="step" id="s14">
+      <div class="step-head"><span class="step-n">14</span><h2 class="step-title">Verify what shipped</h2></div>
+      <p>Phase 1 is a narrow surface on purpose. These are the states to confirm:</p>
+      <div class="tablewrap">
+        <table>
+          <thead><tr><th>URL</th><th>Expected</th></tr></thead>
+          <tbody>
+            <tr><td><code>/</code> <code>/about</code> <code>/services</code> <code>/products</code></td><td>200</td></tr>
+            <tr><td><code>/gallery</code> <code>/podcast</code> <code>/contact</code></td><td>200</td></tr>
+            <tr><td><code>/booking</code></td><td>404 — deleted, not hidden</td></tr>
+            <tr><td><code>/store</code> <code>/blog</code></td><td>307 → <code>/</code> (gated)</td></tr>
+            <tr><td><code>/admin</code></td><td>307 → <code>/admin/login</code></td></tr>
+            <tr><td><code>/mis</code></td><td>307 → <code>/login</code></td></tr>
+            <tr><td><code>POST /api/orders</code></td><td>404 JSON</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Then the part no script can check for you: open the live site, submit the
+      <b>Book a consultation</b> pop-up, and confirm the email arrives in the clinic inbox.
+      Submit twice more with the same number — the third should be refused with
+      <i>"We've already received your enquiry."</i> That single test exercises the whole Phase 1
+      pipeline: form, validation, rate limiting, SMTP.</p>
+    </section>
+
+    <!-- after -->
+    <section class="step" id="after">
+      <div class="step-head"><span class="step-n">→</span><h2 class="step-title">Deploying again, after this</h2></div>
+      <p>Every later deploy is one command from your laptop:</p>
+      <div class="cmd">
+        <div class="cmd-label">from your laptop</div>
+<pre><span class="p">$</span> ssh iyka@DROPLET_IP '/srv/iyka-web/deploy/deploy.sh'</pre>
+      </div>
+      <p>It fetches <code>origin/main</code>, runs <code>npm ci</code> and the build, restarts the
+      service, and then polls until the site actually answers — printing the last forty log lines
+      and exiting non-zero if it does not. A failed deploy tells you so rather than leaving you
+      guessing.</p>
+      <p>The site is unreachable for the two or three seconds systemd takes to restart. Removing
+      that blink means running two ports and switching nginx between them; for a clinic brochure
+      site it is not worth the complexity.</p>
+    </section>
+
+    <!-- phase 2 -->
+    <section class="step" id="phase2">
+      <div class="step-head"><span class="step-n">→</span><h2 class="step-title">When Phase 2 arrives</h2></div>
+      <p>The store and blog are already built and already on the server — they are held shut by
+      environment variables, not missing code. Opening them is four edits and a deploy:</p>
+      <ul>
+        <li>Set <code>STORE_LIVE="true"</code> and <code>BLOG_LIVE="true"</code> in <code>/srv/iyka-web/.env</code></li>
+        <li>Confirm <code>DATABASE_URL</code> points at a live Neon database</li>
+        <li>Restore the two links in <code>src/components/site/site-footer.tsx</code> — the comment there names them exactly</li>
+        <li>Drop <code>/store</code> and <code>/blog</code> from the disallow list in <code>src/app/robots.ts</code></li>
+      </ul>
+      <p>Then redeploy. If you would rather host Postgres on this droplet than pay for Neon, that
+      is a reasonable call at this scale — but it makes database backups your responsibility, and
+      an unbacked-up clinic database is a worse problem than a monthly bill.</p>
+    </section>
+
+    <p class="outro">
+      Config files live in <code>deploy/</code> on <code>main</code>: <code>nginx.conf</code>,
+      <code>iyka-web.service</code>, <code>deploy.sh</code>, <code>env.production.example</code>.
+      Edit them in the repo rather than on the server, so the next deploy does not quietly
+      overwrite a fix you made in place.
+    </p>
+
+  </main>
+</div>

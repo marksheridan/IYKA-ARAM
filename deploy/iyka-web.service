@@ -1,0 +1,52 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# IYKA-ARAM — systemd unit
+#
+# Install to /etc/systemd/system/iyka-web.service, then:
+#   sudo systemctl daemon-reload
+#   sudo systemctl enable --now iyka-web
+# ─────────────────────────────────────────────────────────────────────────────
+
+[Unit]
+Description=IYKA-ARAM Wellness website (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=iyka
+Group=iyka
+WorkingDirectory=/srv/iyka-web
+
+# Next reads .env from the working directory itself. Deliberately NOT loaded
+# via EnvironmentFile= — systemd parses that file differently to dotenv and
+# would mangle values containing spaces, such as a Gmail App Password.
+Environment=NODE_ENV=production
+Environment=PORT=3000
+Environment=HOSTNAME=127.0.0.1
+
+ExecStart=/srv/iyka-web/node_modules/.bin/next start
+
+Restart=always
+RestartSec=5
+# Give a wedged process a chance to finish in-flight requests before SIGKILL.
+KillSignal=SIGTERM
+TimeoutStopSec=30
+
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=iyka-web
+
+# ── Hardening ────────────────────────────────────────────────────────────────
+# The app only ever reads its own directory; nothing it does needs the rest of
+# the filesystem, new privileges, or the kernel's device nodes.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/iyka-web/.next
+ProtectKernelTunables=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+
+[Install]
+WantedBy=multi-user.target
