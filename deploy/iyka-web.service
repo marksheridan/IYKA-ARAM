@@ -22,9 +22,10 @@ WorkingDirectory=/srv/iyka-web
 # would mangle values containing spaces, such as a Gmail App Password.
 Environment=NODE_ENV=production
 Environment=PORT=3000
-Environment=HOSTNAME=127.0.0.1
 
-ExecStart=/srv/iyka-web/node_modules/.bin/next start
+# Next's documented CLI default binds to 0.0.0.0. Bind explicitly to loopback
+# so port 3000 remains reachable only through nginx.
+ExecStart=/srv/iyka-web/node_modules/.bin/next start --hostname 127.0.0.1
 
 Restart=always
 RestartSec=5
