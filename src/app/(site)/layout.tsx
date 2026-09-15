@@ -9,11 +9,19 @@ export default function SiteLayout({
 }: {
   children: React.ReactNode;
 }) {
-  // The holding page is a single screen: no nav, no footer, and no booking
-  // modal, so none of that client JS ships. Every other public route
-  // redirects back to it.
+  // The holding page is a single screen with nowhere to navigate to — every
+  // other public route redirects back to it — so it drops the nav and footer.
+  //
+  // BookingProvider stays. The splash has no button that opens the modal, but
+  // the hidden pages are still prerendered at build time, and /gallery,
+  // /services and /podcast all render a BookButton, which throws without the
+  // context. Dropping the provider here breaks the build, not the page.
   if (COMING_SOON) {
-    return <main>{children}</main>;
+    return (
+      <BookingProvider>
+        <main>{children}</main>
+      </BookingProvider>
+    );
   }
 
   return (
