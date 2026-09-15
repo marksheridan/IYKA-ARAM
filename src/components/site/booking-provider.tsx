@@ -16,6 +16,15 @@ export function useBooking() {
   return ctx;
 }
 
+/**
+ * A BookButton can appear in a statically rendered page which Proxy redirects
+ * during pre-launch. Returning null there lets that page build without adding
+ * the booking modal to the holding-page layout.
+ */
+export function useOptionalBooking() {
+  return useContext(BookingContext);
+}
+
 export function BookingProvider({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   const [interest, setInterest] = useState<string>("GENERAL");

@@ -1,6 +1,6 @@
 "use client";
 
-import { useBooking } from "./booking-provider";
+import { useOptionalBooking } from "./booking-provider";
 import { cn } from "@/lib/utils";
 
 export function BookButton({
@@ -12,7 +12,14 @@ export function BookButton({
   interest?: string;
   className?: string;
 }) {
-  const { open } = useBooking();
+  const booking = useOptionalBooking();
+
+  // Pre-launch pages are redirected before a visitor can reach them, but Next
+  // still prerenders them during the build. They intentionally have no
+  // BookingProvider, so omit the otherwise-unreachable CTA in that pass.
+  if (!booking) return null;
+
+  const { open } = booking;
   return (
     <button
       onClick={() => open(interest)}
