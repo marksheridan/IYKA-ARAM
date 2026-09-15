@@ -3699,3 +3699,30 @@ button.pod-card {
     animation: none;
   }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+   PRE-LAUNCH HOLDING PAGE
+   Borrows the hero wholesale; only the pieces the splash adds are set here.
+   Remove this block along with src/lib/launch.ts once the full site is live.
+   ───────────────────────────────────────────────────────────────────────── */
+
+/* No fixed nav above the splash and no credential strip below it, so the
+   hero's insets — which exist to clear both — are not needed here. The copy
+   simply sits centred in the fold. */
+.cs-hero .v2-hero-content {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.cs-logo {
+  width: clamp(88px, 11vw, 132px);
+  height: auto;
+  margin-bottom: 2rem;
+}
+
+/* With nothing following it, the tagline reads better a little quieter and
+   held to a single line rather than the hero's wider measure. */
+.cs-sub {
+  margin-top: 1.5rem;
+  max-width: none;
+}

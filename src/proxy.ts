@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
+import { COMING_SOON, PRE_LAUNCH_HIDDEN } from "@/lib/launch";
 
 /**
  * Launch gates for the phased rollout.
@@ -21,6 +22,15 @@ const GATES = [
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+
+  // Before launch the splash at / stands in for the whole site, so the inner
+  // pages go back to it rather than being reachable by typed URL.
+  if (
+    COMING_SOON &&
+    PRE_LAUNCH_HIDDEN.some((p) => pathname === p || pathname.startsWith(`${p}/`))
+  ) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
 
   const blocked = GATES.some(
     (gate) =>
@@ -49,5 +59,14 @@ export const config = {
     "/blog/:path*",
     "/api/orders",
     "/api/orders/:path*",
+    // Pre-launch only; inert once COMING_SOON is unset.
+    "/about",
+    "/services",
+    "/products",
+    "/gallery",
+    "/gallery/:path*",
+    "/podcast",
+    "/podcast/:path*",
+    "/contact",
   ],
 };

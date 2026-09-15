@@ -1,3 +1,5 @@
+import { COMING_SOON } from "@/lib/launch";
+import { ComingSoon } from "@/components/site/coming-soon";
 import { Hero } from "@/components/site/hero";
 import { Mission } from "@/components/site/mission";
 import { Recognition } from "@/components/site/recognition";
@@ -14,6 +16,10 @@ import { CtaSection } from "@/components/site/cta-section";
 import { LocationSection } from "@/components/site/location-section";
 
 export default function HomePage() {
+  // Pre-launch, the splash IS the homepage. The full page below is untouched
+  // and returns the moment COMING_SOON is unset.
+  if (COMING_SOON) return <ComingSoon />;
+
   return (
     <>
       <Hero />
