@@ -15,11 +15,9 @@ const INTERESTS = [
 export function BookingModal({
   open,
   onClose,
-  defaultInterest = "GENERAL",
 }: {
   open: boolean;
   onClose: () => void;
-  defaultInterest?: string;
 }) {
   const [state, formAction, isPending] = useActionState<LeadState, FormData>(
     submitLead,
@@ -105,7 +103,7 @@ export function BookingModal({
               required
               placeholder="+91 …"
             />
-            <InterestSelect defaultValue={defaultInterest} />
+            <InterestSelect />
 
             {state && !state.ok && (
               <p className="text-sm text-red-700">{state.message}</p>
@@ -128,8 +126,11 @@ export function BookingModal({
   );
 }
 
-function InterestSelect({ defaultValue }: { defaultValue: string }) {
-  const initial = INTERESTS.find((i) => i.value === defaultValue) ?? INTERESTS[0];
+function InterestSelect() {
+  // GENERAL is the neutral starting point: the visitor tells us what they want
+  // rather than the button they happened to click deciding for them.
+  const initial =
+    INTERESTS.find((i) => i.value === "GENERAL") ?? INTERESTS[0];
   const [selected, setSelected] = useState(initial);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

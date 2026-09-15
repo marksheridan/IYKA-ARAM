@@ -210,7 +210,7 @@ export function GalleryClient() {
             Ready to begin your healing journey?
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
-            <BookButton interest="CONSULTATION" className="v2-btn v2-btn-gold bg-transparent text-[inherit]">Book a consultation</BookButton>
+            <BookButton className="v2-btn v2-btn-gold bg-transparent text-[inherit]">Book a consultation</BookButton>
             <a href="/" className="v2-btn v2-btn-outline-cream">Back to Home</a>
           </div>
         </div>

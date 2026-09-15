@@ -86,7 +86,6 @@ export default function ServicesPage() {
           </h2>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", justifyContent: "center" }}>
             <BookButton
-              interest="CONSULTATION"
               className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
             >
               Book a consultation

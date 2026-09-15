@@ -64,7 +64,6 @@ export function Hero() {
 
             <div className="v2-hero-actions v2-reveal v2-reveal-3">
               <BookButton
-                interest="CONSULTATION"
                 className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
               >
                 Book a consultation

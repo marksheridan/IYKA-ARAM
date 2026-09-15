@@ -38,7 +38,7 @@ export function BookingSection() {
               <span>Shillong, Meghalaya</span>
               <span>Mon – Sat, 9am – 6pm</span>
             </div>
-            <BookButton interest="OFFLINE_SESSION" className={goldBtn}>
+            <BookButton className={goldBtn}>
               Book a visit
             </BookButton>
           </Reveal>
@@ -59,7 +59,7 @@ export function BookingSection() {
               <span>Video Call</span>
               <span>All days, flexible hours</span>
             </div>
-            <BookButton interest="CONSULTATION" className={goldBtn}>
+            <BookButton className={goldBtn}>
               Book a consultation
             </BookButton>
           </Reveal>
@@ -79,7 +79,7 @@ export function BookingSection() {
               <span>Live + Recorded</span>
               <span>Beginner to Advanced</span>
             </div>
-            <BookButton interest="YOGA" className={goldBtn}>
+            <BookButton className={goldBtn}>
               Book a class
             </BookButton>
           </Reveal>
