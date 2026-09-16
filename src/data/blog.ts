@@ -83,7 +83,7 @@ At IYKA-ARAM, breathwork is integrated into our yoga and wellness sessions as bo
     date: "2026-07-02",
     author: "IYKA-ARAM Wellness Team",
     category: "Community",
-    coverImage: "/gallery/img11.jpg",
+    coverImage: "/gallery/img5.jpg",
     excerpt:
       "Healing is rarely a solo journey. We explore why practising alongside others — laughing, breathing, and moving together — amplifies the benefits of every wellness discipline.",
     content: "",
@@ -94,7 +94,7 @@ At IYKA-ARAM, breathwork is integrated into our yoga and wellness sessions as bo
     date: "2026-07-09",
     author: "IYKA-ARAM Wellness Team",
     category: "Yoga & Breathwork",
-    coverImage: "/gallery/img23.jpg",
+    coverImage: "/gallery/cork-mat-logo.jpg",
     excerpt:
       "A mudra is a seal — a precise arrangement of the fingers that redirects prana through the body's energy channels. Discover five accessible mudras and when to use them.",
     content: "",
@@ -105,7 +105,7 @@ At IYKA-ARAM, breathwork is integrated into our yoga and wellness sessions as bo
     date: "2026-07-16",
     author: "IYKA-ARAM Wellness Team",
     category: "Ayurveda",
-    coverImage: "/gallery/img17.jpg",
+    coverImage: "/dr-emidaka-bio.jpg",
     excerpt:
       "Walking into your first Ayurvedic consultation can feel unfamiliar. Here is a calm, practical guide to what our practitioners observe, ask, and recommend in that first session.",
     content: "",
@@ -116,7 +116,7 @@ At IYKA-ARAM, breathwork is integrated into our yoga and wellness sessions as bo
     date: "2026-07-23",
     author: "IYKA-ARAM Wellness Team",
     category: "Yoga & Breathwork",
-    coverImage: "/gallery/img20.jpg",
+    coverImage: "/gallery/cork-mat-rack.jpg",
     excerpt:
       "Yoga was never designed for the flexible or the young. We look at how mindful movement — adapted for every age, ability, and constitution — serves as one of the most democratic medicines available.",
     content: "",
