@@ -34,7 +34,6 @@ export function CtaSection() {
           </p>
           <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "0.5rem" }}>
             <BookButton
-              interest="GENERAL"
               className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
             >
               Book a consultation

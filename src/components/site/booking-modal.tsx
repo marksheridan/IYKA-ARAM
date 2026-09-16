@@ -2,6 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState } from "react";
 import { submitLead, type LeadState } from "@/app/(site)/actions";
+import { EnquiryGuards } from "./enquiry-guards";
 
 const INTERESTS = [
   { value: "CONSULTATION", label: "Functional Medicine Consultation" },
@@ -14,16 +15,16 @@ const INTERESTS = [
 export function BookingModal({
   open,
   onClose,
-  defaultInterest = "GENERAL",
 }: {
   open: boolean;
   onClose: () => void;
-  defaultInterest?: string;
 }) {
   const [state, formAction, isPending] = useActionState<LeadState, FormData>(
     submitLead,
     null,
   );
+
+  const panelRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -32,6 +33,14 @@ export function BookingModal({
     };
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+
+    /* Move focus into the dialog. Without this a keyboard or screen-reader user
+       opens the modal and their focus is still on the page behind it. */
+    const first = panelRef.current?.querySelector<HTMLElement>(
+      "input:not([type=hidden]):not([tabindex='-1'])",
+    );
+    first?.focus();
+
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -49,6 +58,7 @@ export function BookingModal({
       aria-label="Booking and enquiry"
     >
       <div
+        ref={panelRef}
         className="animate-fade-in-up w-full max-w-lg rounded-t-2xl bg-cream p-6 shadow-2xl sm:rounded-2xl sm:p-8"
         onClick={(e) => e.stopPropagation()}
       >
@@ -83,6 +93,8 @@ export function BookingModal({
           </div>
         ) : (
           <form action={formAction} className="mt-5 space-y-4">
+            <EnquiryGuards />
+            <input type="hidden" name="source" value="booking-modal" />
             <Field label="Full name" name="name" required placeholder="Your name" />
             <Field
               label="Phone (WhatsApp)"
@@ -91,7 +103,7 @@ export function BookingModal({
               required
               placeholder="+91 …"
             />
-            <InterestSelect defaultValue={defaultInterest} />
+            <InterestSelect />
 
             {state && !state.ok && (
               <p className="text-sm text-red-700">{state.message}</p>
@@ -114,8 +126,11 @@ export function BookingModal({
   );
 }
 
-function InterestSelect({ defaultValue }: { defaultValue: string }) {
-  const initial = INTERESTS.find((i) => i.value === defaultValue) ?? INTERESTS[0];
+function InterestSelect() {
+  // GENERAL is the neutral starting point: the visitor tells us what they want
+  // rather than the button they happened to click deciding for them.
+  const initial =
+    INTERESTS.find((i) => i.value === "GENERAL") ?? INTERESTS[0];
   const [selected, setSelected] = useState(initial);
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);

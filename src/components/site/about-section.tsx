@@ -91,7 +91,6 @@ export function AboutSection() {
 
             <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
               <BookButton
-                interest="CONSULTATION"
                 className="v2-btn v2-btn-gold bg-transparent text-[inherit]"
               >
                 Book a consultation
