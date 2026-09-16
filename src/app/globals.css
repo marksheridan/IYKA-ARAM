@@ -828,7 +828,13 @@ h3 em {
     to right,
     rgba(15, 33, 24, 0.85) 0%,
     rgba(15, 33, 24, 0.72) 55%,
-    rgba(15, 33, 24, 0.35) 95%
+    /* Through 66% the ramp is unchanged (0.62 here is what the old
+       0.72->0.35 line gave), so the measured title contrast still holds.
+       Past it there is no copy, so the tail runs all the way to zero —
+       it used to stop at 0.35 on the container edge, which cut a hard
+       vertical seam across the photo at the right rail. */
+    rgba(15, 33, 24, 0.62) 66%,
+    rgba(15, 33, 24, 0) 100%
   );
   -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);
   mask-image: linear-gradient(to bottom, transparent 0, #000 2.5rem, #000 calc(100% - 2.5rem), transparent 100%);

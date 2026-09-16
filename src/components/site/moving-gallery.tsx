@@ -20,13 +20,10 @@ type Shot = { src: string; tag: string; caption: string; alt: string };
    strongest images and close on the founder. Add or remove freely — the
    rail no longer needs a minimum count to hide a loop seam. */
 const galleryRow: Shot[] = [
-  { src: "/gallery/img11.jpg", tag: "Yoga Therapy", caption: "Joy in every session", alt: "Adults and a child laughing with arms raised during a group yoga session" },
-  { src: "/gallery/img17.jpg", tag: "Community", caption: "Community health screening", alt: "Practitioners running a health screening station at a community wellness camp" },
-  { src: "/gallery/img20.jpg", tag: "Yoga Therapy", caption: "Group therapeutic yoga", alt: "Participants seated in meditation on yoga mats in a bright hall" },
-  { src: "/gallery/img27.jpg", tag: "IYKA Learn", caption: "Breathwork & energetic anatomy", alt: "A YONA wellness event display board showing an energetic anatomy infographic and the five benefits of breathwork" },
-  { src: "/gallery/img9.jpg", tag: "IYKA Circle", caption: "Certificate ceremony", alt: "A participant receiving a certificate at an IYKA community event" },
-  { src: "/gallery/img23.jpg", tag: "Movement", caption: "Mindful movement", alt: "A smiling participant holding a mudra during a yoga session" },
-  { src: "/gallery/img8.jpg", tag: "Every Age", caption: "Wellness for all ages", alt: "A young girl on a colourful yoga mat during a wellness session" },
+  { src: "/gallery/img3.jpg", tag: "The Clinic", caption: "IYKA-ARAM clinic", alt: "The IYKA-ARAM clinic building viewed from the front steps" },
+  { src: "/gallery/img1.jpg", tag: "Shillong", caption: "Wellness with a view", alt: "The IYKA-ARAM clinic building and hillside view at sunset" },
+  { src: "/gallery/img4.jpg", tag: "Visitors", caption: "Welcoming guests", alt: "Visitors standing in front of the IYKA-ARAM clinic entrance" },
+  { src: "/gallery/img5.jpg", tag: "Community", caption: "Clinic community", alt: "A group photo outside the IYKA-ARAM clinic" },
   { src: "/dr-emidaka-bio.jpg", tag: "The Founder", caption: "Dr. Emidaka", alt: "Dr. Emidaka, founder of IYKA-ARAM, seated in the clinic garden in front of the veranda" },
 ];
 

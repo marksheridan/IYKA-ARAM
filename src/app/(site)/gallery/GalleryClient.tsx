@@ -8,14 +8,25 @@ const CATEGORIES = ["All", "Yoga & Wellness", "Events", "Products", "Team"] as c
 
 const PHOTOS = [
   { src: "/dr-emidaka-bio.jpg", caption: "Dr. Emidaka, Founder",            alt: "Dr. Emidaka, founder of Iyka-Aram, seated in the clinic garden in a navy blazer and white shirt, the veranda's red plinth and hedge behind her, smiling towards the camera", category: "Team",            size: "tall" },
-  { src: "/gallery/img8.jpg",  caption: "YONA Yoga for All Ages",                alt: "A young girl in a pink YONA sweatshirt sitting cross-legged on a colourful yoga mat making a peace sign during a YONA wellness session",                         category: "Yoga & Wellness", size: "wide" },
-  { src: "/gallery/img9.jpg",  caption: "YONA Certificate Ceremony",             alt: "A participant receiving a YONA Certificate of Participation from a female instructor in front of a projected YONA logo at a wellness event",                       category: "Events",          size: "wide" },
-  { src: "/gallery/img11.jpg", caption: "Joy in Every Session",                  alt: "A child and adult participants laughing with arms raised joyfully during a group yoga session at a YONA wellness event",                                           category: "Yoga & Wellness", size: "wide" },
-  { src: "/gallery/img13.jpg", caption: "YONA Certificates of Participation",    alt: "Two YONA Certificates of Participation stacked on a dark surface, illuminated by a beam of natural light",                                                        category: "Events",          size: "wide" },
-  { src: "/gallery/img17.jpg", caption: "Community Health Screening",            alt: "A health screening station at a community wellness camp — a practitioner seated at a table with medical equipment while two staff members assist a participant",   category: "Events",          size: "wide" },
-  { src: "/gallery/img20.jpg", caption: "Group Yoga Session",                    alt: "Participants seated in a meditative posture on colourful yoga mats during a large group yoga session in a bright hall with floor-to-ceiling windows",              category: "Yoga & Wellness", size: "wide" },
-  { src: "/gallery/img23.jpg", caption: "Mindful Movement",                      alt: "A smiling woman in a mustard-yellow YONA sweatshirt holding a mudra gesture mid-movement during a yoga wellness session",                                          category: "Yoga & Wellness", size: "tall" },
-  { src: "/gallery/img27.jpg", caption: "Energetic Anatomy & Breathwork",        alt: "YONA wellness event roll-up display board showing an Energetic Anatomy in Yoga infographic, five benefits of breathwork, and the Wheel of Wellness diagram",     category: "Yoga & Wellness", size: "tall" },
+  { src: "/gallery/new-gallery-01.jpeg", caption: "School Wellness Session", alt: "Students in IYKA-ARAM wellness shirts practising a guided chair-supported movement session in a school hall", category: "Yoga & Wellness", size: "tall" },
+  { src: "/gallery/new-gallery-02.jpeg", caption: "Student Wellness Gathering", alt: "A large group of students and facilitators in IYKA-ARAM wellness shirts gathered in a hall for a wellness programme", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-03.jpeg", caption: "Wellness Education Talk", alt: "An IYKA-ARAM facilitator speaking with seated students during a wellness education session", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-04.jpeg", caption: "Guided Group Practice", alt: "A yoga instructor leading students through a standing balance posture inside a school hall", category: "Yoga & Wellness", size: "tall" },
+  { src: "/gallery/new-gallery-06.jpeg", caption: "Outdoor Yoga Community", alt: "A group of yoga participants standing together with mats in a green outdoor field", category: "Yoga & Wellness", size: "wide" },
+  { src: "/gallery/new-gallery-07.jpeg", caption: "Open-Air Yoga Practice", alt: "Participants seated on yoga mats during an outdoor group practice surrounded by greenery", category: "Yoga & Wellness", size: "wide" },
+  { src: "/gallery/new-gallery-08.jpeg", caption: "Education Department Recognition", alt: "An IYKA-ARAM representative receiving a recognition plaque inside a Department of Education office", category: "Events", size: "tall" },
+  { src: "/gallery/new-gallery-09.jpeg", caption: "IYKA-ARAM Team Gathering", alt: "Members of the IYKA-ARAM team standing together in a garden gazebo", category: "Team", size: "wide" },
+  { src: "/gallery/new-gallery-10.jpeg", caption: "Nutrition Workshop", alt: "A group of students and facilitators gathered in a classroom for a food festival and nutrition workshop", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-12.jpeg", caption: "Rooftop Wellness Session", alt: "Participants seated on a rooftop during a guided corporate wellness session overlooking the city", category: "Yoga & Wellness", size: "wide" },
+  { src: "/gallery/new-gallery-13.jpeg", caption: "Wellness Product Showcase", alt: "IYKA-ARAM representatives presenting an organic cork yoga mat at an outdoor wellness product stall", category: "Products", size: "tall" },
+  { src: "/gallery/new-gallery-14.jpeg", caption: "IYKA-ARAM Wellness Stall", alt: "The IYKA-ARAM team standing behind a wellness and healthcare stall displaying products and gift boxes", category: "Products", size: "wide" },
+  { src: "/gallery/new-gallery-15.jpeg", caption: "Meadow Yoga Practice", alt: "Participants seated on yoga mats in a green meadow during an open-air wellness practice", category: "Yoga & Wellness", size: "wide" },
+  { src: "/gallery/new-gallery-16.jpeg", caption: "School Outreach Visit", alt: "The IYKA-ARAM team standing outside Chnong Chilliang Raij Jowai with wellness programme signage", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-17.jpeg", caption: "Community School Visit", alt: "An IYKA-ARAM facilitator posing with children outside a rural school building", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-18.jpeg", caption: "Clinic Certificate Moment", alt: "Participants holding certificates with an IYKA-ARAM facilitator outside the clinic entrance", category: "Team", size: "tall" },
+  { src: "/gallery/new-gallery-19.jpeg", caption: "Recognition Exchange", alt: "An IYKA-ARAM representative presenting a recognition box during a formal indoor meeting", category: "Events", size: "tall" },
+  { src: "/gallery/new-gallery-20.jpeg", caption: "International Yoga Day", alt: "Students and facilitators gathered behind an International Yoga Day banner in a school hall", category: "Events", size: "wide" },
+  { src: "/gallery/new-gallery-21.jpeg", caption: "School Wellness Celebration", alt: "Students and facilitators in IYKA-ARAM wellness shirts giving thumbs up together inside a school auditorium", category: "Events", size: "wide" },
   { src: "/gallery/elixir-range-flatlay.jpg", caption: "The ELIXIR Oils",     alt: "Four ELIXIR bottles laid out on a dark wood table — Vital Gastro Roll-On, Hair Oil, Muscle Oil and Stress Relief Roll-On — beside a woven bamboo mat and tropical leaves", category: "Products",        size: "wide" },
   { src: "/gallery/muscle-oil-stone.jpg", caption: "ELIXIR Muscle Oil",         alt: "A 15 ml bottle of ELIXIR Muscle Oil with a gold-collared dropper cap resting on a smooth river stone, lit warmly against a dark wooden table", category: "Products",        size: "tall" },
   { src: "/gallery/elixir-box-manual.jpg", caption: "The ELIXIR Gift Set",      alt: "An open crimson-lined Iyka-Aram gift box holding four ELIXIR bottles, photographed from above on woven jute beside the printed Elixir Instructional Manual", category: "Products",        size: "wide" },
@@ -79,7 +90,7 @@ export function GalleryClient() {
         eyebrow="Iyka-Aram Wellness"
         title="Our Gallery"
         lead={<>A visual journey through our clinic, sessions, events, and the community we&rsquo;re building in Northeast India.</>}
-        image="/gallery/img11.jpg"
+        image="/gallery/elixir-range-flatlay.jpg"
         tint="dark"
         vignette
         reveal
@@ -206,7 +217,7 @@ export function GalleryClient() {
           <p className="v2-section-label v2-section-label-light mb-4">
             Experience It In Person
           </p>
-          <h2 className="v2-section-title" style={{ color: "var(--cream)", marginBottom: "1.5rem" }}>
+          <h2 className="v2-feature-title" style={{ color: "var(--cream)", marginBottom: "1.5rem" }}>
             Ready to begin your healing journey?
           </h2>
           <div className="flex flex-wrap justify-center gap-4">
